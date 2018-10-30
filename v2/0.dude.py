@@ -74,12 +74,11 @@ def main():
         WORD_TOKEN_ALLTHREAD = buildTokenSet()
         WORD_TOKEN_ALLTHREAD = list(itertools.chain.from_iterable(WORD_TOKEN_ALLTHREAD))
         # print(WORD_TOKEN_ALLTHREAD)
-        createFile(WORD_TOKEN_ALLTHREAD, 'word_token_allthread')
     except KeyboardInterrupt:
         print("[Cancel] Ctrl-c Detect")
-        createFile(WORD_TOKEN_ALLTHREAD, 'word_token_allthread')
     finally:
-        print("[Close] ")
+        createFile(WORD_TOKEN_ALLTHREAD, 'word_token_allthread')
+    print("[Close] ")
 
 
 if __name__ == '__main__':
