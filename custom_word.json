@@ -1,22 +1,7 @@
 [
-    "ยินดีต้อนรับ",
-    "ความคิดเห็น",
-    "Learn Share  Fun - เรียนรู้ แบ่งปัน ลั้นลา",
-    "<<",
-    ">>",
-    "Pantip",
-    "pantipcomforumpantip",
-    "ทที่",
-    "ค่ะ",
-    "ครับ",
-    "httpwww",
-    "5555",
-    "55",
-    "อิอิ",
-    "เทอญ สวัสดี",
-    "ๆ",
-    "ทุกคน", 
-    "นะ",
-    "httppantipcomtopic",
-    "pantipcomcafeeventtopicEV"
+    "^http",
+    "^Showhttp",
+    "^www",
+    "[0-9]",
+    "หมายเลข"
 ]

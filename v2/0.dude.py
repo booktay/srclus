@@ -53,7 +53,7 @@ def getTokenWordFromUrl(THREAD_RUN):
     return []
 
 
-def runToken(THREAD=[0, 1]):
+def runToken(THREAD=[0, 10]):
     WORD_TOKEN_ALLTHREAD = []
     for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
         WORD_TOKEN = getTokenWordFromUrl(THREAD_RUN)
@@ -63,7 +63,8 @@ def runToken(THREAD=[0, 1]):
     return WORD_TOKEN_ALLTHREAD
 
 def buildTokenSet():
-    ALL_THREAD = [[x, x + 15000] for x in range(10**5, 2*10**5, 15000)]
+    # ALL_THREAD = [[x, x + 15000] for x in range(10**5, 2*10**5, 15000)]
+    ALL_THREAD = [[0,10]]
     with Pool(processes=len(ALL_THREAD)) as pool:
         WORD_TOKEN_ALLTHREAD = pool.map(runToken, ALL_THREAD)
     return WORD_TOKEN_ALLTHREAD
