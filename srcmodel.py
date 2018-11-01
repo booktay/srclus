@@ -85,38 +85,42 @@ class srcmodel:
         THREAD_ID = 30000000 + THREAD_RUN
         URL = BASE_PATH + str(THREAD_ID)
 
+        # print(URL)
         # Request
         try:
             RAW_REQUEST = requests.get(URL).json()
         except:
             print('[Error] URL Exceed : ' + str(THREAD_ID))
-            return []
+            return [],[]
         
         if (RAW_REQUEST["found"]):
             RAW_SOURCE = RAW_REQUEST["_source"]
             TOKEN_TITLE = self.replaceWord(RAW_SOURCE["title"])
             TOKEN_DESC = self.replaceWord(RAW_SOURCE["desc"])
             # TOKEN_WORD = [TOKEN_TITLE + TOKEN_DESC]
-            TOKEN_WORD = self.tokenWord(TOKEN_TITLE + TOKEN_DESC)
-            return self.cutPOS(TOKEN_WORD)
-        return []
+            TOKEN_WORD, ERROR_TOKEN = self.tokenWord(TOKEN_TITLE + TOKEN_DESC)
+            return self.cutPOS(TOKEN_WORD), ERROR_TOKEN
+        return [], []
     
     def runToken(self, THREAD=[0,1]):
         TOKEN_THREAD = []
         ERROR_THREAD = []
-        for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
-            WORD_TOKEN, ERROR_TOKEN = self.getTokenWordFromUrl(THREAD_RUN)
-            TOKEN_THREAD += WORD_TOKEN
-            ERROR_THREAD += ERROR_TOKEN
-            if THREAD_RUN % 10 == 0:
-                print("At Thread : " + str(THREAD_RUN))
-        self.createFile(DATA=TOKEN_THREAD, NAME="token." + str(THREAD[0]) + "." + str(THREAD[1]))
-        self.createFile(DATA=ERROR_THREAD, NAME="error.token." + str(THREAD[0]) + "." + str(THREAD[1]))
-        # return []
+        try:
+            for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
+                WORD_TOKEN, ERROR_TOKEN = self.getTokenWordFromUrl(THREAD_RUN)
+                TOKEN_THREAD += WORD_TOKEN
+                ERROR_THREAD += ERROR_TOKEN
+                if THREAD_RUN % 10 == 0:
+                    print("At Thread : " + str(THREAD_RUN))
+            self.createFile(DATA=TOKEN_THREAD, NAME="token." + str(THREAD[0]) + "." + str(THREAD[1]))
+            self.createFile(DATA=ERROR_THREAD, NAME="error.token." + str(THREAD[0]) + "." + str(THREAD[1]))
+        except KeyboardInterrupt:
+            print("Ctrl c")
+        return []
 
-    def poolCreateModel(self, START=0, STOP=1, ITERATION=1):
+    def poolCreateModel(self, RANGE = [0,0,0]):
         # 2 * 10**4
-        ALL_THREAD = [[x, x + ITERATION] for x in range(START, STOP, ITERATION)]
+        ALL_THREAD = [[x, x + RANGE[2]] for x in range(RANGE[0], RANGE[1], RANGE[2])]
         PROCESS = len(ALL_THREAD)
         print("[Init] Generate " + str(PROCESS) + " processes")
         try :

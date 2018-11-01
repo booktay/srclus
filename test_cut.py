@@ -2,9 +2,8 @@ from srcmodel import srcmodel
 srcm = srcmodel()
 
 def main():
-    srcm.poolCreateModel(START=1*10**5, STOP=2*10**5, ITERATION=2*10**4)
-    # srcm.poolCreateModel(START=1*10**5, STOP=1*10**5 + 1000, ITERATION=200)
-    # srcm.poolCreateModel(START=1*10**5, STOP=1*10**5 + 10, ITERATION=2)
+    srcm.poolCreateModel([100000, 101000, 200])
+    # srcm.runToken([100,200])
 
 if __name__ == '__main__':
     main()
