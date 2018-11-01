@@ -8,6 +8,8 @@ import re
 from pythainlp.tokenize import word_tokenize
 from pythainlp.tag import pos_tag
 from pythainlp.corpus import stopwords
+from multiprocessing import Pool
+from six.moves import xrange
 
 class srcmodel:
 
@@ -98,3 +100,21 @@ class srcmodel:
             TOKEN_WORD = self.tokenWord(TOKEN_TITLE + TOKEN_DESC)
             return self.cutPOS(TOKEN_WORD)
         return []
+    
+    def runToken(self, THREAD=[0,1]):
+        TOKEN_THREAD = []
+        for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
+            WORD_TOKEN = self.getTokenWordFromUrl(THREAD_RUN)
+            TOKEN_THREAD += WORD_TOKEN
+            if THREAD_RUN % 10 == 0:
+                print("At Thread : " + str(THREAD_RUN))
+        self.createFile(DATA=TOKEN_THREAD, NAME="token." + str(THREAD[0]) + "." + str(THREAD[1]))
+        # return []
+
+    def poolCreateModel(self, START=0, STOP=1, ITERATION=1):
+        # 2 * 10**4
+        ALL_THREAD = [[x, x + ITERATION] for x in range(START, STOP, ITERATION)]
+        PROCESS = len(ALL_THREAD)
+        print("[Init] Generate " + PROCESS + " processes")
+        with Pool(processes=PROCESS) as pool:
+            pool.map(self.runToken, ALL_THREAD)
