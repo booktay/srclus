@@ -56,17 +56,12 @@ class srcmodel:
             POS_WORD = [item for item in POS_WORD if item not in self.CUSTOM_STOP]
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
             POS_WORD = [item[0] for item in POS_WORD if item[1] == "NCMN"]
+            # print(POS_WORD)
         except:
             print('[Error] Tokenization : ')
             # print(*TEXT, sep=", ")
             return [], POS_WORD
         return POS_WORD, []
-
-    def cutPOS(self, TEXT=[]):
-        WORDS = []
-        for word in TEXT:
-            WORDS.append(word[0])
-        return WORDS
 
     def getTokenWordFromUrl(self, THREAD_RUN=0):
         # Define Variable
@@ -88,7 +83,7 @@ class srcmodel:
             TOKEN_DESC = self.replaceWord(RAW_SOURCE["desc"])
             # TOKEN_WORD = [TOKEN_TITLE + TOKEN_DESC]
             TOKEN_WORD, ERROR_TOKEN = self.tokenWord(TOKEN_TITLE + TOKEN_DESC)
-            return self.cutPOS(TOKEN_WORD), ERROR_TOKEN
+            return TOKEN_WORD, ERROR_TOKEN
         return [], []
     
     def runToken(self, THREAD=[0,1]):
