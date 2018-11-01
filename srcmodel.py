@@ -37,7 +37,7 @@ class srcmodel:
 
     def replaceWord(self, TEXT=""):
         TEXT = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','', TEXT)
-        TEXT = re.sub(r'[@:.\&;=$#?+{}()[\],><|!\*_"\'–·]', '', TEXT)
+        TEXT = re.sub(r'[@:.\&;=$#?+{}/\\()[\],><|!\*_"\'–·]', '', TEXT)
         TEXT = re.sub(r'[ๆ“”]', '', TEXT)
         # TEXT = re.sub(r'\s+(\d)+\s', r'\1', TEXT)
         TEXT = TEXT.strip()
