@@ -59,6 +59,7 @@ class srcmodel:
                 i += 1
             #
             # print(*POS_WORD, sep=", ")
+            POS_WORD = [item for item in POS_WORD if item != '']
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
             #
             i = 0
@@ -89,7 +90,7 @@ class srcmodel:
         # Request
         try:
             RAW_REQUEST = requests.get(URL).json()
-        except:
+        except :
             print('[Error] URL Exceed : ' + str(THREAD_ID))
             return [],[]
         
@@ -116,7 +117,7 @@ class srcmodel:
             self.createFile(DATA=ERROR_THREAD, NAME="error.token." + str(THREAD[0]) + "." + str(THREAD[1]))
         except KeyboardInterrupt:
             print("Ctrl c")
-        return []
+            return []
 
     def poolCreateModel(self, RANGE = [0,0,0]):
         # 2 * 10**4
