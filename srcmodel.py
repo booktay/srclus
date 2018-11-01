@@ -69,9 +69,9 @@ class srcmodel:
                 i += 1
         except:
             print('[Error] Tokenization : ')
-            print(*TEXT, sep=", ")
-            return []
-        return POS_WORD
+            # print(*TEXT, sep=", ")
+            return [], POS_WORD
+        return POS_WORD, []
 
     def cutPOS(self, TEXT=[]):
         WORDS = []
@@ -103,12 +103,15 @@ class srcmodel:
     
     def runToken(self, THREAD=[0,1]):
         TOKEN_THREAD = []
+        ERROR_THREAD = []
         for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
-            WORD_TOKEN = self.getTokenWordFromUrl(THREAD_RUN)
+            WORD_TOKEN, ERROR_TOKEN = self.getTokenWordFromUrl(THREAD_RUN)
             TOKEN_THREAD += WORD_TOKEN
+            ERROR_THREAD += ERROR_TOKEN
             if THREAD_RUN % 10 == 0:
                 print("At Thread : " + str(THREAD_RUN))
         self.createFile(DATA=TOKEN_THREAD, NAME="token." + str(THREAD[0]) + "." + str(THREAD[1]))
+        self.createFile(DATA=ERROR_THREAD, NAME="error.token." + str(THREAD[0]) + "." + str(THREAD[1]))
         # return []
 
     def poolCreateModel(self, START=0, STOP=1, ITERATION=1):
@@ -116,5 +119,9 @@ class srcmodel:
         ALL_THREAD = [[x, x + ITERATION] for x in range(START, STOP, ITERATION)]
         PROCESS = len(ALL_THREAD)
         print("[Init] Generate " + str(PROCESS) + " processes")
-        with Pool(processes=PROCESS) as pool:
-            pool.map(self.runToken, ALL_THREAD)
+        try :
+            with Pool(processes=PROCESS) as pool:
+                pool.map(self.runToken, ALL_THREAD)
+        except KeyboardInterrupt:
+            print("Ctrl c")
+            return []
