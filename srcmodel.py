@@ -51,23 +51,11 @@ class srcmodel:
                 POS_WORD += word_tokenize(text, engine='deepcut')
             #
             STOP = stopwords.words('thai')
-            i = 0
-            while i < len(POS_WORD):
-                if POS_WORD[i] in STOP:
-                    POS_WORD.remove(POS_WORD[i])
-                    i -= 1
-                i += 1
-            #
+            POS_WORD = [item for item in POS_WORD if item not in STOP]
             # print(*POS_WORD, sep=", ")
-            POS_WORD = [item for item in POS_WORD if item != '']
+            POS_WORD = [item for item in POS_WORD if item not in self.CUSTOM_STOP]
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
-            #
-            i = 0
-            while i < len(POS_WORD):
-                if not POS_WORD[i][1] == "NCMN":
-                    POS_WORD.remove(POS_WORD[i])
-                    i -= 1
-                i += 1
+            POS_WORD = [item[0] for item in POS_WORD if item[1] == "NCMN"]
         except:
             print('[Error] Tokenization : ')
             # print(*TEXT, sep=", ")
