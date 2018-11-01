@@ -5,4 +5,3 @@ class word2vec:
         self.WORD_TOKEN_ALLTHREAD = data
 
     
-

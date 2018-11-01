@@ -22,7 +22,6 @@ def buildTokenSet():
         WORD_TOKEN_ALLTHREAD = pool.map(runToken, ALL_THREAD)
     return WORD_TOKEN_ALLTHREAD
 
-
 def buildGraph(final_embeddings, reverse_dictionary):
     print(reverse_dictionary)
     try:
