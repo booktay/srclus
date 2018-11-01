@@ -98,10 +98,3 @@ class srcmodel:
             TOKEN_WORD = self.tokenWord(TOKEN_TITLE + TOKEN_DESC)
             return self.cutPOS(TOKEN_WORD)
         return []
-
-a = []
-for i in range (100090,100100, 1):
-    ran = srcmodel().getTokenWordFromUrl(THREAD_RUN=i)
-    if ran:
-        a.append(ran)
-print(a)

@@ -1,23 +1,27 @@
-#!/usr/bin/env python
-# coding: utf-8
+from srcmodel import srcmodel
+from multiprocessing import Pool
+from six.moves import xrange
 
-import sys
-import os
-import requests
-import json
-import time
-import re
-import math
-import random
-import pythainlp as ptn
-import numpy as np
-import tensorflow as tf
-import deepcut as dc
+srcm = srcmodel()
 
-WORD_TOKEN = []
-PATH = os.path.join('data/', "word_token_allthread_201810310613" + '.json')
-with open(PATH, mode='r', encoding='utf-8') as store_word:
-    WORD_TOKEN_ALLTHREAD = json.load(store_word)
-    for wordd in WORD_TOKEN_ALLTHREAD:
-        tok = ptn.tokenize.word_tokenize(wordd, engine='deepcut', whitespaces=True)
-        print(tok)
+def runToken(THREAD=[0,1]):
+    TOKEN_THREAD = []
+    for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
+        WORD_TOKEN = srcm.getTokenWordFromUrl(THREAD_RUN)
+        TOKEN_THREAD += WORD_TOKEN
+        if THREAD_RUN % 10 == 0:
+            print("At Thread : " + str(THREAD_RUN))
+    srcm.createFile(DATA=TOKEN_THREAD, NAME="token." + str(THREAD[0]) + "." + str(THREAD[1]))
+    # return []
+
+def main():
+    ALL_THREAD = [[x, x + 2 * 10**4] for x in range(1 * 10**5, 3 * 10**5, 2 * 10**4)]
+    with Pool(processes=len(ALL_THREAD)) as pool:
+        pool.map(runToken, ALL_THREAD)
+    # return TOKEN_THREAD
+    
+    
+
+
+if __name__ == '__main__':
+    main()
