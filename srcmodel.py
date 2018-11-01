@@ -115,6 +115,6 @@ class srcmodel:
         # 2 * 10**4
         ALL_THREAD = [[x, x + ITERATION] for x in range(START, STOP, ITERATION)]
         PROCESS = len(ALL_THREAD)
-        print("[Init] Generate " + PROCESS + " processes")
+        print("[Init] Generate " + str(PROCESS) + " processes")
         with Pool(processes=PROCESS) as pool:
             pool.map(self.runToken, ALL_THREAD)
