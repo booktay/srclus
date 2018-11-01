@@ -1,1 +1,3 @@
-data/srclus/
+data/
+srclus/
+__pycache__/
