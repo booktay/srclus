@@ -102,7 +102,7 @@ class srcmodel:
             self.createFile(DATA=ERROR_THREAD, NAME="error.token." + str(THREAD[0]) + "." + str(THREAD[1]))
         except KeyboardInterrupt:
             print("Ctrl c")
-            return []
+            return
 
     def poolCreateModel(self, RANGE = [0,0,0]):
         # 2 * 10**4
@@ -114,4 +114,4 @@ class srcmodel:
                 pool.map(self.runToken, ALL_THREAD)
         except KeyboardInterrupt:
             print("Ctrl c")
-            return []
+            return

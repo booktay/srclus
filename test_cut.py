@@ -7,6 +7,7 @@ def main():
         # srcm.runToken([100000, 100020])
     except KeyboardInterrupt:
         print("Ctrl C")
+        return 
 
 if __name__ == '__main__':
     main()
