@@ -10,6 +10,8 @@ from pythainlp.tag import pos_tag
 from pythainlp.corpus import stopwords
 from multiprocessing import Pool
 from six.moves import xrange
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class srcmodel:
 
@@ -92,8 +94,8 @@ class srcmodel:
         try:
             for THREAD_RUN in xrange(THREAD[0], THREAD[1]):
                 WORD_TOKEN, ERROR_TOKEN = self.getTokenWordFromUrl(THREAD_RUN)
-                TOKEN_THREAD += WORD_TOKEN
-                ERROR_THREAD += ERROR_TOKEN
+                if len(WORD_TOKEN) > 0 : TOKEN_THREAD.append(WORD_TOKEN)
+                if len(ERROR_TOKEN) > 0 : ERROR_THREAD.append(ERROR_TOKEN)
                 if THREAD_RUN % 10 == 0:
                     print("At Thread : " + str(THREAD_RUN))
             self.createFile(DATA=TOKEN_THREAD, NAME="token." + str(THREAD[0]) + "." + str(THREAD[1]))
