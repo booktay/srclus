@@ -3,8 +3,8 @@ srcm = srcmodel()
 
 def main():
     try:
-        srcm.poolCreateModel([100000, 400000, 100000])
-        # srcm.runToken([100000, 100020])
+        srcm.poolCreateModel([100000, 200000, 20000])
+        # srcm.runToken([100000, 100040])
     except KeyboardInterrupt:
         print("Ctrl C")
         return 

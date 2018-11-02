@@ -30,7 +30,7 @@ class srcmodel:
         if not os.path.exists('data'):
             os.mkdir('data')
         with open(os.path.join('data/', NAME + "." + self.TIMENOW + '.json'), mode='x', encoding='utf-8') as store_word:
-            json.dump(DATA, store_word, ensure_ascii=False)
+            json.dump(DATA, store_word, ensure_ascii=False, indent=2)
 
     def loadCustomStopword(self):
         with open('custom_word.json', mode='r', encoding='utf-8') as custom_word:
@@ -41,29 +41,30 @@ class srcmodel:
         TEXT = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','', TEXT)
         TEXT = re.sub(r'[@:.\&;=$#?+{}/\\()[\],><|!\*_"\'–·]', ' ', TEXT)
         TEXT = re.sub(r'[ๆ“”]', '', TEXT)
-        # TEXT = re.sub(r'\s+(\d)+\s', r'\1', TEXT)
+        # TEXT = re.sub(r'\s+(\d+)+\s', r'\1', TEXT)
         TEXT = TEXT.strip()
-        TEXT = re.split(' ', TEXT)
         return TEXT
 
-    def tokenWord(self, TEXT=[]):
+    def tokenWord(self, TEXT=""):
         POS_WORD = []
         try:
-            for text in TEXT:
+            TEXT = self.replaceWord(TEXT)
+            TEXT_SPLIT = re.split(' ', TEXT)
+            for text in TEXT_SPLIT:
                 POS_WORD += word_tokenize(text, engine='deepcut')
             #
             STOP = stopwords.words('thai')
-            POS_WORD = [item for item in POS_WORD if item not in STOP]
+            POS_WORD = [item for item in POS_WORD if item not in STOP or item not in self.CUSTOM_STOP]
             # print(*POS_WORD, sep=", ")
-            POS_WORD = [item for item in POS_WORD if item not in self.CUSTOM_STOP]
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
             POS_WORD = [item[0] for item in POS_WORD if item[1] == "NCMN"]
+            POS_WORD = ' '.join(POS_WORD)
             # print(POS_WORD)
         except:
             print('[Error] Tokenization : ')
             # print(*TEXT, sep=", ")
-            return [], POS_WORD
-        return POS_WORD, []
+            return "", TEXT
+        return POS_WORD, ""
 
     def getTokenWordFromUrl(self, THREAD_RUN=0):
         # Define Variable
@@ -71,22 +72,19 @@ class srcmodel:
         THREAD_ID = 30000000 + THREAD_RUN
         URL = BASE_PATH + str(THREAD_ID)
 
-        # print(URL)
         # Request
         try:
             RAW_REQUEST = requests.get(URL).json()
         except :
             print('[Error] URL Exceed : ' + str(THREAD_ID))
-            return [],[]
+            return "", ""
         
         if (RAW_REQUEST["found"]):
             RAW_SOURCE = RAW_REQUEST["_source"]
-            TOKEN_TITLE = self.replaceWord(RAW_SOURCE["title"])
-            TOKEN_DESC = self.replaceWord(RAW_SOURCE["desc"])
-            # TOKEN_WORD = [TOKEN_TITLE + TOKEN_DESC]
-            TOKEN_WORD, ERROR_TOKEN = self.tokenWord(TOKEN_TITLE + TOKEN_DESC)
-            return TOKEN_WORD, ERROR_TOKEN
-        return [], []
+            THREAD_WORD = RAW_SOURCE["title"] + " " + RAW_SOURCE["desc"]
+            TOKEN_WORD, ERROR_STATUS = self.tokenWord(THREAD_WORD)
+            return TOKEN_WORD, ERROR_STATUS
+        return "", ""
     
     def runToken(self, THREAD=[0,1]):
         TOKEN_THREAD = []
