@@ -3,7 +3,8 @@ srcm = srcmodel()
 
 def main():
     try:
-        srcm.poolCreateModel([100000, 200000, 20000])
+        A, B, C = [int(x) for x in input("Enter Start Stop Step : ").split()]
+        srcm.poolCreateModel([A, B, C])
         # srcm.runToken([100000, 100040])
     except KeyboardInterrupt:
         print("Ctrl C")
