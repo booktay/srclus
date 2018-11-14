@@ -10,6 +10,8 @@ from pythainlp.tag import pos_tag
 from pythainlp.corpus import stopwords
 from multiprocessing import Pool
 from six.moves import xrange
+import nltk
+from nltk.corpus import stopwords
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -44,6 +46,14 @@ class srcmodel:
         # TEXT = re.sub(r'\s+(\d+)+\s', r'\1', TEXT)
         TEXT = TEXT.strip()
         return TEXT
+
+    def cleanEngStopWord(self, data):
+        stop_eng_words = set(stopwords.words('english'))
+        WORD_ALL = []
+        for words in data:
+            words = [x for x in words.split(' ') if x not in stop_eng_words]
+            WORD_ALL.append(' '.join(words))
+        return WORD_ALL
 
     def tokenWord(self, TEXT=""):
         POS_WORD = []

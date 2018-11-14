@@ -6,26 +6,16 @@ import os
 import numpy as np
 import tensorflow as tf
 from sklearn.feature_extraction.text import TfidfVectorizer
-import nltk
-from nltk.corpus import stopwords
+from srcmodel import srcmodel
 
 class word2vec:
     def __init__(self, data=[]):
-        self.WORD_TOKEN_ALLTHREAD = data
+        self.WORD_TOKEN_ALLTHREAD = srcmodel().cleanEngStopWord(data)
         self.TIMENOW = time.strftime("%Y%m%d%H%M")
         self.WORD_ALL = []
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split(), min_df=1)
 
-    def cleanWord(self):
-        stop_eng_words = set(stopwords.words('english'))
-        for words in self.WORD_TOKEN_ALLTHREAD:
-            print(words)
-            words = [x for x in words if x not in stop_eng_words]
-            print(words)
-            print("*"*40)
-
     def weightTfIdf(self):
-        self.cleanWord()
         WORD = self.tfidf.fit_transform(self.WORD_TOKEN_ALLTHREAD)
         self.WORD_ALL =  WORD
     
