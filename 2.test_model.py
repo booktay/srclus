@@ -17,6 +17,6 @@ DATA_ALL = openfile()
 # print(DATA_ALL)
 w2v = word2vec(DATA_ALL)
 w2v.weightTfIdf()
-a = w2v.getScore()()
-print(a)
+w2v.getScore()
+# print(a)
 
