@@ -12,8 +12,8 @@ class word2vec:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = srcmodel().cleanEngStopWord(data)
         self.TIMENOW = time.strftime("%Y%m%d%H%M")
-        self.WORD_ALL = []
-        self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split(), min_df=1)
+        self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split())
+        self.WORD_ALL = None
 
     def weightTfIdf(self):
         WORD = self.tfidf.fit_transform(self.WORD_TOKEN_ALLTHREAD)
@@ -30,10 +30,18 @@ class word2vec:
     
     def getScore(self):
         response = self.WORD_ALL
-        # data = []
-        for col in response.nonzero()[1]:
-            if response[0, col] < 0.05 and response[0, col] > 0.03:
-                print(self.tfidf.get_feature_names()[col], response[0, col])
+        feature_names = self.tfidf.get_feature_names()
+        # print(response)
+        doc_size = len(self.WORD_TOKEN_ALLTHREAD)
+        # doc_size = 1
+        for doc in range(doc_size):
+            feature_index = response[doc, :].nonzero()[1]
+            TARGET = sorted([[response[doc, x],x] for x in feature_index])[-5:]
+            
+
+        # for w, s in TARGET:
+            # print(feature_names[s], w)
+        # return tfidf_scores
 
     def buildDataset(self, WORDS):
         VOCABULARY_SIZE = len(WORDS)
