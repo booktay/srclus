@@ -6,7 +6,9 @@ from word2vec import word2vec
 
 def openfile():
     DATA_ALL = []
-    for one in os.listdir("data"):
+    PATH_CHECK = ["token.980000.1000000.201811101445.json"]
+    # PATH_CHECK = os.listdir("data")
+    for one in PATH_CHECK:
         with open(os.path.join("data/", one), 'r', encoding="utf-8") as data:
             DATA_ALL = DATA_ALL + json.load(data)
     return DATA_ALL
