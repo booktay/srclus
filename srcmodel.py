@@ -72,7 +72,7 @@ class srcmodel:
             # print(POS_WORD)
         except:
             print('[Error] Tokenization : ')
-            # print(*TEXT, sep=", ")
+            print(*TEXT, sep=", ")
             return "", TEXT
         return POS_WORD, ""
 
