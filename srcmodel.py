@@ -63,8 +63,10 @@ class srcmodel:
             for text in TEXT_SPLIT:
                 POS_WORD += word_tokenize(text, engine='deepcut')
             #
-            STOP = stopwords.words('thai')
-            POS_WORD = [item for item in POS_WORD if item not in STOP or item not in self.CUSTOM_STOP]
+            STOP_TH = stopwords.words('thai')
+            POS_WORD = [item for item in POS_WORD if item not in STOP_TH or item not in self.CUSTOM_STOP]
+            STOP_ENG = set(stopwords.words('english'))
+            POS_WORD = [item for item in POS_WORD if item not in STOP_ENG]
             # print(*POS_WORD, sep=", ")
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
             POS_WORD = [item[0] for item in POS_WORD if item[1] == "NCMN"]
