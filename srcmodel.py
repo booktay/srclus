@@ -7,11 +7,11 @@ import time
 import re
 from pythainlp.tokenize import word_tokenize
 from pythainlp.tag import pos_tag
-from pythainlp.corpus import stopwords
+from pythainlp.corpus import stopwords as pythai_stopword
 from multiprocessing import Pool
 from six.moves import xrange
 import nltk
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords as nltk_stopword
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -48,7 +48,7 @@ class srcmodel:
         return TEXT
 
     def cleanEngStopWord(self, data):
-        stop_eng_words = set(stopwords.words('english'))
+        stop_eng_words = set(nltk_stopword.words('english'))
         WORD_ALL = []
         for words in data:
             words = [x for x in words.split(' ') if x not in stop_eng_words]
@@ -58,14 +58,14 @@ class srcmodel:
     def tokenWord(self, TEXT=""):
         POS_WORD = []
         try:
-            TEXT = self.replaceWord(TEXT)
-            TEXT_SPLIT = re.split(' ', TEXT)
+            TEXT_FILTER = self.replaceWord(TEXT)
+            TEXT_SPLIT = re.split(' ', TEXT_FILTER)
             for text in TEXT_SPLIT:
                 POS_WORD += word_tokenize(text, engine='deepcut')
             #
-            STOP_TH = stopwords.words('thai')
+            STOP_TH = pythai_stopword.words('thai')
             POS_WORD = [item for item in POS_WORD if item not in STOP_TH or item not in self.CUSTOM_STOP]
-            STOP_ENG = set(stopwords.words('english'))
+            STOP_ENG = set(nltk_stopword.words('english'))
             POS_WORD = [item for item in POS_WORD if item not in STOP_ENG]
             # print(*POS_WORD, sep=", ")
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
