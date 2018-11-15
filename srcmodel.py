@@ -43,16 +43,28 @@ class srcmodel:
         TEXT = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','', TEXT)
         TEXT = re.sub(r'[@:.\&;=$#?+{}/\\()[\],><|!\*_"\'–·]', ' ', TEXT)
         TEXT = re.sub(r'[ๆ“”]', '', TEXT)
+        TEXT = re.sub(r'(?=555)5*', '555', TEXT)
+        TEXT = re.sub(r'(\w)\1{2,}', r'\1', TEXT)
         # TEXT = re.sub(r'\s+(\d+)+\s', r'\1', TEXT)
         TEXT = TEXT.strip()
         return TEXT
 
-    def cleanEngStopWord(self, data):
+    def clean(self, data):
         stop_eng_words = set(nltk_stopword.words('english'))
+        stop_th_words = pythai_stopword.words('thai')
+
         WORD_ALL = []
         for words in data:
-            words = [x for x in words.split(' ') if x not in stop_eng_words]
-            WORD_ALL.append(' '.join(words))
+            words = re.sub(r'[@:.\&;=$#?+{}/\\()~\\^[\],><|!\*_"\'–·]', '', words)
+            words = re.sub(r'(?=555)5*', '555', words)
+            words = re.sub(r'(\w+)\1{2,}', r'\1', words)
+            words = re.sub(r'(?=555)5*', '555', words)
+            words = words.replace("-", "")
+            for stopw in self.CUSTOM_STOP:
+                words = words.replace(stopw, "")
+                # 
+            word = [x for x in words.split(' ') if x != '' and (x not in stop_eng_words or x not in stop_th_words)]
+            WORD_ALL.append(' '.join(word))
         return WORD_ALL
 
     def tokenWord(self, TEXT=""):
@@ -64,9 +76,8 @@ class srcmodel:
                 POS_WORD += word_tokenize(text, engine='deepcut')
             #
             STOP_TH = pythai_stopword.words('thai')
-            POS_WORD = [item for item in POS_WORD if item not in STOP_TH or item not in self.CUSTOM_STOP]
             STOP_ENG = set(nltk_stopword.words('english'))
-            POS_WORD = [item for item in POS_WORD if item not in STOP_ENG]
+            POS_WORD = [item for item in POS_WORD if item not in STOP_TH or item not in self.CUSTOM_STOP or item not in STOP_ENG]
             # print(*POS_WORD, sep=", ")
             POS_WORD = pos_tag(POS_WORD, engine='artagger', corpus='orchid')
             POS_WORD = [item[0] for item in POS_WORD if item[1] == "NCMN"]

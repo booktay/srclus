@@ -10,10 +10,13 @@ from srcmodel import srcmodel
 
 class word2vec:
     def __init__(self, data=[]):
-        self.WORD_TOKEN_ALLTHREAD = srcmodel().cleanEngStopWord(data)
+        self.WORD_TOKEN_ALLTHREAD = srcmodel().clean(data)
         self.TIMENOW = time.strftime("%Y%m%d%H%M")
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split())
         self.WORD_ALL = None
+
+    def getWordAll(self):
+        return self.WORD_TOKEN_ALLTHREAD
 
     def weightTfIdf(self):
         WORD = self.tfidf.fit_transform(self.WORD_TOKEN_ALLTHREAD)
@@ -28,20 +31,17 @@ class word2vec:
     def getFeature(self):
         return self.tfidf.get_feature_names()
     
-    def getScore(self):
+    def getOnlyRankWord(self):
         response = self.WORD_ALL
         feature_names = self.tfidf.get_feature_names()
-        # print(response)
-        doc_size = len(self.WORD_TOKEN_ALLTHREAD)
         # doc_size = 1
+        doc_size = len(self.WORD_TOKEN_ALLTHREAD)
+        WORD_TARGET_ALL = []
         for doc in range(doc_size):
             feature_index = response[doc, :].nonzero()[1]
-            TARGET = sorted([[response[doc, x],x] for x in feature_index])[-5:]
-            
-
-        # for w, s in TARGET:
-            # print(feature_names[s], w)
-        # return tfidf_scores
+            TARGET = sorted([[response[doc, x],x] for x in feature_index])[-10:]
+            WORD_TARGET_ALL.append([feature_names[x] for score, x in TARGET])
+        return WORD_TARGET_ALL
 
     def buildDataset(self, WORDS):
         VOCABULARY_SIZE = len(WORDS)
