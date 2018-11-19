@@ -45,6 +45,7 @@ class srcmodel:
         TEXT = re.sub(r'[ๆ“”]', '', TEXT)
         TEXT = re.sub(r'(?=555)5*', '555', TEXT)
         TEXT = re.sub(r'(\w)\1{2,}', r'\1', TEXT)
+        TEXT = TEXT.replace("-", "")
         # TEXT = re.sub(r'\s+(\d+)+\s', r'\1', TEXT)
         TEXT = TEXT.strip()
         return TEXT
@@ -57,13 +58,12 @@ class srcmodel:
         for words in data:
             words = re.sub(r'[@:.\&;=$#?+{}/\\()~\\^[\],><|!\*_"\'–·]', '', words)
             words = re.sub(r'(?=555)5*', '555', words)
-            words = re.sub(r'(\w+)\1{2,}', r'\1', words)
-            words = re.sub(r'(?=555)5*', '555', words)
+            words = re.sub(r'(\w+)\1{2,}', r'', words)
             words = words.replace("-", "")
             for stopw in self.CUSTOM_STOP:
                 words = words.replace(stopw, "")
                 # 
-            word = [x for x in words.split(' ') if x != '' and (x not in stop_eng_words or x not in stop_th_words)]
+            word = [x for x in words.split(' ') if x != '' and not x.isnumeric() and (x not in stop_eng_words or x not in stop_th_words)]
             WORD_ALL.append(' '.join(word))
         return WORD_ALL
 
