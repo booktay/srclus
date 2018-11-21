@@ -63,7 +63,7 @@ class srcmodel:
             for stopw in self.CUSTOM_STOP:
                 words = words.replace(stopw, "")
                 # 
-            word = [x for x in words.split(' ') if x != '' and not x.isnumeric() and (x not in stop_eng_words or x not in stop_th_words)]
+            word = [x for x in words.split(' ') if x != '' and not x.isnumeric() and len(x) > 1 and (x not in stop_eng_words or x not in stop_th_words)]
             WORD_ALL.append(' '.join(word))
         return WORD_ALL
 
