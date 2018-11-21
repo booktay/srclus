@@ -10,7 +10,7 @@ def openfile():
     PATH_CHECK = ["token.clean.201811210859.json"]
     # PATH_CHECK = os.listdir("data/token/")
     for one in PATH_CHECK:
-        with open(os.path.join("data/token/", one), 'r', encoding="utf-8") as data:
+        with open(os.path.join("data/", one), 'r', encoding="utf-8") as data:
             DATA_ALL = DATA_ALL + json.load(data)
     return DATA_ALL
 
