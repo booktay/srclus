@@ -32,7 +32,7 @@ class srcmodel:
         if not os.path.exists('data'):
             os.mkdir('data')
         with open(os.path.join('data/', NAME + "." + self.TIMENOW + '.json'), mode='x', encoding='utf-8') as store_word:
-            json.dump(DATA, store_word, ensure_ascii=False, indent=2)
+            json.dump(DATA, store_word, ensure_ascii=False)  # , indent=2
 
     def loadCustomStopword(self):
         with open('custom_word.json', mode='r', encoding='utf-8') as custom_word:
