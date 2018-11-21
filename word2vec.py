@@ -10,6 +10,7 @@ from srcmodel import srcmodel
 
 class word2vec:
     def __init__(self, data=[]):
+        print("---Preprocess data---")
         self.WORD_TOKEN_ALLTHREAD = srcmodel().clean(data)
         self.TIMENOW = time.strftime("%Y%m%d%H%M")
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split())
