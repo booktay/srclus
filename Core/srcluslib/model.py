@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding: utf-8
+# -------------------------
+# Siwanont Sittinam
+# lib/Managing Model
+# -------------------------
+
 # Import Basic Module
 import collections
 import time
