@@ -137,7 +137,7 @@ class srclusdata:
                     ERROR_THREAD.append({THREAD_RUN:ERROR_TOKEN})
                     ERROR_COUNT += 1
                 # File_Size_Modified
-                FILE_SIZE = 1000
+                FILE_SIZE = 10000
                 if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
                     if len(ALL_THREAD) > 0:
                         TOKEN_NAME = "token." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
