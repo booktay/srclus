@@ -40,7 +40,7 @@ class srclusdata:
         PATHFILE = os.path.join(PATH, NAME + "." + self.TIME + ".json")
         access = 'x' if not os.path.exists(PATHFILE) else 'w'
         with open(PATHFILE, mode=access, encoding='utf-8') as data:
-            json.dump(DATA, data, ensure_ascii=False, indent=4)
+            json.dump(DATA, data, ensure_ascii=False, indent=2)
             print("[Success] " + NAME + "." + self.TIME + " file")
 
     def replaceText(self, TEXT=""):
@@ -133,9 +133,10 @@ class srclusdata:
                 if WORD_TOKEN and ERROR_TOKEN is "" : 
                     ALL_THREAD.append({THREAD_RUN:WORD_TOKEN})
                     ALL_COUNT += 1
-                elif not WORD_TOKEN and ERROR_TOKEN is not "" : 
+                elif not WORD_TOKEN: 
                     ERROR_THREAD.append({THREAD_RUN:ERROR_TOKEN})
                     ERROR_COUNT += 1
+                # File_Size_Modified
                 FILE_SIZE = 100
                 if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
                     if len(ALL_THREAD) > 0:
@@ -146,6 +147,8 @@ class srclusdata:
                         self.createFile(DATA=ERROR_THREAD, PATH="result/error/", NAME=ERROR_NAME)
                     print("[Save] file at thread " + str(THREAD_ID) + " " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
                     ALL_THREAD, ERROR_THREAD = [], []
+                if THREAD_RUN == THREAD[0]:
+                    print("[Start] Thread " + str(THREAD_RUN) + " getFromurl " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
                 if THREAD_RUN == THREAD[1]:
                     print("[Success] Finish getFromurl " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
         except KeyboardInterrupt:
