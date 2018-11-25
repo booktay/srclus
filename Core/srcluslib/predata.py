@@ -49,7 +49,7 @@ class srclusdata:
         # Remove Another Language
         TEXT = re.sub(r'[^!-~ก-๙\s]+', r'', TEXT)
         # Link URL
-        TEXT = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','url', TEXT)
+        TEXT = re.sub(r'http[s]?://(?:[a-zA-Zก-ฮ]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','url', TEXT)
         # Duplicate Char
         TEXT = re.sub(r'555+|ถถถ+', 'ตลก', TEXT)
         TEXT = re.sub(r'([a-zก-๙])\1{3,}', r'\1', TEXT)
@@ -76,7 +76,7 @@ class srclusdata:
         return TEXT
     
     def replaceWord(self, WORDS=[]):
-        WORDS = [word for word in WORDS if re.match(r'[a-zก-๐]+', word) is not None]
+        WORDS = [word for word in WORDS if re.match(r'[a-zก-ฮ]+', word) is not None]
         return WORDS
 
     def tokenizeText(self, TEXT=""):
@@ -136,31 +136,34 @@ class srclusdata:
                 elif not WORD_TOKEN and ERROR_TOKEN is not "" : 
                     ERROR_THREAD.append({THREAD_RUN:ERROR_TOKEN})
                     ERROR_COUNT += 1
-                FILE_SIZE = 10
+                FILE_SIZE = 100
                 if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
-                    self.createFile(DATA=ALL_THREAD, PATH="result/token/" , NAME="token." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN))
-                    self.createFile(DATA=ERROR_THREAD, PATH="result/error/", NAME="error." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN))
+                    if len(ALL_THREAD) > 0:
+                        TOKEN_NAME = "token." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
+                        self.createFile(DATA=ALL_THREAD, PATH="result/token/" , NAME=TOKEN_NAME)
+                    if len(ERROR_TOKEN) > 0:
+                        ERROR_NAME = "error." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
+                        self.createFile(DATA=ERROR_THREAD, PATH="result/error/", NAME=ERROR_NAME)
                     print("[Save] file at thread " + str(THREAD_ID) + " " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
                     ALL_THREAD, ERROR_THREAD = [], []
                 if THREAD_RUN == THREAD[1]:
                     print("[Success] Finish getFromurl " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
         except KeyboardInterrupt:
-            print("[Cancel] Ctrl-c Detection at runGetFromUrl()")
+            print("\n[Cancel] Ctrl-c Detection at runGetFromUrl()")
             sys.exit(0)
     
-    def createPool(self, PROCESS=1):
-        print("[Initial] Create "+ PROCESS + " processes")
-        
-        # Input Thread range
-        ALL_THREAD = []
-        for i in range(PROCESS):
-            THREAD_MIN = int(input("[Process " + i +"] Start Thread : "))
-            THREAD_MAX = int(input("[Process " + i +"] Stop Thread : "))
-            ALL_THREAD.append([THREAD_MIN, THREAD_MAX])
-
+    def createPoolGetFromUrl(self, PROCESS=1):
         try :
+            print("[Initial] Create "+ str(PROCESS) + " processes")
+            # Input Thread range
+            ALL_THREAD = []
+            for i in range(1, PROCESS+1):
+                THREAD_MIN = int(input("[Process " + str(i) +"] Start Thread : "))
+                THREAD_MAX = int(input("[Process " + str(i) +"] Stop Thread : "))
+                ALL_THREAD.append([THREAD_MIN, THREAD_MAX])
             with Pool(processes=PROCESS) as pool:
                 pool.map(self.runGetFromUrl, ALL_THREAD)
+            print("[Success] "+ str(PROCESS) + " processes")
         except KeyboardInterrupt:
-            print("[Cancel] Ctrl-c Detection at runGetFromUrl()")
+            print("\n[Cancel] Ctrl-c Detection at createPool()")
             sys.exit(0)
