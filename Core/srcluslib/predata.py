@@ -137,12 +137,12 @@ class srclusdata:
                     ERROR_THREAD.append({THREAD_RUN:ERROR_TOKEN})
                     ERROR_COUNT += 1
                 # File_Size_Modified
-                FILE_SIZE = 100
+                FILE_SIZE = 1000
                 if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
                     if len(ALL_THREAD) > 0:
                         TOKEN_NAME = "token." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
                         self.createFile(DATA=ALL_THREAD, PATH="result/token/" , NAME=TOKEN_NAME)
-                    if len(ERROR_TOKEN) > 0:
+                    if len(ERROR_THREAD) > 0:
                         ERROR_NAME = "error." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
                         self.createFile(DATA=ERROR_THREAD, PATH="result/error/", NAME=ERROR_NAME)
                     print("[Save] file at thread " + str(THREAD_ID) + " " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
