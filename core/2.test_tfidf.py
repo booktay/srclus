@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
-import os, json
+import os, json, time
 from srcluslib.tfidf import srclustfidf
+nowtime = time.strftime("%Y%m%d%H%M")
 
 def openfile():
     DATA_ALL = []
@@ -29,4 +30,5 @@ print("---Create Rank Word---")
 RANK_WORD = srclustfidf.getOnlyRankallThread()
 DATA_MERGE = dict(zip(DATA_KEYS, RANK_WORD))
 print("---Create Token.TfIdf File---")
-srclustfidf.createFile(DATA=DATA_MERGE, PATH="result/tfidf/", NAME="tfidf")
+FILENAME = "tfidf." + nowtime + "." + "0.0"
+srclustfidf.createFile(DATA=DATA_MERGE, PATH="result/tfidf/", NAME=FILENAME)

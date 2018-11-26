@@ -6,14 +6,13 @@
 # -------------------------
 
 # Import Basic Module
-import time, json, os
+import json, os
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class srclustfidf:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = data
-        self.TIME = time.strftime("%Y%m%d%H%M")
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split())
 
     def getWordAll(self):
@@ -49,7 +48,7 @@ class srclustfidf:
         print("[Create] " + NAME + "." + self.TIME + " file")
         if not os.path.exists(PATH):
             os.mkdir(PATH)
-        PATHFILE = os.path.join(PATH, NAME + "." + self.TIME + ".json")
+        PATHFILE = os.path.join(PATH, NAME + ".json")
         access = 'x' if not os.path.exists(PATHFILE) else 'w'
         with open(PATHFILE, mode=access, encoding='utf-8') as data:
             json.dump(DATA, data, ensure_ascii=False, indent=2)
