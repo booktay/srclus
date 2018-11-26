@@ -37,7 +37,7 @@ class srclusdata:
         print("[Create] " + NAME + "." + self.TIME + " file")
         if not os.path.exists(PATH):
             os.mkdir(PATH)
-        PATHFILE = os.path.join(PATH, NAME + "." + self.TIME + ".json")
+        PATHFILE = os.path.join(PATH, NAME + ".json")
         access = 'x' if not os.path.exists(PATHFILE) else 'w'
         with open(PATHFILE, mode=access, encoding='utf-8') as data:
             json.dump(DATA, data, ensure_ascii=False, indent=2)
@@ -49,10 +49,11 @@ class srclusdata:
         # Remove Another Language
         TEXT = re.sub(r'[^!-~ก-๙\s]+', r'', TEXT)
         # Link URL
-        TEXT = re.sub(r'http[s]?://(?:[a-zA-Zก-ฮ]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','url', TEXT)
+        TEXT = re.sub(r'(http[s]?://)?([a-zก-ฮ0-9]+[.]?[a-zก-ฮ0-9]+)[.][a-zก-ฮ]+[/\w]*', r'\2', TEXT)
         # Duplicate Char
         TEXT = re.sub(r'555+|ถถถ+', 'ตลก', TEXT)
         TEXT = re.sub(r'([a-zก-๙])\1{3,}', r'\1', TEXT)
+        TEXT = re.sub(r'([a-zก-๙])\1{2,}\s+', r'\1 ', TEXT)
         # Time
         TEXT = re.sub(r"(\d+)\s(ชั่วโมง|นาที|วินาที)", r"\1\2", TEXT)
         TEXT = re.sub(r"(\d+)\s(hour|minute|second|sec[s]?)", r"\1\2", TEXT)
@@ -64,19 +65,20 @@ class srclusdata:
         TEXT = re.sub(r"\s+[0-9]+\s+", " ", TEXT)
         # Special Char
         TEXT = re.sub(r"[<(\{\[\\/#]+\s*(\w+)\s*[>)\}\]\\/#]+", r"\1", TEXT)
-        TEXT = re.sub(r'[@:\&;=$?\+{}/\\().[\],><|!\*_"\'–·]+', '', TEXT)
+        TEXT = re.sub(r'[@!-/:->\[-`{-~]+', '', TEXT)
+        TEXT = re.sub(r'[:/&?#.\-ๆ]', '', TEXT)
+        TEXT = re.sub(r'(\s)\1{1,}',r'\1', TEXT)
         # Add Multilanguage Detect
         TEXT = re.sub("(^[a-z]+[0-9๐-๙]*)", r"[EN][@@]\1", TEXT)
         TEXT = re.sub("(^[ก-๐]+[0-9๐-๙]*)", r"[TH][@@]\1", TEXT)
-        TEXT = re.sub("([a-z]+[0-9๐-๙]*)\s*([0-9๐-๙]*[ก-๐]+)", r"\1\n[TH][@@]\2", TEXT)
-        TEXT = re.sub("([ก-๐]+[0-9๐-๙]*)\s*([0-9๐-๙]*[a-z]+)", r"\1\n[EN][@@]\2", TEXT)
+        TEXT = re.sub("([a-z]+[0-9๐-๙]*)\s*([ก-๐]+[0-9๐-๙]*)", r"\1\n[TH][@@]\2", TEXT)
+        TEXT = re.sub("([ก-๐]+[0-9๐-๙]*)\s*([a-z]+[0-9๐-๙]*)", r"\1\n[EN][@@]\2", TEXT)
         # Split by Char
-        TEXT = TEXT.strip()
-        TEXT = re.split("\n", TEXT)
+        TEXT = [word.strip() for word in re.split("\n", TEXT)]
         return TEXT
     
     def replaceWord(self, WORDS=[]):
-        WORDS = [word for word in WORDS if re.match(r'[a-zก-ฮ]+', word) is not None]
+        WORDS = [word for word in WORDS if re.match(r'[a-zก-๙]+', word) is not None]
         return WORDS
 
     def tokenizeText(self, TEXT=""):
@@ -86,6 +88,7 @@ class srclusdata:
             # Tokenize Text
             TOK_ENG = ' '.join([TOK.split("[@@]")[1] for TOK in TOKEN_WORD if TOK.split("[@@]")[0] == "[EN]"])
             TOK_TH = ' '.join([TOK.split("[@@]")[1] for TOK in TOKEN_WORD if TOK.split("[@@]")[0] == "[TH]"])
+            # print(TOK_ENG, TOK_TH)
             TOKEN_TH = [word for word in deepcut.tokenize(TOK_TH, custom_dict=self.WORD.customWord()) if word not in [' ','']]
             TOKEN_ENG = [word for word in re.split(' ', TOK_ENG) if word not in [' ','']]
             # Part of Speech Tagger
@@ -96,7 +99,7 @@ class srclusdata:
             TOKEN_WORD = TOKEN_ENG + TOKEN_TH
             # Replace List of Word By Regex
             TOKEN_WORD = self.replaceWord(TOKEN_WORD)
-            # POS_WORD = ' '.join(POS_WORD)
+            TOKEN_WORD = ' '.join(TOKEN_WORD)
             # print(POS_WORD)
         except:
             print('[Error] Tokenize Word')
@@ -140,10 +143,10 @@ class srclusdata:
                 FILE_SIZE = 10000
                 if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
                     if len(ALL_THREAD) > 0:
-                        TOKEN_NAME = "token." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
+                        TOKEN_NAME = "token" + "." + self.TIME + "." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
                         self.createFile(DATA=ALL_THREAD, PATH="result/token/" , NAME=TOKEN_NAME)
                     if len(ERROR_THREAD) > 0:
-                        ERROR_NAME = "error." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
+                        ERROR_NAME = "error" + "." + self.TIME + "." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
                         self.createFile(DATA=ERROR_THREAD, PATH="result/error/", NAME=ERROR_NAME)
                     print("[Save] file at thread " + str(THREAD_ID) + " " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
                     ALL_THREAD, ERROR_THREAD = [], []

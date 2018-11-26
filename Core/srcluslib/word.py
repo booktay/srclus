@@ -30,7 +30,7 @@ class word:
         return self.customWordTH() + self.customWordENG()
 
     def customWordTH(self):
-        return ["โง้บ", "โง้ย",  "พันติ๊บ", "ประมาท", "มาก", "มาการอง", "สถานตากอากาศบางปู", "สุขภาพกาย", "สุขสม"]
+        return ["โง้บ", "โง้ย",  "พันติ๊บ", "ประมาท", "มาก", "มาการอง", "สถานตากอากาศบางปู", "สุขภาพกาย", "สุขสม", "แม่ฮ่องสอน", "มากก"]
 
     def customWordENG(self):
         return []
