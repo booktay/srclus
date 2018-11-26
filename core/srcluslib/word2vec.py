@@ -6,50 +6,17 @@
 # -------------------------
 
 # Import Basic Module
-import collections
-import time
-import json
-import os
+import collections, time, json, os
 import numpy as np
 import tensorflow as tf
-from sklearn.feature_extraction.text import TfidfVectorizer
-from srcmodel import srcmodel
 
-class word2vec:
+class model:
     def __init__(self, data=[]):
         print("---Preprocess data---")
         self.WORD_TOKEN_ALLTHREAD = srcmodel().clean(data)
         self.TIMENOW = time.strftime("%Y%m%d%H%M")
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split())
         self.WORD_ALL = None
-
-    def getWordAll(self):
-        return self.WORD_TOKEN_ALLTHREAD
-
-    def weightTfIdf(self):
-        WORD = self.tfidf.fit_transform(self.WORD_TOKEN_ALLTHREAD)
-        self.WORD_ALL =  WORD
-    
-    def getWord(self):
-        return self.WORD_ALL
-
-    def getVocabulary(self):
-        return self.tfidf.vocabulary_
-
-    def getFeature(self):
-        return self.tfidf.get_feature_names()
-    
-    def getOnlyRankWord(self):
-        response = self.WORD_ALL
-        feature_names = self.tfidf.get_feature_names()
-        # doc_size = 1
-        doc_size = len(self.WORD_TOKEN_ALLTHREAD)
-        WORD_TARGET_ALL = []
-        for doc in range(doc_size):
-            feature_index = response[doc, :].nonzero()[1]
-            TARGET = sorted([[response[doc, x],x] for x in feature_index])[-10:]
-            WORD_TARGET_ALL.append([feature_names[x] for score, x in TARGET])
-        return WORD_TARGET_ALL
 
     def buildDataset(self, WORDS):
         VOCABULARY_SIZE = len(WORDS)

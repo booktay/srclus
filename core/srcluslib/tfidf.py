@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 class srclustfidf:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = data
-        self.NOWTIME = time.strftime("%Y%m%d%H%M")
+        self.TIME = time.strftime("%Y%m%d%H%M")
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split())
 
     def getWordAll(self):
