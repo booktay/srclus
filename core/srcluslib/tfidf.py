@@ -2,7 +2,7 @@
 # coding: utf-8
 # -------------------------
 # Siwanont Sittinam
-# lib/Managing Model
+# lib/Rank tfidf
 # -------------------------
 
 # Import Basic Module
