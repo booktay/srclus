@@ -30,7 +30,7 @@ class word:
         return self.customWordTH() + self.customWordENG()
 
     def customWordTH(self):
-        return ["โง้บ", "โง้ย",  "พันติ๊บ", "ประมาท", "มาก", "มาการอง", "สถานตากอากาศบางปู", "สุขภาพกาย", "สุขสม", "แม่ฮ่องสอน", "มากก"]
+        return ["โง้บ", "โง้ย",  "พันติ๊บ", "ประมาท", "มาก", "มาการอง", "สถานตากอากาศบางปู", "สุขภาพกาย", "สุขสม", "แม่ฮ่องสอน", "มากก", "พี่มากพระโขนง", "อยู่เป็น"]
 
     def customWordENG(self):
         return []
@@ -62,4 +62,4 @@ class word:
         "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", "towards", "twelve", "twenty", "two", 
         "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", 
         "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", 
-        "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"] + [""]
+        "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"] + ["URLLINK"]

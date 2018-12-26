@@ -49,7 +49,7 @@ class srclusdata:
         # Remove Another Language
         TEXT = re.sub(r'[^!-~ก-๙\s]+', r'', TEXT)
         # Link URL
-        TEXT = re.sub(r'(http[s]?://)?([a-zก-ฮ0-9]+[.]?[a-zก-ฮ0-9]+)[.][a-zก-ฮ]+[/\w]*', r'\2', TEXT)
+        TEXT = re.sub(r'(http[s]?://)?([a-zก-ฮ0-9]+[.]?[a-zก-ฮ0-9]+)[.][a-zก-ฮ]+[/&?.=\-\w]*', r'URLLINK', TEXT)
         # Duplicate Char
         TEXT = re.sub(r'555+|ถถถ+', 'ตลก', TEXT)
         TEXT = re.sub(r'([a-zก-๙])\1{3,}', r'\1', TEXT)
@@ -64,7 +64,7 @@ class srclusdata:
         TEXT = re.sub(r"\s+(and|or)\s+", r"\1", TEXT)
         TEXT = re.sub(r"\s+[0-9]+\s+", " ", TEXT)
         # Special Char
-        TEXT = re.sub(r"[<(\{\[\\/#]+\s*(\w+)\s*[>)\}\]\\/#]+", r"\1", TEXT)
+        TEXT = re.sub(r"[<(\{\[\\/#]+\s*(\w+)\s*[>)\}\]\\/#]+", r"\1 ", TEXT)
         TEXT = re.sub(r'[@!-/:->\[-`{-~]+', '', TEXT)
         TEXT = re.sub(r'[:/&?#.\-ๆ]', '', TEXT)
         TEXT = re.sub(r'(\s)\1{1,}',r'\1', TEXT)
@@ -78,7 +78,7 @@ class srclusdata:
         return TEXT
     
     def replaceWord(self, WORDS=[]):
-        WORDS = [word for word in WORDS if re.match(r'[a-zก-๙]+', word) is not None]
+        WORDS = [word for word in WORDS if re.match(r'[a-zก-๐]+', word) is not None]
         return WORDS
 
     def tokenizeText(self, TEXT=""):
@@ -140,7 +140,7 @@ class srclusdata:
                     ERROR_THREAD.append({THREAD_RUN:ERROR_TOKEN})
                     ERROR_COUNT += 1
                 # File_Size_Modified
-                FILE_SIZE = 10000
+                FILE_SIZE = 5
                 if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
                     if len(ALL_THREAD) > 0:
                         TOKEN_NAME = "token" + "." + self.TIME + "." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
