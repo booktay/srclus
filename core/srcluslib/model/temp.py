@@ -1,11 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-# -------------------------
-# Siwanont Sittinam
-# lib/Preprocess Data
-# -------------------------
-
-# Import General Module
 import sys, os, requests, json, time, re
 from multiprocessing import Pool
 from six.moves import xrange
@@ -24,24 +16,6 @@ class srclusdata:
     def __init__(self):
         self.TIME = time.strftime("%Y%m%d%H%M")
         self.WORD = word()
-    
-    def loadFile(self, PATH="", NAME=""):
-        print("[Load] " + NAME + " file")
-        PATHFILE = os.path.join(PATH, NAME + ".json")
-        with open(PATHFILE, mode='r', encoding='utf-8') as data:
-            WORDS = json.load(data)
-            print("[Success] " + NAME + " file")
-            return WORDS
-
-    def createFile(self, DATA=[], PATH="", NAME=""):
-        print("[Create] " + NAME + "." + self.TIME + " file")
-        if not os.path.exists(PATH):
-            os.mkdir(PATH)
-        PATHFILE = os.path.join(PATH, NAME + ".json")
-        access = 'x' if not os.path.exists(PATHFILE) else 'w'
-        with open(PATHFILE, mode=access, encoding='utf-8') as data:
-            json.dump(DATA, data, ensure_ascii=False, indent=2)
-            print("[Success] " + NAME + "." + self.TIME + " file")
 
     def replaceText(self, TEXT=""):
         # General
