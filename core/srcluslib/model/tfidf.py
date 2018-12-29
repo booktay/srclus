@@ -1,40 +1,35 @@
 #!/usr/bin/env python
 # coding: utf-8
-# -------------------------
-# Siwanont Sittinam
-# lib/Rank tfidf
-# -------------------------
+# author: Siwanont Sittinam
+# description: model/tfidf module
 
 # Import Basic Module
 import json, os
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-class srclustfidf:
+class tfidf:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = data
         self.tfidf = TfidfVectorizer(tokenizer=lambda x: x.split(), min_df=0.1, max_df=1)
 
-    def getWordAll(self):
-        return self.WORD_TOKEN_ALLTHREAD
-
     def weightTfIdf(self):
         WORD = self.tfidf.fit_transform(self.WORD_TOKEN_ALLTHREAD)
-        print("[TF-IDF] Get words weight by tf-idf")
+        print("[Process] Get weight of words")
         return WORD
-    
+
     def getIDF(self):
         return self.tfidf.idf_
 
     def getVocabulary(self):
-        print("[TF-IDF] Get Vocabulary")
+        print("[Process] Get Vocabulary")
         return self.tfidf.vocabulary_
 
     def getFeature(self):
-        print("[TF-IDF] Get Features")
+        print("[Process] Get Features")
         return self.tfidf.get_feature_names()
     
-    def getOnlyRankallThread(self):
+    def getRank(self):
         response = self.weightTfIdf()
         feature_names = self.getFeature()
         # doc_size = 1
@@ -44,15 +39,5 @@ class srclustfidf:
             feature_index = response[doc, :].nonzero()[1]
             TARGET = sorted([[response[doc, x],x] for x in feature_index])
             WORD_TARGET_ALL.append([[feature_names[x],score] for score, x in TARGET])
-        print("[TF-IDF] Get Rank Result Words")
+        print("[Process] Get Rank of Words")
         return WORD_TARGET_ALL
-    
-    def createFile(self, DATA=[], PATH="", NAME=""):
-        # print("[Create] " + NAME + ".json")
-        if not os.path.exists(PATH):
-            os.mkdir(PATH)
-        PATHFILE = os.path.join(PATH, NAME + ".json")
-        access = 'x' if not os.path.exists(PATHFILE) else 'w'
-        with open(PATHFILE, mode=access, encoding='utf-8') as data:
-            json.dump(DATA, data, ensure_ascii=False, indent=2)
-            print("[Success] " + NAME + ".json")

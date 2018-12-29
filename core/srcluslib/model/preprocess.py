@@ -6,11 +6,14 @@
 # General Module
 import os, time, re
 # My Module
-# from ..corpus import stopwords, customwords
+from ..corpus.stopwords import stopwords
+from ..corpus.customwords import customwords
 
 class preprocess:
     def __init__(self):
         self.TIME = time.strftime("%Y-%m-%d-%H-%M")
+        self.stopwords = stopwords()
+        self.customwords = customwords()
     
     def replaceURL(self, data=""):
         TEXT = re.sub(r'([^@])(\[[a-z]*\][ ]?)?(http[s]?://)?([^ ][a-zก-ฮะ-๙0-9]+[.][a-zก-ฮะ-๙0-9]+([/&?.=\-\w]+)?)([ ]?\[/[a-z]*\])?([ ])?', r' URLLINK ', data)
@@ -32,6 +35,19 @@ class preprocess:
         TEXT = re.sub(r'(\s)?[0-9]+(\s)?', r'', data)
         TEXT = re.sub(r'(\s)\1{1,}', r'\1', TEXT)
         return TEXT
+
+    def removeStopword(self, data=[]):
+        stopwordthai = self.stopwords.languages("thai")
+        stopwordeng = self.stopwords.languages("eng")
+        customstopword = self.customwords.target(customtype="stopwords")
+        text = data
+        if stopwordeng:
+            text = [word for word in data if word not in stopwordeng]
+        if stopwordthai:
+            text = [word for word in data if word not in stopwordthai]
+        if customstopword:
+            text = [word for word in data if word not in customstopword]
+        return text
 
 if __name__ == "__main__":
     pass

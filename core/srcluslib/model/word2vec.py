@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-# -------------------------
-# Siwanont Sittinam
-# lib/Managing Model
-# -------------------------
+# author: Siwanont Sittinam
+# description: model/word2vec module
 
 # Import Basic Module
 import collections, time, json, os

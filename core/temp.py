@@ -12,11 +12,6 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class srclusdata:
-
-    def __init__(self):
-        self.TIME = time.strftime("%Y%m%d%H%M")
-        self.WORD = word()
-
     def replaceText(self, TEXT=""):
         # General
         TEXT = TEXT.lower()
@@ -51,10 +46,6 @@ class srclusdata:
         TEXT = [word.strip() for word in re.split("\n", TEXT)]
         return TEXT
     
-    def replaceWord(self, WORDS=[]):
-        WORDS = [word for word in WORDS if re.match(r'[a-zก-๐]+', word) is not None]
-        return WORDS
-
     def tokenizeText(self, TEXT=""):
         try:
             # Replace Text By Regex
@@ -80,25 +71,6 @@ class srclusdata:
             # print(*TEXT, sep=", ")
             return "", TEXT
         return TOKEN_WORD, ""
-
-    def getWordFromUrl(self, THREAD_ID=30000000):
-        # Define Variable
-        BASE_PATH = "https://ptdev03.mikelab.net/kratoo/"
-        URL = BASE_PATH + str(THREAD_ID)
-
-        # Request
-        try:
-            RAW_REQUEST = requests.get(URL).json()
-        except :
-            print('[Error] URL Exceed : ' + str(THREAD_ID))
-            return [], ""
-        
-        if (RAW_REQUEST["found"]):
-            RAW_SOURCE = RAW_REQUEST["_source"]
-            THREAD_WORD = RAW_SOURCE["title"] + " " + RAW_SOURCE["desc"]
-            TOKEN_WORD, ERROR_WORD = self.tokenizeText(THREAD_WORD)
-            return TOKEN_WORD, ERROR_WORD
-        return [], ""
 
     def runGetFromUrl(self, THREAD=[1,2]):
         try:
@@ -147,3 +119,4 @@ class srclusdata:
         except KeyboardInterrupt:
             print("\n[Cancel] Ctrl-c Detection at createPool()")
             sys.exit(0)
+
