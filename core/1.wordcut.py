@@ -26,17 +26,18 @@ def processpantipthread(ALL_THREAD=[1, 1, 2]):
     # a,b = input('[Input] Generate Thread Range : ').split(',')
     process = ALL_THREAD[0]
     a,b = 3*10**7 + ALL_THREAD[1], 3*10**7 + ALL_THREAD[2]
-    datathread = {}
+    datathread = [{},[]]
     for i in range(int(a), int(b)+1):
         url = "https://ptdev03.mikelab.net/kratoo/"+ str(i)
         io.print(f'[Process %s] thread : %s' % (str(process), str(i)))
-        data = io.requestURL(url=url, security=False)
+        data = io.requestURL(url=url, security=True)
         if data and data['found'] : 
             word = data['_source']['title'] + " " + data['_source']['desc']
             processword = preprocessdata(word=word)
-            # processword = ' '.join(processword)
-            datathread[data['_id']] = processword
+            processword = ' '.join(processword)
+            datathread[0][data['_id']] = processword
         else : 
+            datathread[1].append(i)
             io.print(f'[Error] No data at %s' % url)
     # io.print(datathread)
     filename="token." + str(a) + "-" + str(b) # "." + time.strftime("%Y-%m-%d-%H-%M")
@@ -56,4 +57,5 @@ def poolpantipthread():
         sys.exit(0)
 
 if __name__ == "__main__":
-    processpantipthread(ALL_THREAD=[1,1,10])
+    # processpantipthread(ALL_THREAD=[1,1,10])
+    poolpantipthread()
