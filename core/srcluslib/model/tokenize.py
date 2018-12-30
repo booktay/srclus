@@ -18,7 +18,7 @@ class tokenize:
     def run(self):
         customdict = self.customwords.target(customtype="tokenize")
         words = [word.replace(' ', '') for word in deepcut.tokenize(self.DATA, custom_dict=customdict) if word not in [' ','']]
-        words = set(words)
+        # words = set(words)
         words = pos_tag(words, engine='artagger', corpus='orchid')
         words = [item[0] for item in words if (item[1] == "NCMN" and (item[0] and not item[0].isnumeric()))]
         return set(words)

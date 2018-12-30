@@ -4,14 +4,13 @@
 # description: model/preprocess module
 
 # General Module
-import os, time, re
+import os, re
 # My Module
 from ..corpus.stopwords import stopwords
 from ..corpus.customwords import customwords
 
 class preprocess:
     def __init__(self):
-        self.TIME = time.strftime("%Y-%m-%d-%H-%M")
         self.stopwords = stopwords()
         self.customwords = customwords()
     
@@ -20,9 +19,12 @@ class preprocess:
         return TEXT
 
     def filterOnlyTHENG(self, data=""):
+        customstopword = self.customwords.target(customtype="stopwords")
         TEXT = re.sub(r'[^!-~ก-๙\s]+', r'', data)
         TEXT = re.sub(r'(\s)\1{1,}', r'\1', TEXT)
         TEXT = re.sub(r'([^a-zA-Zก-ฮ1-9๐-๙])\1{1,}', r'\1', TEXT)
+        for word in customstopword:
+            TEXT = re.sub(r'(word)\1{1,}', "\1", TEXT)
         return TEXT
 
     def removeSpecialcharacter(self, data=""):

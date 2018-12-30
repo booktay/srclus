@@ -22,6 +22,7 @@ class io:
 
     def write(self, filename=None, filepath=".", data=[]):
         path, ops = os.path.join(filepath, filename + ".json"), "y"
+        if not os.path.exists(filepath): os.mkdir(filepath)
         if os.path.exists(path): 
             print(f'[Error] File at %s is exists' % path)
             ops = input('[Question] Do you want to overwrite [y/n]: ')

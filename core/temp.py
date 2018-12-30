@@ -104,19 +104,3 @@ class srclusdata:
             print("\n[Cancel] Ctrl-c Detection at runGetFromUrl()")
             sys.exit(0)
     
-    def createPoolGetFromUrl(self, PROCESS=1):
-        try :
-            print("[Initial] Create "+ str(PROCESS) + " processes")
-            # Input Thread range
-            ALL_THREAD = []
-            for i in range(1, PROCESS+1):
-                THREAD_MIN = int(input("[Process " + str(i) +"] Start Thread : "))
-                THREAD_MAX = int(input("[Process " + str(i) +"] Stop Thread : "))
-                ALL_THREAD.append([THREAD_MIN, THREAD_MAX])
-            with Pool(processes=PROCESS) as pool:
-                pool.map(self.runGetFromUrl, ALL_THREAD)
-            print("[Success] "+ str(PROCESS) + " processes")
-        except KeyboardInterrupt:
-            print("\n[Cancel] Ctrl-c Detection at createPool()")
-            sys.exit(0)
-
