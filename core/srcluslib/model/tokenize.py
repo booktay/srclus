@@ -17,23 +17,21 @@ class tokenize:
 
     def run(self):
         customdict. statuscustom = self.customwords.target(customtype="tokenize")
-        statusrun = 400
+        words, statusrun = self.DATA, 400
         # Wordcut
         try:
-            words = [word.replace(' ', '') for word in deepcut.tokenize(self.DATA, custom_dict=customdict) if word not in [' ','']]
+            tokenword = deepcut.tokenize(self.DATA, custom_dict=customdict)
+            if tokenword: words = [word.replace(' ', '') for word in tokenword if word not in [' ','']]
         except:
-            print("[Error] DEEPCUT Function")
-            words = self.DATA
+            print("[Error] Wordcut Function")
             statusrun = 401
-        
         words = set(words)
-
-        # Part of speech
+        # POS Tag
         try:
-            words = pos_tag(words, engine='artagger', corpus='orchid')
-            words = [item[0] for item in words if (item[1] == "NCMN" and (item[0] and not item[0].isnumeric()))]
+            poswords = pos_tag(words, engine='artagger', corpus='orchid')
+            words = [item[0] for item in poswords if (item[1] == "NCMN" and item[0])
         except:
-            print("[Error] POS_TAG Function")
+            print("[Error] POS Tag Function")
             words = words
             statusrun = 402
 
