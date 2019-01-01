@@ -27,7 +27,7 @@ class customwords:
                 return self.CUSTOMWORDS[customtype],100
             else:
                 print(f'[Error] Please choose a type [%s]' % ','.join(x for x in self.TARGET))
-                return [],103
+                return None,103
         return None, 102
 
 if __name__ == "__main__":

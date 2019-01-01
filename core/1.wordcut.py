@@ -15,30 +15,32 @@ preprocess = preprocess()
 io = io()
 
 def preprocessdata(word=""):
-    procdata = preprocess.replaceURL(data=word)
-    procdata = preprocess.filterOnlyTHENG(data=procdata)
-    procdata = preprocess.removeSpecialcharacter(data=procdata)
-    procdata = tokenize(data=str(procdata).lower()).run()
-    procdata = preprocess.removeStopword(procdata)
-    return procdata
+    status = []
+    procdata, status[0] = preprocess.replaceURL(data=word)
+    procdata, status[1] = preprocess.filterOnlyTHENG(data=procdata)
+    procdata, status[2] = preprocess.removeSpecialcharacter(data=procdata)
+    procdata, status[3] = tokenize(data=str(procdata).lower()).run()
+    procdata, status[4] = preprocess.removeStopword(procdata)
+    return procdata, status
 
 def processpantipthread(ALL_THREAD=[1, 1, 2]):
     # a,b = input('[Input] Generate Thread Range : ').split(',')
     process = ALL_THREAD[0]
     a,b = 3*10**7 + ALL_THREAD[1], 3*10**7 + ALL_THREAD[2]
-    datathread = [{},[]]
+    datathread = [{},{}]
     for i in range(int(a), int(b)+1):
         url = "https://ptdev03.mikelab.net/kratoo/"+ str(i)
         io.print(f'[Process %s] thread : %s' % (str(process), str(i)))
-        data = io.requestURL(url=url, security=True)
-        if data and data['found'] : 
-            word = data['_source']['title'] + " " + data['_source']['desc']
-            processword = preprocessdata(word=word)
-            processword = ' '.join(processword)
-            datathread[0][data['_id']] = processword
-        else : 
-            datathread[1].append(i)
-            io.print(f'[Error] No data at %s' % url)
+        data, statusrequest = io.requestURL(url=url, security=True)
+        if statusrequest == 500:
+            if data and data['found'] : 
+                word = data['_source']['title'] + " " + data['_source']['desc']
+                processword, statuspreprocess = preprocessdata(word=word)
+                processword = ' '.join(processword)
+                datathread[0][data['_id']] = processword
+            else : 
+                datathread[1][i] = statuspreprocess.append(statusrequest)
+                io.print(f'[Error] No data at %s' % url)
     # io.print(datathread)
     filename="token." + str(a) + "-" + str(b) # "." + time.strftime("%Y-%m-%d-%H-%M")
     io.write(filename=filename, filepath="result/", data=datathread)

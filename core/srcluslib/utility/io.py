@@ -15,10 +15,10 @@ class io:
         if os.path.exists(path):
             words = open(path, 'r', encoding="utf-8")
             print(f'[Success] Read file at %s complete' % path)
-            return json.load(words)
+            return json.load(words), 500
         else: 
             print(f'[Error] File at %s not found' % path)
-            return None
+            return None, 501
 
     def write(self, filename=None, filepath=".", data=[]):
         path, ops = os.path.join(filepath, filename + ".json"), "y"
@@ -30,15 +30,18 @@ class io:
             with open(path, mode='w', encoding='utf-8') as rawdata:
                 json.dump(data, rawdata, ensure_ascii=False, indent=2)
             print(f'[Success] Save file at %s complete' % path)
-        else: print(f'[Cancel] File at %s not save' % path)
+            return None, 500
+        else: 
+            print(f'[Cancel] File at %s not save' % path)
+            return None, 502
 
     def requestURL(self, url="", security=True):
         try:
             data = requests.get(url, verify=security).json()
-            return data
+            return data, 500
         except :
             print(f'[Error] URL : %s not response' % str(url))
-            return None
+            return None, 503
 
     def print(self, data=None):
         pp.pprint(data)

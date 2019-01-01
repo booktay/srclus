@@ -8,7 +8,7 @@ import os, json
 
 class stopwords:
     def __init__(self):
-        self.STOPWORDS = self.importStopwords()
+        self.STOPWORDS, self.STATUS = self.importCustomwords()
         self.LANGUAGES = None
         if self.STOPWORDS : self.LANGUAGES = self.STOPWORDS.keys()
     
@@ -26,18 +26,19 @@ class stopwords:
         filepath = os.path.join("srcluslib/corpus", filename + ".json")
         if os.path.exists(filepath):
             words = open(filepath, 'r', encoding="utf-8")
-            return json.load(words)
+            return json.load(words),200
         else: 
             print(f'[Error] %s file not found' % filepath)
-            return None
+            return None,201
 
     def languages(self, language=None):
         if self.LANGUAGES:
             if language in self.LANGUAGES:
-                return self.STOPWORDS[language]
+                return self.STOPWORDS[language], 200
             else:
                 print(f'[Error] Please choose a language [%s]' % ','.join(x for x in self.LANGUAGES))
-        return None
+                return None, 203
+        return None,202
 
 if __name__ == "__main__":
     stopwords = stopwords()
