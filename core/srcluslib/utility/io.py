@@ -10,45 +10,68 @@ class io:
     def __init__(self):
         pass
 
-    def read(self, filename=None, filepath="."):
+    def readJson(self, filename=None, filepath="."):
         path = os.path.join(filepath, filename + ".json")
         if os.path.exists(path):
             words = open(path, 'r', encoding="utf-8")
             print(f'[Success] Read file at %s complete' % path)
-            return json.load(words), 500
+            return json.load(words), 300
         else: 
             print(f'[Error] File at %s not found' % path)
-            return None, 501
+            return None, 301
 
-    def write(self, filename=None, filepath=".", data=[]):
-        path, ops = os.path.join(filepath, filename + ".json"), "y"
+    def writeJson(self, filename=None, filepath=".", data=None):
+        path, ops = os.path.join(filepath, filename + ".json"), "yes"
         if not os.path.exists(filepath): os.mkdir(filepath)
         if os.path.exists(path): 
             print(f'[Error] File at %s is exists' % path)
-            ops = input('[Question] Do you want to overwrite [y/n]: ')
-        if ops == "y": 
+            ops = input('[Question] Do you want to overwrite [yes/no]: ')
+        if ops.lower() == "yes": 
             with open(path, mode='w', encoding='utf-8') as rawdata:
                 json.dump(data, rawdata, ensure_ascii=False, indent=2)
             print(f'[Success] Save file at %s complete' % path)
-            return None, 500
+            return None, 300
         else: 
             print(f'[Cancel] File at %s not save' % path)
-            return None, 502
+            return None, 302
 
     def requestURL(self, url="", security=True):
         try:
             data = requests.get(url, verify=security).json()
-            return data, 500
+            print(f'[Success] Request from %s' % url)
+            return data, 400
         except :
             print(f'[Error] URL : %s not response' % str(url))
-            return None, 503
+            return None, 401
+
+    def requestPantip(self, thread="", security=True):
+        url = "https://ptdev03.mikelab.net/kratoo/"+ thread
+        data = requests.get(url, verify=security).json()
+        # print(data)
+        if data and data['found']:
+            print(f'[Success] Request from thread %s ' % thread)
+            return {data['_id']: data['_source']['title'] + data['_source']['desc']}, 400
+        else:
+            print(f'[Error] Thread : %s not response' % thread)
+            return None, 402
 
     def print(self, data=None):
         pp.pprint(data)
 
 if __name__ == "__main__":
     io = io()
-    data = io.requestURL(url="https://ptdev03.mikelab.net/kratoo/3000000", security=False)
-    if data: io.print(data)
+    # Test Write
+    datas = [{},{}]
+    for i in range(5*10**6+1, 6*10**6+1):
+        thread = str(3*10**7 + i)
+        data, status = io.requestPantip(thread=thread, security=True)
+        if status == 400 : 
+            datas[0] = {**datas[0], **data}
+        else:
+            datas[0][thread] = ""
+            datas[1][thread] = status
+        if i % 10000 == 0 or i == 6*10**6+1:
+            io.writeJson(filename=thread, filepath="result/", data=datas)
+            datas = [{},{}]
 
 

@@ -29,7 +29,7 @@ class tokenize:
         # POS Tag
         try:
             poswords = pos_tag(words, engine='artagger', corpus='orchid')
-            words = [item[0] for item in poswords if (item[1] == "NCMN" and item[0])
+            words = [item[0] for item in poswords if (item[1] == "NCMN" and item[0])]
         except:
             print("[Error] POS Tag Function")
             words = words

@@ -15,7 +15,7 @@ preprocess = preprocess()
 io = io()
 
 def preprocessdata(word=""):
-    status = []
+    status = [0,0,0,0,0]
     procdata, status[0] = preprocess.replaceURL(data=word)
     procdata, status[1] = preprocess.filterOnlyTHENG(data=procdata)
     procdata, status[2] = preprocess.removeSpecialcharacter(data=procdata)
@@ -28,22 +28,28 @@ def processpantipthread(ALL_THREAD=[1, 1, 2]):
     process = ALL_THREAD[0]
     a,b = 3*10**7 + ALL_THREAD[1], 3*10**7 + ALL_THREAD[2]
     datathread = [{},{}]
-    for i in range(int(a), int(b)+1):
-        url = "https://ptdev03.mikelab.net/kratoo/"+ str(i)
-        io.print(f'[Process %s] thread : %s' % (str(process), str(i)))
-        data, statusrequest = io.requestURL(url=url, security=True)
-        if statusrequest == 500:
-            if data and data['found'] : 
-                word = data['_source']['title'] + " " + data['_source']['desc']
-                processword, statuspreprocess = preprocessdata(word=word)
-                processword = ' '.join(processword)
-                datathread[0][data['_id']] = processword
-            else : 
-                datathread[1][i] = statuspreprocess.append(statusrequest)
-                io.print(f'[Error] No data at %s' % url)
-    # io.print(datathread)
-    filename="token." + str(a) + "-" + str(b) # "." + time.strftime("%Y-%m-%d-%H-%M")
-    io.write(filename=filename, filepath="result/", data=datathread)
+    try:
+        for i in range(int(a), int(b)+1):
+            io.print(f'[Process %s] thread : %s' % (str(process), str(i)))
+            url = "https://ptdev03.mikelab.net/kratoo/"+ str(i)
+            # Request URL
+            data, statusrequest = io.requestURL(url=url, security=True)
+            if statusrequest == 500:
+                if data and data['found'] : 
+                    word = data['_source']['title'] + " " + data['_source']['desc']
+                    # processword, statuspreprocess = preprocessdata(word=word)
+                    # processword = ' '.join(processword)
+                    datathread[0][data['_id']] = processword
+                    # datathread[1][i] = statuspreprocess
+                    io.print(word)
+                else : 
+                    datathread[1][i] = statusrequest
+                    io.print(f'[Error] No data at %s' % url)
+        # io.print(datathread)
+        # filename="token." + str(a) + "-" + str(b) # "." + time.strftime("%Y-%m-%d-%H-%M")
+        # io.write(filename=filename, filepath="result/", data=datathread)
+    except KeyboardInterrupt:
+        io.print("[Cancel] Ctrl-C from user")
 
 def poolpantipthread():
     try :
@@ -59,5 +65,5 @@ def poolpantipthread():
         sys.exit(0)
 
 if __name__ == "__main__":
-    processpantipthread(ALL_THREAD=[1,100000,101000])
+    processpantipthread(ALL_THREAD=[1,100000,100010])
     # poolpantipthread()

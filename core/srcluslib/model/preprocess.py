@@ -17,10 +17,10 @@ class preprocess:
     def replaceURL(self, data=""):
         if data != "":
             TEXT = re.sub(r'([^@])(\[[a-z]*\][ ]?)?(http[s]?://)?([^ ][a-zก-ฮะ-๙0-9]+[.][a-zก-ฮะ-๙0-9]+([/&?.=\-\w]+)?)([ ]?\[/[a-z]*\])?([ ])?', r' URLLINK ', data)
-            return TEXT, 300
+            return TEXT, 500
         else:
             print("[Error] No Operation in replaceURL function")
-            return "", 301
+            return "", 501
 
     def filterOnlyTHENG(self, data=""):
         customstopword, status = self.customwords.target(customtype="stopwords")
@@ -62,7 +62,6 @@ class preprocess:
         stopwordeng, statuseng = self.stopwords.languages("eng")
         customstopword, statuscustom = self.customwords.target(customtype="stopwords")
         text = data
-        if statuseng:
         if statuseng == 200 and stopwordeng:
             text = [word for word in data if word not in stopwordeng]
         if statusth == 200 and stopwordthai:

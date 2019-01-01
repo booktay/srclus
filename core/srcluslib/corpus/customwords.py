@@ -9,10 +9,10 @@ import os, json
 class customwords:
     def __init__(self):
         self.CUSTOMWORDS, self.STATUS = self.importCustomwords()
-        self.TARGET = None
-        if self.CUSTOMWORDS : self.TARGET = self.CUSTOMWORDS.keys()
+        self.TARGET = self.CUSTOMWORDS.keys() if self.CUSTOMWORDS else None
 
     def importCustomwords(self, filename="customwords"):
+        # filepath = os.path.join(".", filename + ".json")
         filepath = os.path.join("srcluslib/corpus", filename + ".json")
         if os.path.exists(filepath):
             words = open(filepath, 'r', encoding="utf-8")
@@ -24,11 +24,11 @@ class customwords:
     def target(self, customtype=None):
         if self.TARGET:
             if customtype in self.TARGET:
-                return self.CUSTOMWORDS[customtype],100
+                return self.CUSTOMWORDS[customtype], 100
             else:
                 print(f'[Error] Please choose a type [%s]' % ','.join(x for x in self.TARGET))
-                return None,103
-        return None, 102
+                return None,102
+        return None, 101
 
 if __name__ == "__main__":
     customwords = customwords()
