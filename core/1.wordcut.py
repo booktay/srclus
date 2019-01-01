@@ -59,5 +59,5 @@ def poolpantipthread():
         sys.exit(0)
 
 if __name__ == "__main__":
-    processpantipthread(ALL_THREAD=[1,100000,200000])
+    processpantipthread(ALL_THREAD=[1,100000,101000])
     # poolpantipthread()
