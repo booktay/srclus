@@ -62,7 +62,7 @@ class preprocess:
         stopwordeng, statuseng = self.stopwords.languages("eng")
         customstopword, statuscustom = self.customwords.target(customtype="stopwords")
         text = data
-        if statuseng 
+        if statuseng:
         if statuseng == 200 and stopwordeng:
             text = [word for word in data if word not in stopwordeng]
         if statusth == 200 and stopwordthai:
