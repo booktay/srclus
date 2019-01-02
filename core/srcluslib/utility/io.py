@@ -65,7 +65,7 @@ if __name__ == "__main__":
     io = io()
     # Test Write
     datas = [{},{}]
-    for i in range(5*10**6+5*10**4+1, 6*10**6+1):
+    for i in range(6*10**6+1, 8*10**6+1):
         thread = str(3*10**7 + i)
         try:
             data, status = io.requestPantip(thread=thread, security=True)
