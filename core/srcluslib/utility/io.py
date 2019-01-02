@@ -46,14 +46,17 @@ class io:
 
     def requestPantip(self, thread="", security=True):
         url = "https://ptdev03.mikelab.net/kratoo/"+ thread
-        data = requests.get(url, verify=security).json()
-        # print(data)
-        if data and data['found']:
-            print(f'[Success] Request from thread %s ' % thread)
-            return {data['_id']: data['_source']['title'] + data['_source']['desc']}, 400
-        else:
-            print(f'[Error] Thread : %s not response' % thread)
-            return None, 402
+        try:
+            data = requests.get(url, verify=security).json()
+            if data and data['found']:
+                print(f'[Success] Request from thread %s ' % thread)
+                return {data['_id']: data['_source']['title'] + data['_source']['desc']}, 400
+            else:
+                print(f'[Error] Thread : %s not response' % thread)
+                return None, 402
+        except :
+            print(f'[Error] Max retries exceeded on thread %s' % str(url))
+            return None, 401
 
     def print(self, data=None):
         pp.pprint(data)
@@ -62,7 +65,7 @@ if __name__ == "__main__":
     io = io()
     # Test Write
     datas = [{},{}]
-    for i in range(5*10**6+1, 6*10**6+1):
+    for i in range(5*10**6+5*10**4+1, 6*10**6+1):
         thread = str(3*10**7 + i)
         data, status = io.requestPantip(thread=thread, security=True)
         if status == 400 : 
