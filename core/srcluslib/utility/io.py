@@ -74,7 +74,7 @@ if __name__ == "__main__":
             else:
                 datas[0][thread] = ""
                 datas[1][thread] = status
-            if i % 10000 == 0 or i == 6*10**6+1:
+            if i % 10000 == 0 or i == 8*10**6:
                 io.writeJson(filename=thread, filepath="result/", data=datas)
                 datas = [{},{}]
         except KeyboardInterrupt:
