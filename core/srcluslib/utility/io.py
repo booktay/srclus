@@ -4,7 +4,7 @@
 # description: utility/io module
 
 # General Module
-import os, json, requests, pprint as pp
+import os, sys, json, requests, pprint as pp
 
 class io:
     def __init__(self):
@@ -67,14 +67,19 @@ if __name__ == "__main__":
     datas = [{},{}]
     for i in range(5*10**6+5*10**4+1, 6*10**6+1):
         thread = str(3*10**7 + i)
-        data, status = io.requestPantip(thread=thread, security=True)
-        if status == 400 : 
-            datas[0] = {**datas[0], **data}
-        else:
-            datas[0][thread] = ""
-            datas[1][thread] = status
-        if i % 10000 == 0 or i == 6*10**6+1:
-            io.writeJson(filename=thread, filepath="result/", data=datas)
-            datas = [{},{}]
+        try:
+            data, status = io.requestPantip(thread=thread, security=True)
+            if status == 400 : 
+                datas[0] = {**datas[0], **data}
+            else:
+                datas[0][thread] = ""
+                datas[1][thread] = status
+            if i % 10000 == 0 or i == 6*10**6+1:
+                io.writeJson(filename=thread, filepath="result/", data=datas)
+                datas = [{},{}]
+        except KeyboardInterrupt:
+            print("[Cancel] Ctrl-c Detection")
+            break
+            sys.exit(0)
 
 
