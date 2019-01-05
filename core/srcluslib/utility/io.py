@@ -11,7 +11,7 @@ class io:
         pass
 
     def readJson(self, filename=None, filepath="."):
-        path = os.path.join(filepath, filename + ".json")
+        path = os.path.join(filepath, filename)
         if os.path.exists(path):
             words = open(path, 'r', encoding="utf-8")
             print(f'[Success] Read file at %s complete' % path)
@@ -61,11 +61,10 @@ class io:
     def print(self, data=None):
         pp.pprint(data)
 
-if __name__ == "__main__":
-    io = io()
-    # Test Write
+# Test Write
+def collectPantip(io=None):
     datas = [{},{}]
-    for i in range(6*10**6+1, 8*10**6+1):
+    for i in range(0*10**6+1, 8*10**6+1):
         thread = str(3*10**7 + i)
         try:
             data, status = io.requestPantip(thread=thread, security=True)
@@ -82,4 +81,21 @@ if __name__ == "__main__":
             break
             sys.exit(0)
 
+def fixCollectPantip(io=None):
+    folderpath="../../datas"
+    io.print(os.getcwd())
+    for folder in os.listdir(folderpath):
+        filepaths = os.path.join(folderpath, folder)
+        print(filepaths)
+        # for filepath in os.listdir(filepaths):
+        #     filename = os.path.join(filepaths, filepath)
+        #     io.print(filename)
+            # data, status = io.readJson(filename=filename, filepath=filepath)
+            # for name, status in data[1].items():
+                # if status == 401:
+                    # io.print(name)
+        break
 
+if __name__ == "__main__":
+    io = io()
+    fixCollectPantip(io=io)
