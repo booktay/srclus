@@ -81,21 +81,16 @@ def collectPantip(io=None):
             break
             sys.exit(0)
 
-def fixCollectPantip(io=None):
+def checkCollectPantip(io=None):
     folderpath="../../datas"
-    io.print(os.getcwd())
-    for folder in os.listdir(folderpath):
-        filepaths = os.path.join(folderpath, folder)
-        print(filepaths)
-        # for filepath in os.listdir(filepaths):
-        #     filename = os.path.join(filepaths, filepath)
-        #     io.print(filename)
-            # data, status = io.readJson(filename=filename, filepath=filepath)
-            # for name, status in data[1].items():
-                # if status == 401:
-                    # io.print(name)
-        break
+    folder = os.listdir(folderpath)
+    filepaths = os.path.join(folderpath, folder[7])
+    for filename in os.listdir(filepaths):
+        data, status = io.readJson(filename=filename, filepath=filepaths)
+        for name, status in data[1].items():
+            if status == 401:
+                io.print(name)
 
 if __name__ == "__main__":
     io = io()
-    fixCollectPantip(io=io)
+    # checkCollectPantip(io=io)
