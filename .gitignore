@@ -1,5 +1,7 @@
 result/
 srclusenv/
 datas/
+datastest/
+wait/
 __pycache__/
 .vscode/
