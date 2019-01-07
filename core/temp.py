@@ -71,36 +71,3 @@ class srclusdata:
             # print(*TEXT, sep=", ")
             return "", TEXT
         return TOKEN_WORD, ""
-
-    def runGetFromUrl(self, THREAD=[1,2]):
-        try:
-            ALL_THREAD, ERROR_THREAD = [], []
-            ALL_COUNT, ERROR_COUNT = 0, 0
-            for THREAD_RUN in xrange(THREAD[0], THREAD[1] + 1):
-                THREAD_ID = 30000000 + THREAD_RUN
-                WORD_TOKEN, ERROR_TOKEN = self.getWordFromUrl(THREAD_ID)
-                if WORD_TOKEN and ERROR_TOKEN is "" : 
-                    ALL_THREAD.append({THREAD_RUN:WORD_TOKEN})
-                    ALL_COUNT += 1
-                elif not WORD_TOKEN: 
-                    ERROR_THREAD.append({THREAD_RUN:ERROR_TOKEN})
-                    ERROR_COUNT += 1
-                # File_Size_Modified
-                FILE_SIZE = 5
-                if (THREAD_RUN != THREAD[0] and THREAD_RUN % FILE_SIZE == 0) or (THREAD_RUN == THREAD[1]):
-                    if len(ALL_THREAD) > 0:
-                        TOKEN_NAME = "token" + "." + self.TIME + "." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
-                        self.createFile(DATA=ALL_THREAD, PATH="result/token/" , NAME=TOKEN_NAME)
-                    if len(ERROR_THREAD) > 0:
-                        ERROR_NAME = "error" + "." + self.TIME + "." + str(THREAD_RUN-FILE_SIZE+1) + "." + str(THREAD_RUN)
-                        self.createFile(DATA=ERROR_THREAD, PATH="result/error/", NAME=ERROR_NAME)
-                    print("[Save] file at thread " + str(THREAD_ID) + " " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
-                    ALL_THREAD, ERROR_THREAD = [], []
-                if THREAD_RUN == THREAD[0]:
-                    print("[Start] Thread " + str(THREAD_RUN) + " getFromurl " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
-                if THREAD_RUN == THREAD[1]:
-                    print("[Success] Finish getFromurl " + str(ALL_COUNT) + "/" + str(ERROR_COUNT))
-        except KeyboardInterrupt:
-            print("\n[Cancel] Ctrl-c Detection at runGetFromUrl()")
-            sys.exit(0)
-    

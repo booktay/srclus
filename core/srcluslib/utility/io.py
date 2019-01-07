@@ -11,6 +11,7 @@ class io:
         pass
 
     def readJson(self, filename=None, filepath="."):
+        if filename.split('.')[1] != "json": return None, 303
         path = os.path.join(filepath, filename)
         if os.path.exists(path):
             words = open(path, 'r', encoding="utf-8")
@@ -21,7 +22,8 @@ class io:
             return None, 301
 
     def writeJson(self, filename=None, filepath=".", data=None):
-        path, ops = os.path.join(filepath, filename + ".json"), "yes"
+        path, ops = os.path.join(filepath, filename), "yes"
+        if filename.split('.')[-1] != "json": return None, 303
         if not os.path.exists(filepath): os.mkdir(filepath)
         if os.path.exists(path): 
             print(f'[Error] File at %s is exists' % path)
@@ -64,7 +66,7 @@ class io:
 # Test Write
 def collectPantip(io=None):
     datas = [{},{}]
-    for i in range(0*10**6+1, 8*10**6+1):
+    for i in range(2*10**6+9*10**5+1, 2*10**6+9*10**5+1*10**4+1):
         thread = str(3*10**7 + i)
         try:
             data, status = io.requestPantip(thread=thread, security=True)
@@ -83,14 +85,21 @@ def collectPantip(io=None):
 
 def checkCollectPantip(io=None):
     folderpath="../../datas"
-    folder = os.listdir(folderpath)
-    filepaths = os.path.join(folderpath, folder[7])
-    for filename in os.listdir(filepaths):
-        data, status = io.readJson(filename=filename, filepath=filepaths)
-        for name, status in data[1].items():
-            if status == 401:
-                io.print(name)
+    folders = os.listdir(folderpath)
+    tempforrequest = []
+    count = 0
+    for folder in folders:
+        filepaths = os.path.join(folderpath, folder)
+        for filename in os.listdir(filepaths):
+            data, status = io.readJson(filename=filename, filepath=filepaths)
+            count+=1
+            for name, status in data[1].items():
+                # io.print([name, status])
+                if status == 401:
+                    tempforrequest.append(name)
+    io.print([count, tempforrequest])
 
 if __name__ == "__main__":
     io = io()
-    # checkCollectPantip(io=io)
+    # collectPantip(io=io)
+    checkCollectPantip(io=io)
