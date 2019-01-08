@@ -95,6 +95,7 @@ class reqfromFile:
             io.print(thread)
             if int(thread) % 10000 == 0:
                 io.writeJson(filename="token."+thread+".json", filepath="datastest/"+str(int(thread[0:2])+1)+"/", data=datastoken)
+                datastoken = [{},{}]
         #     break
         # break
 
