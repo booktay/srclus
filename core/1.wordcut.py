@@ -68,27 +68,35 @@ class reqfromURL:
 
 class reqfromFile:
     def checkdata(self):
-        folderpath="datas"
+        folderpath="datas/process/process"+ "1"
         folders = os.listdir(folderpath)
-        datas = [{},{}]
+        datas = {}
+        os.mkdir('datastest/')
         for folder in folders:
             filepaths = os.path.join(folderpath, folder)
+            os.mkdir(os.path.join('datastest/', folder))
             for filename in os.listdir(filepaths):
                 data, status = io.readJson(filename=filename, filepath=filepaths)
-                for thread, data in data[0].items():
-                    if data != "": 
-                        try:
-                            text, status = preprocessdata(data)
-                            datas[0][thread] = text
-                        except:
-                            print("Something went wrong!!!")
-                            datas[0][thread] = []
-                            datas[1][thread] = 700
-                        # break
-                    io.print(thread)
-                io.writeJson(filename="testcutall."+filename, filepath="datastest/"+folder+"/", data=datas)
-                # break
-            # break
+                datas = {**datas, **data[0]}
+        # io.print([len(datas), dict(list(datas.items())[-2:])])
+        datastoken = [{},{}]
+        for thread, data in datas.items():
+            if data != "": 
+                try:
+                    text, status = preprocessdata(data)
+                    datastoken[0][thread] = text
+                except KeyboardInterrupt:
+                    print("[Cancel] Ctrl-c detection")
+                    sys.exit(0)
+                except:
+                    print("Something went wrong!!!")
+                    datastoken[0][thread] = []
+                    datastoken[1][thread] = 700
+            io.print(thread)
+            if int(thread) % 10000 == 0:
+                io.writeJson(filename="token."+thread+".json", filepath="datastest/"+str(int(thread[0:2])+1)+"/", data=datastoken)
+        #     break
+        # break
 
 if __name__ == "__main__":
     # processpantipthread(ALL_THREAD=[1,100000,100010])
