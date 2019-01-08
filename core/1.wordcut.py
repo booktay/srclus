@@ -71,7 +71,7 @@ class reqfromFile:
         folderpath="datas/process/process"+ "1"
         folders = os.listdir(folderpath)
         datas = {}
-        os.mkdir('datastest/')
+        # os.mkdir('datastest/')
         for folder in folders:
             filepaths = os.path.join(folderpath, folder)
             os.mkdir(os.path.join('datastest/', folder))
