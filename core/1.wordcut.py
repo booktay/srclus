@@ -68,17 +68,19 @@ class reqfromURL:
 
 class reqfromFile:
     def checkdata(self):
-        folderpath="datas/process/process"+ "1"
+        processnumber = input('[Input] Process number : ')
+        folderpath="datas/process/process"+ processnumber
         folders = os.listdir(folderpath)
         datas = {}
-        # os.mkdir('datastest/')
+        if not os.path.exists('datasoutput/'): os.mkdir('datasoutput/')
         for folder in folders:
             filepaths = os.path.join(folderpath, folder)
-            os.mkdir(os.path.join('datastest/', folder))
+            if not os.path.exists(os.path.join('datasoutput/', folder)): os.mkdir(os.path.join('datasoutput/', folder))
             for filename in os.listdir(filepaths):
                 data, status = io.readJson(filename=filename, filepath=filepaths)
                 datas = {**datas, **data[0]}
         # io.print([len(datas), dict(list(datas.items())[-2:])])
+
         datastoken = [{},{}]
         for thread, data in datas.items():
             if data != "": 
@@ -94,10 +96,8 @@ class reqfromFile:
                     datastoken[1][thread] = 700
             io.print(thread)
             if int(thread) % 10000 == 0:
-                io.writeJson(filename="token."+thread+".json", filepath="datastest/"+str(int(thread[0:2])+1)+"/", data=datastoken)
+                io.writeJson(filename="token."+thread+".json", filepath="datasoutput/"+str(int(thread[0:2])+1)+"/", data=datastoken)
                 datastoken = [{},{}]
-        #     break
-        # break
 
 if __name__ == "__main__":
     # processpantipthread(ALL_THREAD=[1,100000,100010])
