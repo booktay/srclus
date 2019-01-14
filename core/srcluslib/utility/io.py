@@ -11,7 +11,7 @@ class io:
         pass
 
     def readJson(self, filename=None, filepath="."):
-        if filename.split('.')[1] != "json": return None, 303
+        if filename.split('.')[-1] != "json": return None, 303
         path = os.path.join(filepath, filename)
         if os.path.exists(path):
             words = open(path, 'r', encoding="utf-8")
@@ -101,5 +101,6 @@ def checkCollectPantip(io=None):
 
 if __name__ == "__main__":
     io = io()
+    io.readJson(filename="token.30010000.json", filepath="../../datas/process/process2/31")
     # collectPantip(io=io)
-    checkCollectPantip(io=io)
+    # checkCollectPantip(io=io)

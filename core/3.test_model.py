@@ -1,1 +1,0 @@
-from srcluslib.word2vec import model
