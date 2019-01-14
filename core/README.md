@@ -1,7 +1,7 @@
 # Install Python Dependencies
 
 ```
-pip install tensorflow deepcut pythainlp sklearn pprint nltk
+pip install tensorflow[tensorflow-gpu] deepcut pythainlp sklearn pprint nltk
 ```
 
 ```
