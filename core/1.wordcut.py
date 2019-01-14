@@ -68,14 +68,15 @@ class reqfromURL:
 
 class reqfromFile:
     def checkdata(self):
+        if not os.path.exists('datatoken/'): os.mkdir('datatoken/')
         processnumber = input('[Input] Process number : ')
+        datas = {}
         folderpath="datas/process/process"+ processnumber
         folders = os.listdir(folderpath)
-        datas = {}
-        if not os.path.exists('datasoutput/'): os.mkdir('datasoutput/')
         for folder in folders:
             filepaths = os.path.join(folderpath, folder)
-            if not os.path.exists(os.path.join('datasoutput/', folder)): os.mkdir(os.path.join('datasoutput/', folder))
+            resultpath = os.path.join('datatoken/', folder)
+            if not os.path.exists(resultpath): os.mkdir(resultpath)
             for filename in os.listdir(filepaths):
                 data, status = io.readJson(filename=filename, filepath=filepaths)
                 datas = {**datas, **data[0]}
@@ -96,9 +97,10 @@ class reqfromFile:
                     datastoken[1][thread] = 700
             io.print(thread)
             if int(thread) % 10000 == 0:
-                io.writeJson(filename="token."+thread+".json", filepath="datasoutput/"+str(int(thread[0:2])+1)+"/", data=datastoken)
+                io.writeJson(filename="token."+thread+".json", filepath="datatoken/"+str(int(thread[0:2])+1)+"/", data=datastoken)
                 datastoken = [{},{}]
-
+            # break
+            
 if __name__ == "__main__":
     # processpantipthread(ALL_THREAD=[1,100000,100010])
     # poolpantipthread()
