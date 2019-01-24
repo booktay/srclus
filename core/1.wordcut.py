@@ -67,19 +67,20 @@ class reqfromURL:
             sys.exit(0)
 
 class reqfromFile:
-    def checkdata(self):
-        if not os.path.exists('datatoken/'): os.mkdir('datatoken/')
-        processnumber = input('[Input] Process number : ')
+    def data(self):
+        foldernumber = input('[Input] folder number : ')
         datas = {}
-        folderpath="datas/process/process"+ processnumber
-        folders = os.listdir(folderpath)
-        for folder in folders:
-            filepaths = os.path.join(folderpath, folder)
-            resultpath = os.path.join('datatoken/', folder)
-            if not os.path.exists(resultpath): os.mkdir(resultpath)
-            for filename in os.listdir(filepaths):
-                data, status = io.readJson(filename=filename, filepath=filepaths)
-                datas = {**datas, **data[0]}
+        folderpath="datas/raw/"+ foldernumber
+        filesname = os.listdir(folderpath)
+        if not filesname: 
+            print("[Error] Can't found directory")
+            return None
+        resultpath = os.path.join('datas/token/', foldernumber)
+        if not os.path.exists(resultpath): os.mkdir(resultpath)
+        for filename in filesname:
+            filepaths = os.path.join(folderpath,filename)
+            data, status = io.readJson(filename=filename, filepath=filepaths)
+            datas = {**datas, **data[0]}
         # io.print([len(datas), dict(list(datas.items())[-2:])])
 
         datastoken = [{},{}]
@@ -97,11 +98,11 @@ class reqfromFile:
                     datastoken[1][thread] = 700
             io.print(thread)
             if int(thread) % 10000 == 0:
-                io.writeJson(filename="token."+thread+".json", filepath="datatoken/"+str(int(thread[0:2])+1)+"/", data=datastoken)
+                io.writeJson(filename="token."+thread+".json", filepath=resultpath, data=datastoken)
                 datastoken = [{},{}]
             # break
             
 if __name__ == "__main__":
     # processpantipthread(ALL_THREAD=[1,100000,100010])
     # poolpantipthread()
-    reqfromFile().checkdata()
+    reqfromFile().data()

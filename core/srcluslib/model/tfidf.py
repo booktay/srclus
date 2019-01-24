@@ -34,10 +34,12 @@ class tfidf:
         feature_names, statusfeature = self.getFeature()
         # doc_size = 1
         doc_size = len(self.WORD_TOKEN_ALLTHREAD)
+        # print("[Total] Weight size" + str(doc_size))
         WORD_TARGET_ALL = []
         for doc in range(doc_size):
             feature_index = response[doc, :].nonzero()[1]
             TARGET = sorted([[response[doc, x],x] for x in feature_index])
-            WORD_TARGET_ALL.append([[feature_names[x],score] for score, x in TARGET])
+            WORD_TARGET_ALL.append([[feature_names[x],score] for score, x in TARGET if score > 0.2])
+            # WORD_TARGET_ALL.append([feature_names[x] for score, x in TARGET])
         print("[Process] Get Rank of Words")
         return WORD_TARGET_ALL, 600
