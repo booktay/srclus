@@ -78,8 +78,8 @@ class reqfromFile:
         resultpath = os.path.join('datas/token/', foldernumber)
         if not os.path.exists(resultpath): os.mkdir(resultpath)
         for filename in filesname:
-            filepaths = os.path.join(folderpath,filename)
-            data, status = io.readJson(filename=filename, filepath=filepaths)
+            # filepaths = os.path.join(folderpath,filename)
+            data, status = io.readJson(filename=filename, filepath=folderpath)
             datas = {**datas, **data[0]}
         # io.print([len(datas), dict(list(datas.items())[-2:])])
 
