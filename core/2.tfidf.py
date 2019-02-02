@@ -29,16 +29,15 @@ class procfromfile:
                 data, status = io.readJson(filename=filename, filepath=filepaths)
                 for word in data[0].values():
                     if word != [] : word_all.append(word)
-            #     break
+                # break
             # break
         print("[Total] Read " + str(len(word_all)) + " threads")
         srclustfidf = tfidf(word_all)
-        # vocab = srclustfidf.weightTfIdf()
-        vocab, statusrank = srclustfidf.getRank()
-        # io.print(vocab)
-        rankword = [word for word in rankword if word != []]
+        response = srclustfidf.weightTfIdf()
+        feature_names = srclustfidf.getFeature()
+        rankword, statusrank = srclustfidf.getRank(response, feature_names)
         print("[Total] Thread ["+str(len(rankword))+"]")
-        io.writeJson(filename="tfidf."+self.time+".json", filepath='datas/', data=rankword)
+        io.writeJson(filename="tfidf.all"+self.time+".json", filepath='datas/tfidf', data=rankword)
 
 if __name__ == "__main__":
     procfromfile().run()

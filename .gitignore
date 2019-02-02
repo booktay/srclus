@@ -1,7 +1,4 @@
-result/
-srclusenv/
+envsrclus/
 datas/
-datastest/
-wait/
 __pycache__/
 .vscode/
