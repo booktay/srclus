@@ -29,8 +29,8 @@ class procfromfile:
                 data, status = io.readJson(filename=filename, filepath=filepaths)
                 for word in data[0].values():
                     if word != [] : word_all.append(word)
-                break
-            break
+                # break
+            # break
         print("[Total] Read " + str(len(word_all)) + " threads")
         srclustfidf = tfidf(word_all)
         response = srclustfidf.weightTfIdf()
