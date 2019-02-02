@@ -43,7 +43,9 @@ class tfidf:
         WORD_TARGET_ALL = []
         for doc in range(doc_size):
             feature_index = response[doc, :].nonzero()[1]
-            WORD_TARGET_ALL.append(sorted([[feature_names[x],[response[doc, x]]] for x in feature_index]))
-            # if doc == 100 : break
+            # words_thread = sorted([[feature_names[x],response[doc, x]] for x in feature_index])
+            words_thread = [feature_names[x] for x in feature_index if response[doc, x] >= 0.1]
+            WORD_TARGET_ALL.append(words_thread)
+            if doc % 100 == 0 : print("[Process] Complete " + str(doc) + " docs")
         print("[Complete] Get Rank of Words")
         return WORD_TARGET_ALL, 600
