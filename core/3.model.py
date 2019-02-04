@@ -15,7 +15,7 @@ class procfromfile:
 
     def run(self, TEXT=""):
         word_all = []
-        folderpath = "datas/token/"
+        folderpath = "datas/tfidf/"
         folders = os.listdir(folderpath)
         if not folders: 
             print("[Error] Can't found directory")
@@ -29,19 +29,7 @@ class procfromfile:
                 # break
             # break
         print("[Total] Read " + str(len(word_all)) + " threads")
-        srclustfidf = tfidf(word_all)
-        response = srclustfidf.weightTfIdf()
-        print("[Complete] Get Weight")
-        feature_names = srclustfidf.getFeature()
-        print("[Complete] Get Feature")
-        rankwords, statusrank = srclustfidf.getRank(response, feature_names)
-        print("[Total] Thread ["+str(len(rankwords))+"]")
-        rankword = []
-        for n in range(0,len(rankwords)):
-            rankword.append(rankwords[n])
-            if n == 10000 or n == len(rankwords) - 1:
-                io.writeJson(filename="tfidf."+self.time + ".json", filepath='datas/tfidf', data=rankword)
-                rankword = []
+
 
 if __name__ == "__main__":
     procfromfile().run()

@@ -43,7 +43,7 @@ class procfromfile:
         for n in range(0,len(rankwords)):
             rankword.append(rankwords[n])
             if (n > 0 and n % 10000 == 0) or n == len(rankwords) - 1:
-                io.writeJson(filename="tfidf."+ str(n) + "." + self.time + ".json", filepath='datas/tfidf', data=rankword)
+                io.writeJson(filename="tfidf."+ str(n) + ".json", filepath='datas/tfidf' + "/" + self.time, data=rankword)
                 rankword = []
 
 if __name__ == "__main__":
