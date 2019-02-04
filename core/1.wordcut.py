@@ -71,7 +71,7 @@ class reqfromFile:
         foldernumber = input('[Input] folder number : ')
         datas = {}
         folderpath="datas/raw/"+ foldernumber
-        filesname = os.listdir(folderpath)
+        filesname = sorted(os.listdir(folderpath))
         if not filesname: 
             print("[Error] Can't found directory")
             return None

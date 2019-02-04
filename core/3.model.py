@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 # author: Siwanont Sittinam
-# description: 2.tfidf
+# description: 3.model
 
 # General Module
 import os, sys, time
 # My Module
 from srcluslib.utility.io import io
-from srcluslib.model.tfidf import tfidf
-
-# Init My Module
-io = io()
+from srcluslib.word2vec import model
 
 class procfromfile:
     def __init__(self):
@@ -29,8 +26,8 @@ class procfromfile:
                 data, status = io.readJson(filename=filename, filepath=filepaths)
                 for word in data[0].values():
                     if word != [] : word_all.append(word)
-                break
-            break
+                # break
+            # break
         print("[Total] Read " + str(len(word_all)) + " threads")
         srclustfidf = tfidf(word_all)
         response = srclustfidf.weightTfIdf()
@@ -38,12 +35,12 @@ class procfromfile:
         feature_names = srclustfidf.getFeature()
         print("[Complete] Get Feature")
         rankwords, statusrank = srclustfidf.getRank(response, feature_names)
-        print("[Total] Thread ["+str(len(rankwords))+ " / " + str(len(word_all)) +"]")
+        print("[Total] Thread ["+str(len(rankwords))+"]")
         rankword = []
         for n in range(0,len(rankwords)):
             rankword.append(rankwords[n])
-            if (n > 0 and n % 10000 == 0) or n == len(rankwords) - 1:
-                io.writeJson(filename="tfidf."+ str(n) + "." + self.time + ".json", filepath='datas/tfidf', data=rankword)
+            if n == 10000 or n == len(rankwords) - 1:
+                io.writeJson(filename="tfidf."+self.time + ".json", filepath='datas/tfidf', data=rankword)
                 rankword = []
 
 if __name__ == "__main__":
