@@ -19,10 +19,10 @@ class procfromfile:
     def run(self, TEXT=""):
         word_all = []
         folderpath = "datas/token/"
-        folders = os.listdir(folderpath)
-        if not folders: 
+        if not os.path.exists(folderpath):
             print("[Error] Can't found directory")
             return None
+        folders = os.listdir(folderpath)
         for folder in sorted(folders):
             filepaths = os.path.join(folderpath, folder)
             for filename in sorted(os.listdir(filepaths)):

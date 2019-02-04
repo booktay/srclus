@@ -7,29 +7,31 @@
 import os, sys, time
 # My Module
 from srcluslib.utility.io import io
-from srcluslib.word2vec import model
+from srcluslib.model.word2vec import word2vec
+io = io()
 
 class procfromfile:
     def __init__(self):
         self.time = time.strftime("%Y%m%d.%H%M", time.localtime())
 
-    def run(self, TEXT=""):
-        word_all = []
-        folderpath = "datas/tfidf/"
-        folders = os.listdir(folderpath)
-        if not folders: 
+    def run(self):
+        foldername = input('[Input] folder name : ')
+        datas = []
+        folderpath = "datas/tfidf/" + foldername
+        if not os.path.exists(folderpath):
             print("[Error] Can't found directory")
             return None
-        for folder in sorted(folders):
-            filepaths = os.path.join(folderpath, folder)
-            for filename in sorted(os.listdir(filepaths)):
-                data, status = io.readJson(filename=filename, filepath=filepaths)
-                for word in data[0].values():
-                    if word != [] : word_all.append(word)
-                # break
-            # break
-        print("[Total] Read " + str(len(word_all)) + " threads")
-
+        resultpath = os.path.join('datas/model/', foldername)
+        if not os.path.exists(resultpath):
+            print("[Process] Create directory at " + resultpath)
+            os.mkdir(resultpath)
+        for filename in sorted(os.listdir(folderpath)):
+            data, status = io.readJson(filename=filename, filepath=folderpath)
+            datas += data
+            break
+        io.print(datas)
+        w2v = word2vec(datas)
+        # datass = w2v.getRawdata()
 
 if __name__ == "__main__":
     procfromfile().run()
