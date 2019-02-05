@@ -91,17 +91,16 @@ def word2vec_basic(log_dir):
   if not os.path.exists(resultpath):
       print("[Process] Create directory at " + resultpath)
       os.mkdir(resultpath)
+  vocabulary = []
+  # vocabulary = read_data(filename)
   for filename in sorted(os.listdir(folderpath)):
       data, status = io.readJson(filename=filename, filepath=folderpath)
-      vocabulary = getVocabulary(data)
-      break
-
-  # vocabulary = read_data(filename)
-
+      vocabulary += getVocabulary(data)
+      # break
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
-  vocabulary_size = 1000
+  vocabulary_size = 50000
 
   def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
@@ -119,7 +118,6 @@ def word2vec_basic(log_dir):
       data.append(index)
     count[0][1] = unk_count
     reversed_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
-    print(len(reversed_dictionary))
     return data, count, dictionary, reversed_dictionary
 
   # Filling 4 global variables:
