@@ -2,3 +2,4 @@ envsrclus/
 datas/
 __pycache__/
 .vscode/
+log/
