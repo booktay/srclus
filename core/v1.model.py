@@ -75,7 +75,7 @@ def word2vec_basic(log_dir):
       data = tf.compat.as_str(f.read(f.namelist()[0])).split()
     return data
 
-  def getVocabulary(self, datas):
+  def getVocabulary(datas):
     words = []
     for word in datas:
         words += word
@@ -97,7 +97,7 @@ def word2vec_basic(log_dir):
       break
 
   # vocabulary = read_data(filename)
-  
+
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
