@@ -44,9 +44,9 @@ data_index = 0
 def word2vec_basic(log_dir):
   def getVocabulary(datas):
     words = []
-    for word in datas:
-      for line in word:
-          words += line.encode("utf-8")
+    for line in datas:
+      for word in line:
+          words.append(word)  # .encode("utf-8")
     return words
 
   foldername = input('[Input] folder name : ')
@@ -68,7 +68,7 @@ def word2vec_basic(log_dir):
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
-  vocabulary_size = 50000
+  vocabulary_size = 500000
 
   def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
@@ -217,7 +217,7 @@ def word2vec_basic(log_dir):
     saver = tf.train.Saver()
 
   # Step 5: Begin training.
-  num_steps = 100001
+  num_steps = 10000001
 
   with tf.Session(graph=graph) as session:
     # Open a writer to write summaries.
@@ -316,7 +316,10 @@ def word2vec_basic(log_dir):
     # pylint: disable=g-import-not-at-top
     from sklearn.manifold import TSNE
     import matplotlib.pyplot as plt
-
+    from matplotlib import rcParams
+    rcParams['font.family'] = 'sans-serif'
+    rcParams['font.sans-serif'] = ['Tahoma']
+    
     tsne = TSNE(
         perplexity=30, n_components=2, init='pca', n_iter=5000, method='exact')
     plot_only = 500

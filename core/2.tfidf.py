@@ -33,11 +33,14 @@ class procfromfile:
             # break
         print("[Total] Read " + str(len(word_all)) + " threads")
         srclustfidf = tfidf(word_all)
+        del word_all
         response = srclustfidf.weightTfIdf()
         print("[Complete] Get Weight")
         feature_names = srclustfidf.getFeature()
         print("[Complete] Get Feature")
         rankwords, statusrank = srclustfidf.getRank(response, feature_names)
+        del response
+        del feature_names
         print("[Total] Thread ["+str(len(rankwords))+ " / " + str(len(word_all)) +"]")
         rankword = []
         for n in range(0,len(rankwords)):

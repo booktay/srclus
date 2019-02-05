@@ -39,6 +39,7 @@ class tfidf:
     def getRank(self, response, feature_names):
         # doc_size = 1
         doc_size = len(self.WORD_TOKEN_ALLTHREAD)
+        del self.WORD_TOKEN_ALLTHREAD
         print("[Start] Get Rank of Words")
         WORD_TARGET_ALL = []
         for doc in range(doc_size):
