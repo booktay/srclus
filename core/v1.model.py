@@ -34,6 +34,10 @@ import tensorflow as tf
 
 from tensorflow.contrib.tensorboard.plugins import projector
 
+# My Module
+from srcluslib.utility.io import io
+io = io()
+
 data_index = 0
 
 
@@ -71,7 +75,29 @@ def word2vec_basic(log_dir):
       data = tf.compat.as_str(f.read(f.namelist()[0])).split()
     return data
 
-  vocabulary = read_data(filename)
+  def getVocabulary(self, datas):
+    words = []
+    for word in datas:
+        words += word
+    return set(words)
+
+  foldername = input('[Input] folder name : ')
+  datas = []
+  folderpath = "datas/tfidf/" + foldername
+  if not os.path.exists(folderpath):
+      print("[Error] Can't found directory")
+      return None
+  resultpath = os.path.join('datas/model/', foldername)
+  if not os.path.exists(resultpath):
+      print("[Process] Create directory at " + resultpath)
+      os.mkdir(resultpath)
+  for filename in sorted(os.listdir(folderpath)):
+      data, status = io.readJson(filename=filename, filepath=folderpath)
+      vocabulary = getVocabulary(data)
+      break
+
+  # vocabulary = read_data(filename)
+  
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
