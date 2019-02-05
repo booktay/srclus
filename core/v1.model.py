@@ -49,7 +49,7 @@ def word2vec_basic(log_dir):
   # pylint: disable=redefined-outer-name
   def maybe_download(filename, expected_bytes):
     """Download a file if not present, and make sure it's the right size."""
-    local_filename = os.path.join(gettempdir(), filename)
+    local_filename = os.path.join('./', filename)
     if not os.path.exists(local_filename):
       local_filename, _ = urllib.request.urlretrieve(url + filename,
                                                      local_filename)
@@ -329,7 +329,7 @@ def word2vec_basic(log_dir):
     plot_only = 500
     low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
     labels = [reverse_dictionary[i] for i in xrange(plot_only)]
-    plot_with_labels(low_dim_embs, labels, os.path.join(gettempdir(),
+    plot_with_labels(low_dim_embs, labels, os.path.join('./',
                                                         'tsne.png'))
 
   except ImportError as ex:
