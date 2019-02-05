@@ -29,8 +29,10 @@ class procfromfile:
             data, status = io.readJson(filename=filename, filepath=folderpath)
             datas += data
             break
-        io.print(datas)
+        # io.print(datas)
         w2v = word2vec(datas)
+        print("[Initial] Initial wod2vec model")
+        w2v.makeModel()
         # datass = w2v.getRawdata()
 
 if __name__ == "__main__":

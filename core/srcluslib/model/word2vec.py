@@ -37,9 +37,12 @@ class word2vec:
 
     def makeModel(self):
         vocabs = self.getVocabulary()
+        print("[Process] Get Vocabulary")
         word2int, int2word, vocab_size = self.makeOnehot(vocabs)
-        data = []
+        print("[Process] Make One-hot vector")
         WINDOW_SIZE = 2
+        print("[Process] Window size : " + WINDOW_SIZE)
+        data = []
         sentences = self.WORDSALL
         for sentence in sentences:
             for word_index, word in enumerate(sentence):
@@ -47,6 +50,7 @@ class word2vec:
                     if nb_word != word:
                         data.append([word, nb_word])
         
+        print("[Process] Init Model")
         x_train = [] 
         y_train = [] 
         for data_word in data:
@@ -57,9 +61,12 @@ class word2vec:
         y_train = np.asarray(y_train)
         # print(x_train.shape, y_train.shape)
 
+        print("[Process] Init Tensorflow process")
+
         x = tf.placeholder(tf.float32, shape=(None, vocab_size))
         y_label = tf.placeholder(tf.float32, shape=(None, vocab_size))
         EMBEDDING_DIM = 5 
+        print("[Process] Embedding dimension : " + EMBEDDING_DIM)
 
         W1 = tf.Variable(tf.random_normal([vocab_size, EMBEDDING_DIM]))
         b1 = tf.Variable(tf.random_normal([EMBEDDING_DIM]))
@@ -69,10 +76,13 @@ class word2vec:
         b2 = tf.Variable(tf.random_normal([vocab_size]))
         prediction = tf.nn.softmax(tf.add( tf.matmul(hidden_representation, W2), b2))
 
+        print("[Process] Start Tensorflow session")
+
         sess = tf.Session()
         init = tf.global_variables_initializer()
         sess.run(init) 
 
+        print("[Process] Gradient Descent Optimizing")
         # define the loss function:
         cross_entropy_loss = tf.reduce_mean(-tf.reduce_sum(y_label * tf.log(prediction), reduction_indices=[1]))
         # define the training step:
@@ -86,10 +96,12 @@ class word2vec:
         print(sess.run(W1))
         print(sess.run(b1))
 
+        print("[Process] Generate Model")
         vectors = sess.run(W1 + b1)
         # print(vectors[word2int['queen']])
-
-        print(int2word[find_closest(word2int['queen'], vectors)])
+        print("[Complete] Testing")
+        wordtest = input('[Test] Input word : ')
+        print(int2word[self.find_closest(word2int[wordtest], vectors)])
     
     def euclideandist(self, vec1, vec2):
         return np.sqrt(np.sum((vec1-vec2)**2))
@@ -99,7 +111,7 @@ class word2vec:
         min_index = -1
         query_vector = vectors[word_index]
         for index, vector in enumerate(vectors):
-            if euclidean_dist(vector, query_vector) < min_dist and not np.array_equal(vector, query_vector):
-                min_dist = euclidean_dist(vector, query_vector)
+            if self.euclidean_dist(vector, query_vector) < min_dist and not np.array_equal(vector, query_vector):
+                min_dist = self.euclidean_dist(vector, query_vector)
                 min_index = index
         return min_index
