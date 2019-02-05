@@ -28,7 +28,7 @@ class procfromfile:
         for filename in sorted(os.listdir(folderpath)):
             data, status = io.readJson(filename=filename, filepath=folderpath)
             datas += data
-            # break
+            break
         # io.print(datas)
         w2v = word2vec(datas)
         print("[Initial] Initial wod2vec model")

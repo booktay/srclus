@@ -47,6 +47,7 @@ class word2vec:
         for sentence in sentences:
             for word_index, word in enumerate(sentence):
                 for nb_word in sentence[max(word_index - WINDOW_SIZE, 0) : min(word_index + WINDOW_SIZE, len(sentence)) + 1] : 
+                    # print(word, nb_word)
                     if nb_word != word:
                         data.append([word, nb_word])
         
