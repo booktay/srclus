@@ -41,12 +41,13 @@ class word2vec:
         word2int, int2word, vocab_size = self.makeOnehot(vocabs)
         print("[Process] Make One-hot vector")
         WINDOW_SIZE = 2
-        print("[Process] Window size : " + WINDOW_SIZE)
+        print("[Process] Window size : " + str(WINDOW_SIZE))
         data = []
         sentences = self.WORDSALL
         for sentence in sentences:
             for word_index, word in enumerate(sentence):
                 for nb_word in sentence[max(word_index - WINDOW_SIZE, 0) : min(word_index + WINDOW_SIZE, len(sentence)) + 1] : 
+                    # print(word, nb_word)
                     if nb_word != word:
                         data.append([word, nb_word])
         
@@ -66,7 +67,7 @@ class word2vec:
         x = tf.placeholder(tf.float32, shape=(None, vocab_size))
         y_label = tf.placeholder(tf.float32, shape=(None, vocab_size))
         EMBEDDING_DIM = 5 
-        print("[Process] Embedding dimension : " + EMBEDDING_DIM)
+        print("[Process] Embedding dimension : " + str(EMBEDDING_DIM))
 
         W1 = tf.Variable(tf.random_normal([vocab_size, EMBEDDING_DIM]))
         b1 = tf.Variable(tf.random_normal([EMBEDDING_DIM]))
