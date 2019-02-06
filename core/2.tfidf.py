@@ -31,7 +31,8 @@ class procfromfile:
                     if word != [] : word_all.append(word)
             #     break
             # break
-        print("[Total] Read " + str(len(word_all)) + " threads")
+        wordsize = str(len(word_all))
+        print("[Total] Read " + wordsize + " threads")
         srclustfidf = tfidf(word_all)
         del word_all
         response = srclustfidf.weightTfIdf()
@@ -41,7 +42,7 @@ class procfromfile:
         rankwords, statusrank = srclustfidf.getRank(response, feature_names)
         del response
         del feature_names
-        print("[Total] Thread ["+str(len(rankwords))+ " / " + str(len(word_all)) +"]")
+        print("[Total] Thread ["+str(len(rankwords)) + " / " + wordsize + "]")
         rankword = []
         for n in range(0,len(rankwords)):
             rankword.append(rankwords[n])
