@@ -68,7 +68,7 @@ def word2vec_basic(log_dir):
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
-  vocabulary_size = 500000
+  vocabulary_size = 5000000
 
   def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
@@ -217,7 +217,7 @@ def word2vec_basic(log_dir):
     saver = tf.train.Saver()
 
   # Step 5: Begin training.
-  num_steps = 10000001
+  num_steps = 100001
 
   with tf.Session(graph=graph) as session:
     # Open a writer to write summaries.
@@ -325,7 +325,7 @@ def word2vec_basic(log_dir):
     plot_only = 500
     low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
     labels = [reverse_dictionary[i] for i in xrange(plot_only)]
-    plot_with_labels(low_dim_embs, labels, os.path.join('./',
+    plot_with_labels(low_dim_embs, labels, os.path.join('tsne/',
                                                         'tsne.png'))
 
   except ImportError as ex:
