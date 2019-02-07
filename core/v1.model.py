@@ -68,7 +68,7 @@ def word2vec_basic(log_dir):
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
-  vocabulary_size = 5000000
+  vocabulary_size = 1000000
 
   def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
