@@ -68,7 +68,7 @@ def word2vec_basic(log_dir):
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
-  vocabulary_size = 500000
+  vocabulary_size = 5000000
 
   def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
@@ -217,7 +217,7 @@ def word2vec_basic(log_dir):
     saver = tf.train.Saver()
 
   # Step 5: Begin training.
-  num_steps = 10000001
+  num_steps = 100001
 
   with tf.Session(graph=graph) as session:
     # Open a writer to write summaries.
