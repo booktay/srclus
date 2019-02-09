@@ -320,6 +320,7 @@ def word2vec_basic(log_dir):
     rcParams['font.family'] = 'sans-serif'
     rcParams['font.sans-serif'] = ['Tahoma']
     
+    print("Plot TSNE")
     tsne = TSNE(
         perplexity=30, n_components=2, init='pca', n_iter=5000, method='exact')
     plot_only = 5000
