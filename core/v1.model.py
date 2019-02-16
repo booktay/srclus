@@ -47,7 +47,7 @@ def word2vec_basic(log_dir):
     for line in datas:
       for word in line:
           words.append(word)  # .encode("utf-8")
-    return words
+    return words, len(words)
 
   foldername = input('[Input] folder name : ')
   datas = []
@@ -60,15 +60,23 @@ def word2vec_basic(log_dir):
       print("[Process] Create directory at " + resultpath)
       os.mkdir(resultpath)
   vocabulary = []
+  lensvocab = 0
   # vocabulary = read_data(filename)
-  for filename in sorted(os.listdir(folderpath)):
+  for filename in sorted(os.listdir(folderpath), reverse=True):
       data, status = io.readJson(filename=filename, filepath=folderpath)
-      vocabulary += getVocabulary(data)
+      words, lens = getVocabulary(data)
+      vocabulary += words
+      lensvocab += lens
+      # if lensvocab > 5000000
       # break
   print('Data size', len(vocabulary))
 
   # Step 2: Build the dictionary and replace rare words with UNK token.
+<<<<<<< HEAD
   vocabulary_size = 1000000
+=======
+  vocabulary_size = 10000
+>>>>>>> master
 
   def build_dataset(words, n_words):
     """Process raw inputs into a dataset."""
@@ -217,7 +225,7 @@ def word2vec_basic(log_dir):
     saver = tf.train.Saver()
 
   # Step 5: Begin training.
-  num_steps = 1000001
+  num_steps = 100001
 
   with tf.Session(graph=graph) as session:
     # Open a writer to write summaries.
@@ -320,9 +328,10 @@ def word2vec_basic(log_dir):
     rcParams['font.family'] = 'sans-serif'
     rcParams['font.sans-serif'] = ['Tahoma']
     
+    print("Plot TSNE")
     tsne = TSNE(
         perplexity=30, n_components=2, init='pca', n_iter=5000, method='exact')
-    plot_only = 500
+    plot_only = 1000
     low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
     labels = [reverse_dictionary[i] for i in xrange(plot_only)]
     plot_with_labels(low_dim_embs, labels, os.path.join('tsne/',
