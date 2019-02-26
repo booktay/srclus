@@ -66,8 +66,8 @@ class io:
 # Test Write
 def collectPantip(io=None):
     datas = [{},{}]
-    rangethread = [8000000, 8580771]
-    for i in range(rangethread[0], rangethread[1]):
+    rangethread = [8000001, 8580770]
+    for i in range(rangethread[0], rangethread[1] + 1):
         thread = str(3*10**7 + i)
         try:
             data, status = io.requestPantip(thread=thread, security=True)
@@ -77,7 +77,7 @@ def collectPantip(io=None):
                 datas[0][thread] = ""
                 datas[1][thread] = status
             if i % 10000 == 0 or i == int(rangethread[1]):
-                io.writeJson(filename=thread, filepath="datas/raw/39", data=datas)
+                io.writeJson(filename=thread+".json", filepath="datas/raw/39/", data=datas)
                 datas = [{},{}]
         except KeyboardInterrupt:
             print("[Cancel] Ctrl-c Detection")
