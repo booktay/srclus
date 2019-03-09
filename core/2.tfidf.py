@@ -18,7 +18,7 @@ class procfromfile:
 
     def run(self, TEXT=""):
         word_all = []
-        folderpath = "datas/token/"
+        folderpath = os.path.join("datas", "token")
         if not os.path.exists(folderpath):
             print("[Error] Can't found directory")
             return None
@@ -43,13 +43,33 @@ class procfromfile:
         del response
         del feature_names
         print("[Total] Thread ["+str(len(rankwords)) + " / " + wordsize + "]")
-        rankword = []
+        rankword, wordlist = [], []
         for n in range(0,len(rankwords)):
+            wordlist += rankwords[n]
             rankword.append(rankwords[n])
             if (n > 0 and n % 10000 == 0) or n == len(rankwords) - 1:
                 io.writeJson(filename="tfidf."+ str(n) + ".json", filepath='datas/tfidf' + "/" + self.time, data=rankword)
                 rankword = []
+        io.writeJson(filename="tfidf.word.json", filepath='datas/tfidf' + "/" + self.time, data=wordlist)
+
+    def convert(self):
+        word_all = []
+        path = input("Input folder name : ")
+        folderpath = os.path.join(os.path.join("datas", "tfidf") , path)
+        del path
+        if not os.path.exists(folderpath):
+            print("[Error] Can't found directory")
+            return None
+        folders = os.listdir(folderpath)
+        for filename in sorted(folders):
+            data, status = io.readJson(filename=filename, filepath=folderpath)
+            for word in data:
+                if word != [] : word_all += word
+            # break
+        io.writeJson(filename="tfidf.word.json", filepath=folderpath, data=word_all)
+
 
 if __name__ == "__main__":
     procfromfile().run()
+    procfromfile().convert()
 
