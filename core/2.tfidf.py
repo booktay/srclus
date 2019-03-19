@@ -70,6 +70,6 @@ class procfromfile:
 
 
 if __name__ == "__main__":
-    procfromfile().run()
+    # procfromfile().run()
     procfromfile().convert()
 
