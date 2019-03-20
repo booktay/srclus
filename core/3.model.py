@@ -57,5 +57,6 @@ if __name__ == "__main__":
     engine = input('[Input] Engine [gensim/tensorflow]: ')
     model = procfromfile(engine)
     datas = model.preparedata()
-    model.run3("word.model")
+    model.run2(datas)
+    # model.run3("word.model")
 
