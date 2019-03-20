@@ -11,11 +11,12 @@ from srcluslib.model.word2vec import word2vec
 io = io()
 
 class procfromfile:
-    def __init__(self):
+    def __init__(self, engine):
         self.time = time.strftime("%Y%m%d.%H%M", time.localtime())
+        self.ENGINE = engine
 
-    def run(self):
-        foldername = input('[Input] folder name : ')
+    def preparedata(self):
+        foldername = input('[Input] Folder name : ')
         datas = []
         folderpath = "datas/tfidf/" + foldername
         if not os.path.exists(folderpath):
@@ -27,14 +28,34 @@ class procfromfile:
             os.mkdir(resultpath)
         for filename in sorted(os.listdir(folderpath)):
             data, status = io.readJson(filename=filename, filepath=folderpath)
-            datas += data
-            break
+            if self.ENGINE == "gensim" : datas += data
+            elif self.ENGINE == "tensorflow" : 
+                for line in data:
+                    datas += line
+            # break
         # io.print(datas)
+        return datas
+
+    def run1(self, datas):
         w2v = word2vec(datas)
         print("[Initial] Initial wod2vec model")
         w2v.makeModel()
-        # datass = w2v.getRawdata()
+        # datas = w2v.getRawdata()
+    
+    def run2(self, datas):
+        print("[Initial] Initial wod2vec model")
+        w2v = word2vec()
+        print("[Process] Train wod2vec model")
+        w2v.makeGensim(datas)
+        print("[Complete] Train model by gensim")
+
+    def run3(self, pathname):
+        w2v = word2vec()
+        w2v.loadGensim(pathname)
 
 if __name__ == "__main__":
-    procfromfile().run()
+    engine = input('[Input] Engine [gensim/tensorflow]: ')
+    model = procfromfile(engine)
+    datas = model.preparedata()
+    model.run3("word.model")
 
