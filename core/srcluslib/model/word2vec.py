@@ -6,7 +6,10 @@
 # Import Basic Module
 import collections, time, json, os
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
+from gensim.models import Word2Vec
+# from gensim.models.word2vec import LineSentence
+import multiprocessing
 
 class word2vec:
     def __init__(self, data=[]):
@@ -116,3 +119,17 @@ class word2vec:
                 min_dist = self.euclidean_dist(vector, query_vector)
                 min_index = index
         return min_index
+
+    def makeGensim(self, document):
+        model = Word2Vec(document, size=400, window=5, min_count=5, workers=multiprocessing.cpu_count())
+        model.train(document, total_examples=len(document), epochs=10)
+        # trim unneeded model memory = use(much) less RAM
+        #model.init_sims(replace=True)
+        model.save("word.model")
+        # model.save_word2vec_format("word.vector", binary=False)
+        print("[Save] Model and Vector")
+
+    def loadGensim(self, pathname):
+        new_model = Word2Vec.load(pathname)
+        print(new_model)
+        print(new_model['รุ้'])
