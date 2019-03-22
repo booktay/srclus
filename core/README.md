@@ -1,6 +1,6 @@
 # Install Python Dependencies
 
-####Base
+#### Base
 ```
 pip install tensorflow[tensorflow-gpu] gensim deepcut pythainlp sklearn pprint nltk
 ```
@@ -10,18 +10,18 @@ pip install tensorflow[tensorflow-gpu] gensim deepcut pythainlp sklearn pprint n
 pip install https://github.com/wannaphongcom/artagger/tarball/master#egg=artagger
 ```
 
-####NLTK POS Tagger
+#### NLTK POS Tagger
 ```
 import nltk
 nltk.download('averaged_perceptron_tagger')
 ```
 
-####Test Embedded Graph
+#### Test Embedded Graph
 ```
 pip install matplotlib scipy
 ```
 
-####Use Virtual Environment on Jupyter 
+#### Use Virtual Environment on Jupyter 
 ```
 pip install --user ipykernel
 python -m ipykernel install --user --name=envsrclus
