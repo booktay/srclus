@@ -1,18 +1,28 @@
 # Install Python Dependencies
 
-```
-pip install tensorflow[tensorflow-gpu] deepcut pythainlp sklearn pprint nltk
-```
+Base
+```pip install tensorflow[tensorflow-gpu] gensim deepcut pythainlp sklearn pprint nltk```
 
-* Note: standard ```artagger``` package from PyPI will not work on Windows, please 
+* Note: **Windows OS**, please install this first
 ```pip install https://github.com/wannaphongcom/artagger/tarball/master#egg=artagger```
 
+NLTK POS Tagger
 ```
 import nltk
 nltk.download('averaged_perceptron_tagger')
 ```
 
 Test Embedded Graph
+```pip install matplotlib scipy```
+
+Use Virtual Environment on Jupyter 
 ```
-pip install matplotlib scipy
+pip install --user ipykernel
+python -m ipykernel install --user --name=envsrclus
 ```
+
+* Check Virtual Environment on Jupyter
+```jupyter kernelspec list```
+
+* Remove Virtual Environment on Jupyter
+```jupyter kernelspec uninstall myenv```
