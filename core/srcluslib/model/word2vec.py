@@ -12,8 +12,9 @@ from gensim.models import Word2Vec
 import multiprocessing
 
 class word2vec:
-    def __init__(self, data=[]):
+    def __init__(self, data=[], resultpath=""):
         self.WORDSALL = data
+        self.RESULTPATH = resultpath
 
     def getRawdata(self):
         return self.WORDSALL
@@ -125,7 +126,8 @@ class word2vec:
         model.train(document, total_examples=len(document), epochs=10)
         # trim unneeded model memory = use(much) less RAM
         #model.init_sims(replace=True)
-        model.save("word.model")
+        modelpath = os.path.join(self.RESULTPATH, "vocab.model")
+        model.save(modelpath)
         # model.save_word2vec_format("word.vector", binary=False)
         print("[Save] Model and Vector")
 

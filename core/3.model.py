@@ -15,7 +15,7 @@ class procfromfile:
         self.time = time.strftime("%Y%m%d.%H%M", time.localtime())
         self.ENGINE = engine
 
-    def preparedata(self):
+    def preparedata1(self):
         foldername = input('[Input] Folder name : ')
         datas = []
         folderpath = "datas/tfidf/" + foldername
@@ -34,7 +34,30 @@ class procfromfile:
                     datas += line
             # break
         # io.print(datas)
-        return datas
+        return datas, resultpath
+
+    def preparedata2(self):
+        # Prepare data for train model
+        # Don't use TF-IDF
+        datas = []
+        resultpath = os.path.join(os.path.join("datas", "model"), self.time)
+        if not os.path.exists(resultpath):
+            print("[Process] Create directory at " + resultpath)
+            os.mkdir(resultpath)
+        rootpath = os.path.join("datas","token")
+        folderpath = os.listdir(rootpath)
+        folders = [os.path.join(rootpath, folder) for folder in folderpath]
+        for folder in folders:
+            for filename in os.listdir(folder):
+                data, status = io.readJson(filename=filename, filepath=folder)
+                data = list(data[0].values())
+                if self.ENGINE == "gensim" : datas += data
+                elif self.ENGINE == "tensorflow" : 
+                    for line in data: datas += line
+            #     break
+            # break
+        # io.print(datas)
+        return datas, resultpath
 
     def run1(self, datas):
         w2v = word2vec(datas)
@@ -42,9 +65,9 @@ class procfromfile:
         w2v.makeModel()
         # datas = w2v.getRawdata()
     
-    def run2(self, datas):
+    def run2(self, datas, resultpath):
         print("[Initial] Initial wod2vec model")
-        w2v = word2vec()
+        w2v = word2vec(resultpath=resultpath)
         print("[Process] Train wod2vec model")
         w2v.makeGensim(datas)
         print("[Complete] Train model by gensim")
@@ -54,9 +77,10 @@ class procfromfile:
         w2v.loadGensim(pathname)
 
 if __name__ == "__main__":
-    engine = input('[Input] Engine [gensim/tensorflow]: ')
+    # engine = input('[Input] Engine [gensim/tensorflow]: ')
+    engine = "gensim"
     model = procfromfile(engine)
-    datas = model.preparedata()
-    model.run2(datas)
+    datas, resultpath = model.preparedata2()
+    model.run2(datas, resultpath)
     # model.run3("word.model")
 
