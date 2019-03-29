@@ -1,5 +1,14 @@
+# Environments
 envsrclus/
+envsrclusserv/
+
+# Dataset
 datas/
+
+# General
 __pycache__/
 .vscode/
 log/
+
+#NodeJS
+node_modules/
