@@ -4,9 +4,9 @@
 # description: model/tokenize module
 
 # Import NLP Module
-import deepcut
+# import deepcut
 from pythainlp.tag import pos_tag as thai_tag
-from pythainlp.tokenize import isthai
+from pythainlp.tokenize import isthai, dict_word_tokenize,create_custom_dict_trie
 from nltk import pos_tag as eng_tag
 # My Module
 from ..corpus.customwords import customwords
@@ -18,12 +18,14 @@ class tokenize:
 
     def run(self):
         customdict, statuscustom = self.customwords.target(customtype="tokenize")
+        customdict = create_custom_dict_trie(customdict)
         tokenwords_thai, tokenwords_eng, statusrun = [], [], 600
         # Wordcut
         try:
             for word in self.DATA:
                 if isthai(word, check_all=False)['thai'] > 0:
-                    tokenword = deepcut.tokenize(word, custom_dict=customdict)
+                    # tokenword = deepcut.tokenize(word, custom_dict=customdict)
+                    tokenword = dict_word_tokenize(word,customdict, engine='newmm')
                     if tokenword: tokenwords_thai += [word.replace(' ', '') for word in tokenword if word not in [' ','']]
                 else: 
                     if not word.isdigit(): tokenwords_eng.append(word)

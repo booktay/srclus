@@ -25,7 +25,7 @@ class preprocess:
     def filterTHENG(self, data=""):
         customstopword, status = self.customwords.target(customtype="stopwords")
         if data != "" and status == 100:
-            TEXT = re.sub(r'[^a-zA-Z0-9ก-ฮะ-ูเ-์๐-๙\s#@._%)\-]+', r'', data)
+            TEXT = re.sub(r'[^a-zA-Z0-9ก-ฮะ-ูเ-์๐-๙\s#@._%)\-]+', r' ', data)
             TEXT = re.sub(r'([#@._%)\-\s])\1{1,}', r'\1', TEXT)
             TEXT = re.sub(r'([#@._\-])(\s)', r'\1', TEXT)
             # TEXT = re.sub(r'(\d+)(\s)([%])', r'\2', TEXT)
@@ -53,5 +53,5 @@ class preprocess:
         return text, 500
 
 if __name__ == "__main__":
-    # preprocess = preprocess()
-    pass
+    preprocess = preprocess()
+    

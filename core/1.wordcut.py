@@ -67,8 +67,7 @@ class reqfromURL:
             sys.exit(0)
 
 class reqfromFile:
-    def data(self):
-        foldernumber = input('[Input] folder number : ')
+    def data(self, foldernumber="31"):
         datas = {}
         folderpath="datas/raw/"+ foldernumber
         filesname = sorted(os.listdir(folderpath))
@@ -105,4 +104,7 @@ class reqfromFile:
 if __name__ == "__main__":
     # processpantipthread(ALL_THREAD=[1,100000,100010])
     # poolpantipthread()
-    reqfromFile().data()
+
+    # foldernumber = input('[Input] folder number : ')
+    for i in range(31, 40):
+        reqfromFile().data(i)
