@@ -46,7 +46,7 @@ class io:
             print(f'[Error] URL : %s not response' % str(url))
             return None, 401
 
-    def requestPantip(self, thread="", security=True):
+    def requestPantipthread(self, thread="", security=True):
         url = "https://ptdev03.mikelab.net/kratoo/"+ thread
         try:
             data = requests.get(url, verify=security).json()
@@ -60,6 +60,20 @@ class io:
             print(f'[Error] Max retries exceeded on thread %s' % str(url))
             return None, 401
 
+    def requestPantipsearch(self, keywords="", pages="", security=True):
+        try:
+            url = "https://ptdev03.mikelab.net/search/"+ keywords + "&page=" + pages
+            data = requests.get(url, verify=security).json()
+            if data and data['pts_searchResult']['hits']:
+                print(f'[Success] Request from word : %s ' % keywords)
+                return data['pts_searchResult']['hits'], 400
+            else:
+                print(f'[Error] Thread : %s not response' % keywords)
+                return None, 403
+        except :
+            print(f'[Error] word %s on page %s' % (keywords, pages))
+            return None, 401
+
     def print(self, data=None):
         pp.pprint(data)
 
@@ -70,7 +84,7 @@ def collectPantip(io=None):
     for i in range(rangethread[0], rangethread[1] + 1):
         thread = str(3*10**7 + i)
         try:
-            data, status = io.requestPantip(thread=thread, security=True)
+            data, status = io.requestPantipthread(thread=thread, security=True)
             if status == 400 : 
                 datas[0] = {**datas[0], **data}
             else:
@@ -103,5 +117,7 @@ def checkCollectPantip(io=None):
 if __name__ == "__main__":
     io = io()
     # io.readJson(filename="token.30010000.json", filepath="../../datas/process/process2/31")
-    collectPantip(io=io)
+    # collectPantip(io=io)
     # checkCollectPantip(io=io)
+    data, status = io.requestPantipsearch(keywords="apple", pages="1")
+    io.print(data)
