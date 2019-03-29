@@ -65,7 +65,7 @@ class io:
             url = "https://ptdev03.mikelab.net/search/"+ keywords + "&page=" + pages
             data = requests.get(url, verify=security).json()
             if data and data['pts_searchResult']['hits']:
-                print(f'[Success] Request from word : %s ' % keywords)
+                print(f'[Success] Request from word : %s, pages : %s' % (keywords, pages))
                 return data['pts_searchResult']['hits'], 400
             else:
                 print(f'[Error] Thread : %s not response' % keywords)
