@@ -74,7 +74,7 @@ class reqfromFile:
         if not filesname: 
             print("[Error] Can't found directory")
             return None
-        resultpath = os.path.join('datas/token/', foldernumber)
+        resultpath = os.path.join('datas/token/newmm/', foldernumber)
         if not os.path.exists(resultpath): os.mkdir(resultpath)
         for filename in filesname:
             # filepaths = os.path.join(folderpath,filename)
@@ -107,4 +107,4 @@ if __name__ == "__main__":
 
     # foldernumber = input('[Input] folder number : ')
     for i in range(31, 40):
-        reqfromFile().data(i)
+        reqfromFile().data(str(i))
