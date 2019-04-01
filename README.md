@@ -35,7 +35,7 @@ pip install matplotlib scipy
 
 #### Use Virtual Environment on Jupyter 
 ```
-pip install --user ipykernel
+pip install ipykernel
 python -m ipykernel install --user --name=envsrclus
 ```
 
