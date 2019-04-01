@@ -10,7 +10,7 @@ from srcluslib.utility.io import io
 from srcluslib.model.word2vec import word2vec
 io = io()
 
-datas_path = os.path.join("..", "datas")
+datas_path = os.path.join(".", "datas")
 raw_datas_path = os.path.join(datas_path, "raw")
 token_datas_path = os.path.join(datas_path, "token")
 token_datas_path = os.path.join(token_datas_path, "newmm")

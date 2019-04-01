@@ -12,7 +12,7 @@ from srcluslib.model.tfidf import tfidf
 # Init My Module
 io = io()
 
-datas_path = os.path.join("..", "datas")
+datas_path = os.path.join(".", "datas")
 raw_datas_path = os.path.join(datas_path, "raw")
 token_datas_path = os.path.join(datas_path, "token")
 token_datas_path = os.path.join(token_datas_path, "newmm")
