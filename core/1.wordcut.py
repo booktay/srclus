@@ -111,5 +111,5 @@ if __name__ == "__main__":
     # poolpantipthread()
 
     # foldernumber = input('[Input] folder number : ')
-    for i in range(31, 40):
-        reqfromFile().data(str(i))
+    # for i in range(31, 40):
+    reqfromFile().data("39")
