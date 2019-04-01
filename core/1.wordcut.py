@@ -14,6 +14,11 @@ from srcluslib.model.tokenize import tokenize
 preprocess = preprocess()
 io = io()
 
+datas_path = os.path.join(".", "datas")
+raw_datas_path = os.path.join(datas_path, "raw")
+token_datas_path = os.path.join(datas_path, "token")
+token_datas_path = os.path.join(token_datas_path, "newmm")
+
 def preprocessdata(word=""):
     status = [0,0,0,0,0]
     procdata = word
@@ -69,12 +74,12 @@ class reqfromURL:
 class reqfromFile:
     def data(self, foldernumber="31"):
         datas = {}
-        folderpath="datas/raw/"+ foldernumber
+        folderpath = os.path.join(raw_datas_path, foldernumber)
         filesname = sorted(os.listdir(folderpath))
         if not filesname: 
             print("[Error] Can't found directory")
             return None
-        resultpath = os.path.join('datas/token/newmm/', foldernumber)
+        resultpath = os.path.join(token_datas_path, foldernumber)
         if not os.path.exists(resultpath): os.mkdir(resultpath)
         for filename in filesname:
             # filepaths = os.path.join(folderpath,filename)
