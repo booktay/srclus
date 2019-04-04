@@ -6,15 +6,14 @@
 # General Module
 import os, json, sys
 
-# My Module
-sys.path.insert(0, '../../srcluslib')
-from io import io
+# Utility Module
+sys.path.append('../utility')
+from iorq import IORQ
+IORQ = IORQ()
 
-# io = io()
-
-# class customwords:
-#     def __init__(self):
-#         pass
+class Customwords:
+    def __init__(self):
+        pass
 
 #     def importwords(self, filename="customwords"):
 #         FILEPATH = os.path.join("srcluslib","corpus", filename + ".json")
