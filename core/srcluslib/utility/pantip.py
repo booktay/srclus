@@ -6,7 +6,7 @@
 import os, sys, json, requests
 
 # My Module
-from .iorq import IORQ
+from iorq import IORQ
 iorq = IORQ()
 
 '''
@@ -38,14 +38,15 @@ class Pantip:
         url = "https://ptdev03.mikelab.net/kratoo/"+ str(thread)
         try:
             data = iorq.requestURL(url)
+            print(data)
             if data and data['found']:
                 print(f'[Success] Request from thread %s ' % thread)
                 return {data['_id']: data['_source']['title'] + data['_source']['desc']}, 400
             else:
-                print(f'[Error] Thread : %s not response' % thread)
+                # print(f'[Error] Thread : %s not response' % thread)
                 return None, 402
         except :
-            print(f'[Error] Max retries exceeded on thread %s' % str(url))
+            # print(f'[Error] Max retries exceeded on thread %s' % str(url))
             return None, 401
 
     '''
@@ -73,5 +74,5 @@ class Pantip:
 
 if __name__ == "__main__":
     pantip = Pantip()
-    pantip.requestSearch()
-    pantip.requestThread()
+    iorq.print(pantip.requestThread(thread="30000111"))
+    # pantip.requestSearch()
