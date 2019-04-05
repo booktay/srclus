@@ -1,3 +1,3 @@
 from .iorq import IORQ
-
-__all__ = ["iorq"]
+from .pantip import Pantip
+__all__ = ["iorq", "pantip"]
