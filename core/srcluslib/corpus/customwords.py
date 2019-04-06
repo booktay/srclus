@@ -4,32 +4,38 @@
 # description: corpus/customwords module
 
 # General Module
-import os, json
+import os, json, sys
 
-class customwords:
+# Utility Module
+sys.path.append('../utility')
+from iorq import IORQ
+IORQ = IORQ()
+
+class Customwords:
     def __init__(self):
-        self.CUSTOMWORDS, self.STATUS = self.importCustomwords()
-        self.TARGET = self.CUSTOMWORDS.keys() if self.CUSTOMWORDS else None
+        pass
 
-    def importCustomwords(self, filename="customwords"):
-        # filepath = os.path.join(".", filename + ".json")
-        filepath = os.path.join("srcluslib/corpus", filename + ".json")
-        if os.path.exists(filepath):
-            words = open(filepath, 'r', encoding="utf-8")
-            return json.load(words), 100
-        else: 
-            print(f'[Error] %s file not found' % filepath)
-            return None, 101
+#     def importwords(self, filename="customwords"):
+#         FILEPATH = os.path.join("srcluslib","corpus", filename + ".json")
+#         if os.path.exists(FILEPATH):
+#             WORDS = open(FILEPATH, 'r', encoding="utf-8")
+#             return json.load(WORDS), 100
+#         else: 
+#             print(f'[Error] file not found at %s' % FILEPATH)
+#             return None, 101
 
-    def target(self, customtype=None):
-        if self.TARGET:
-            if customtype in self.TARGET:
-                return self.CUSTOMWORDS[customtype], 100
-            else:
-                print(f'[Error] Please choose a type [%s]' % ','.join(x for x in self.TARGET))
-                return None,102
-        return None, 101
+#     def target(self, customtype=None):
+#         CUSTOMWORDS, STATUS = self.importwords()
+#         TARGET = CUSTOMWORDS.keys() if CUSTOMWORDS else None
+#         if TARGET:
+#             if customtype in TARGET:
+#                 return CUSTOMWORDS[customtype], 100
+#             else:
+#                 print(f'[Error] Please choose a type [%s]' % ','.join(x for x in self.TARGET))
+#                 return None,102
+#         return None, 101
 
-if __name__ == "__main__":
-    customwords = customwords()
-    print(customwords.target(customtype="tokenize"))
+# if __name__ == "__main__":
+#     CUSTOMWORDS = customwords()
+#     io.print("AA")
+#     io.print(CUSTOMWORDS.target(customtype="tokenize"))
