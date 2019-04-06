@@ -4,13 +4,41 @@
 # description: corpus/stopwords module
 
 # General Module
-import os, json
+import os, json, sys
 
+# My Module
+utility_path = os.path.join('..', '..', 'srcluslib')
+sys.path.append(utility_path)
+print(sys.path)
+from srcluslib.utility.iorq import IORQ
+iorq = IORQ()
+
+'''
+------------- Statuscode -------------
+-- 4XX Series
+400 : OK
+401 : URL not response
+'''
+
+# Init Stopwords class
 class Stopwords:
+    '''
+    Init
+    '''
     def __init__(self):
+        iorq.print("AAA")
+        pass
         # self.STOPWORDS, self.STATUS = self.importStopwords()
         # self.LANGUAGES = self.STOPWORDS.keys() if self.STOPWORDS else None
     
+    '''
+    Read Json file 
+    ---------------- Input ---------------
+    filepath = "../datas"
+    filename = "data.json"
+    --------------- Output ---------------
+    list(data), int(statuscode)
+    '''
 #     def generateStopwordsCorpus(self, languages=["thai", "eng"], words=None, filename = "temp"):
 #         DATA = {}
 #         for n in languages:
@@ -39,6 +67,6 @@ class Stopwords:
 #                 return None, 202
 #         return None,201
 
-# if __name__ == "__main__":
-#     stopwords = stopwords()
+if __name__ == "__main__":
+    stopwords = Stopwords()
 #     print(stopwords.languages("thai"))
