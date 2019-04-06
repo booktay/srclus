@@ -111,8 +111,8 @@ class IORQ:
     def print(self, data=None):
         pp.pprint(data)
 
-# if __name__ == "__main__":
-    # iorq = IORQ()
+if __name__ == "__main__":
+    iorq = IORQ()
     # iorq.checkpath(path="../../test")
     # iorq.writeJson(filepath="../../test", filename="token.30010000.json")
     # iorq.readJson(filepath="../../test", filename="token.30010000.json")
