@@ -9,7 +9,11 @@ Massive Information and Knowledge Engineering Lab
 
 #### Base
 ```
-pip install tensorflow[tensorflow-gpu] deepcut gensim pythainlp sklearn pprint nltk
+pip install deepcut gensim pythainlp sklearn pprint nltk
+```
+
+```
+pip tensorflow[tensorflow-gpu]
 ```
 
 * Note: **Windows OS**, please install this first
