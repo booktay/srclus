@@ -8,4 +8,8 @@ datas/
 # General
 __pycache__/
 .vscode/
+.DS_Store
 log/
+
+#NodeJS
+node_modules/
