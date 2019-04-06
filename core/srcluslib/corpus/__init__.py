@@ -1,2 +1,4 @@
-from . import stopwords
-from . import customwords
+from .stopwords import Stopwords
+from .customwords import Customwords
+
+__all__ = ["customwords", "stopwords"]

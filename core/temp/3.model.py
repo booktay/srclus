@@ -10,6 +10,13 @@ from srcluslib.utility.io import io
 from srcluslib.model.word2vec import word2vec
 io = io()
 
+datas_path = os.path.join(".", "datas")
+raw_datas_path = os.path.join(datas_path, "raw")
+token_datas_path = os.path.join(datas_path, "token")
+token_datas_path = os.path.join(token_datas_path, "newmm")
+tfidf_datas_path = os.path.join(datas_path, "tfidf")
+model_datas_path = os.path.join(datas_path, "model")
+
 class procfromfile:
     def __init__(self, engine):
         self.time = time.strftime("%Y%m%d.%H%M", time.localtime())
@@ -18,11 +25,11 @@ class procfromfile:
     def preparedata1(self):
         foldername = input('[Input] Folder name : ')
         datas = []
-        folderpath = "datas/tfidf/" + foldername
+        folderpath = os.path.join(tfidf_datas_path, foldername)
         if not os.path.exists(folderpath):
             print("[Error] Can't found directory")
             return None
-        resultpath = os.path.join('datas/model/', foldername)
+        resultpath = os.path.join(model_datas_path, foldername)
         if not os.path.exists(resultpath):
             print("[Process] Create directory at " + resultpath)
             os.mkdir(resultpath)
@@ -40,11 +47,11 @@ class procfromfile:
         # Prepare data for train model
         # Don't use TF-IDF
         datas = []
-        resultpath = os.path.join(os.path.join("datas", "model"), self.time)
+        resultpath = os.path.join(model_datas_path, "newmm.all.notfidf")
         if not os.path.exists(resultpath):
             print("[Process] Create directory at " + resultpath)
             os.mkdir(resultpath)
-        rootpath = os.path.join("datas","token")
+        rootpath = token_datas_path
         folderpath = os.listdir(rootpath)
         folders = [os.path.join(rootpath, folder) for folder in folderpath]
         for folder in folders:
