@@ -7,12 +7,12 @@
 import os, json, sys
 
 # My Module
-utility_path = os.path.join('..', '..', 'srcluslib')
-sys.path.append(utility_path)
-print(sys.path)
-from srcluslib.utility.iorq import IORQ
+# utility_path = os.path.join('..', '..', 'srcluslib')
+# sys.path.append(utility_path)
+# print(sys.path)
+from ..utility.iorq import IORQ
 iorq = IORQ()
-
+iorq.print("AAAAAAA")
 '''
 ------------- Statuscode -------------
 -- 4XX Series
@@ -21,24 +21,24 @@ iorq = IORQ()
 '''
 
 # Init Stopwords class
-class Stopwords:
-    '''
-    Init
-    '''
-    def __init__(self):
-        iorq.print("AAA")
-        pass
+# class Stopwords:
+#     '''
+#     Init
+#     '''
+#     def __init__(self):
+#         iorq.print("AAA")
+    #     pass
         # self.STOPWORDS, self.STATUS = self.importStopwords()
         # self.LANGUAGES = self.STOPWORDS.keys() if self.STOPWORDS else None
     
-    '''
-    Read Json file 
-    ---------------- Input ---------------
-    filepath = "../datas"
-    filename = "data.json"
-    --------------- Output ---------------
-    list(data), int(statuscode)
-    '''
+    # '''
+    # Read Json file
+    # ---------------- Input ---------------
+    # filepath = "../datas"
+    # filename = "data.json"
+    # --------------- Output ---------------
+    # list(data), int(statuscode)
+    # '''
 #     def generateStopwordsCorpus(self, languages=["thai", "eng"], words=None, filename = "temp"):
 #         DATA = {}
 #         for n in languages:
@@ -67,6 +67,6 @@ class Stopwords:
 #                 return None, 202
 #         return None,201
 
-if __name__ == "__main__":
-    stopwords = Stopwords()
+# if __name__ == "__main__":
+    # stopwords = Stopwords()
 #     print(stopwords.languages("thai"))

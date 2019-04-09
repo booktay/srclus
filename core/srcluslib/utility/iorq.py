@@ -116,4 +116,4 @@ if __name__ == "__main__":
     # iorq.checkpath(path="../../test")
     # iorq.writeJson(filepath="../../test", filename="token.30010000.json")
     # iorq.readJson(filepath="../../test", filename="token.30010000.json")
-    # iorq.print(iorq.requestURL(url="https://ptdev03.mikelab.net/search/%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B4%E0%B8%9E&page=1"))
+    iorq.print(iorq.requestURL(url="https://ptdev03.mikelab.net/search/%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B4%E0%B8%9E&page=1"))
