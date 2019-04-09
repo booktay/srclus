@@ -6,7 +6,6 @@
 # General Module
 import os
 import sys
-import json
 
 # My Module
 sys.path.insert(0, os.path.abspath('..'))
@@ -27,23 +26,8 @@ class Stopwords:
     def __init__(self):
         self.iorq = IORQ()
         corpus_datas_path = os.path.join("..", "..", "datas", "corpus")
-        self.words, status = self.iorq.readjson(filepath="corpus_datas_path", filename="stopwords.json")
-        self.iorq.print(self.words)
-    
-    # '''
-    # Make a Stopwords corpus file
-    # ---------------- Input ---------------
-    # filepath = "../datas"
-    # filename = "data.json"
-    # '''
-    # def makeCorpus(self, languages=["thai", "eng"], filename="temp.json"):
-    #     data = {}
-    #     for n in languages:
-    #         if words and languages[n] in words:
-    #             data[languages[n]] = sorted(set(words[languages[n]]))
-    #
-    #     with open(filename + ".json", 'x', encoding="utf-8") as data:
-    #         json.dump(data, data, ensure_ascii=False, indent=2)
+        self.words, status = self.iorq.readjson(filepath=corpus_datas_path, filename="stopwords.json")
+        # self.iorq.print(self.words)
 
     # '''
     # Request stopwords
@@ -61,7 +45,7 @@ class Stopwords:
             return None, 201
 
 
-if __name__ == "__main__":
-    stopwords = Stopwords()
+# if __name__ == "__main__":
+    # stopwords = Stopwords()
     # iorq = IORQ()
     # iorq.print(stopwords.languages("thai"))
