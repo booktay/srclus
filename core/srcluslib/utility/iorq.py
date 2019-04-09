@@ -38,7 +38,8 @@ class IORQ:
     --------------- Output ---------------
     Boolean(True)
     '''
-    def checkpath(self, filepath=""):
+    @staticmethod
+    def checkpath(filepath=""):
         if os.path.exists(filepath):
             return True
         else:
@@ -53,7 +54,8 @@ class IORQ:
     --------------- Output ---------------
     list(data), int(statuscode)
     '''
-    def readjson(self, filepath=".", filename=""):
+    @staticmethod
+    def readjson(filepath=".", filename=""):
         try:
             if filename.split('.')[-1] != "json":
                 return None, 303
@@ -75,7 +77,8 @@ class IORQ:
     --------------- Output ---------------
     None, int(statuscode)
     '''
-    def writejson(self, filepath=".", filename=None, data=None):
+    @staticmethod
+    def writejson(filepath=".", filename=None, data=None):
         path, ops = os.path.join(filepath, filename), "yes"
         if filename.split('.')[-1] != "json":
             return None, 303
@@ -100,7 +103,8 @@ class IORQ:
     --------------- Output ---------------
     str(data), int(statuscode)
     '''
-    def requesturl(self, url=""):
+    @staticmethod
+    def requesturl(url=""):
         try:
             data = requests.get(url, verify=True).json()
             print(f'[Success] Request from %s' % url)
@@ -117,10 +121,11 @@ class IORQ:
     --------------- Output ---------------
     Show list on screen
     '''
-    def print(self, data=None):
+    @staticmethod
+    def print(data=None):
         pp.pprint(data)
 
 
-if __name__ == "__main__":
-    iorq = IORQ()
-    iorq.print(iorq.requesturl(url="https://ptdev03.mikelab.net/search/%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B4%E0%B8%9E&page=1"))
+# if __name__ == "__main__":
+#     iorq = IORQ()
+#     iorq.print(iorq.requesturl(url="https://ptdev03.mikelab.net/search/%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%B4%E0%B8%9E&page=1"))
