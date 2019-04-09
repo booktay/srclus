@@ -8,10 +8,12 @@ import os
 import sys
 import re
 
-# Import NLP Module
+# Part of speech Module
 from pythainlp.tag import pos_tag as thai_tag
 from nltk import pos_tag as eng_tag
+# Check Thai Language Module
 from pythainlp.util import is_thai
+# Tokenize Module
 from pythainlp.tokenize import dict_word_tokenize
 # import deepcut
 
@@ -21,8 +23,12 @@ from corpus.stopwords import Stopwords
 from corpus.customwords import Customwords
 from utility.iorq import IORQ
 
+
 '''
 ------------- Statuscode -------------
+-- 4XX Series
+400 : OK
+401 : Error
 -- 5XX Series
 500 : OK
 501 : Replaceurl Error
@@ -31,6 +37,7 @@ from utility.iorq import IORQ
 '''
 
 
+# Init Preprocess class
 class Preprocess:
     # Init
     def __init__(self):
@@ -44,7 +51,6 @@ class Preprocess:
     --------------- Output ---------------                                                                               
     str(data), int(statuscode)                                                                                           
     '''
-
     @staticmethod
     def replaceurl(data=""):
         if data != "":
@@ -61,7 +67,6 @@ class Preprocess:
     --------------- Output ---------------                                                                               
     str(data), int(statuscode)                                                                                           
     '''
-
     @staticmethod
     def filtertheng(data=""):
         if data != "":
@@ -79,6 +84,13 @@ class Preprocess:
             print("[Error] No operation in filtertheng function")
             return "", 502
 
+    '''                                                                                                                  
+    Filter words                                                                                                         
+    ---------------- Input ---------------                                                                               
+    data = ""                                                                                                            
+    --------------- Output ---------------                                                                               
+    str(data), int(statuscode)                                                                                           
+    '''
     def removestopword(self, data=[]):
         if data == "":
             print("[Error] No Operation in removestopword function")
@@ -93,42 +105,43 @@ class Preprocess:
         return text, 500
 
 
+# Init Tokenize class
 class Tokenize:
     def __init__(self, data=[]):
-        self.DATA = data
-        self.customwords = customwords()
+        self.data = data
+        self.custom_words = Customwords()
 
-    def run(self):
-        customdict, statuscustom = self.customwords.target(customtype="tokenize")
-        tokenwords_thai, tokenwords_eng, statusrun = [], [], 600
-        # Wordcut
-        try:
-            for word in self.DATA:
-                if isthai(word, check_all=True)['thai'] > 0:
-                    # tokenword = deepcut.tokenize(word, custom_dict=customdict)
-                    tokenword = dict_word_tokenize(word,customdict, engine='newmm')
-                    if tokenword: tokenwords_thai += [word.replace(' ', '') for word in tokenword if word not in [' ','']]
-                else: 
-                    if not word.isdigit(): tokenwords_eng.append(word)
-        except:
-            print("[Error] Wordcut Function")
-            statusrun = 601
-        tokenwords_thai = set(tokenwords_thai)
-        tokenwords_eng = set(tokenwords_eng)
-        # POS Tag
-        try:
-            poswordsthai = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
-            poswordsthai_noun = [item[0] for item in poswordsthai if (item[1] == "NCMN" and item[0])]
-
-            poswordseng = eng_tag(tokenwords_eng)
-            poswordseng_noun = [item[0] for item in poswordseng if (item[1] not in ["IN"]and item[0])]
-            poswords_noun = poswordsthai_noun + poswordseng_noun
-        except:
-            print("[Error] POS Tag Function")
-            poswords_noun = tokenwords_thai + tokenwords_eng
-            statusrun = 402
-        tokenwords = set(poswords_noun)
-        return tokenwords, statusrun
+    # def run(self):
+    #     customdict, statuscustom = self.custom_words.target(customtype="tokenize")
+    #     tokenwords_thai, tokenwords_eng, statusrun = [], [], 600
+    #     # Wordcut
+    #     try:
+    #         for word in self.DATA:
+    #             if isthai(word, check_all=True)['thai'] > 0:
+    #                 # tokenword = deepcut.tokenize(word, custom_dict=customdict)
+    #                 tokenword = dict_word_tokenize(word,customdict, engine='newmm')
+    #                 if tokenword: tokenwords_thai += [word.replace(' ', '') for word in tokenword if word not in [' ','']]
+    #             else:
+    #                 if not word.isdigit(): tokenwords_eng.append(word)
+    #     except:
+    #         print("[Error] Wordcut Function")
+    #         statusrun = 601
+    #     tokenwords_thai = set(tokenwords_thai)
+    #     tokenwords_eng = set(tokenwords_eng)
+    #     # POS Tag
+    #     try:
+    #         poswordsthai = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
+    #         poswordsthai_noun = [item[0] for item in poswordsthai if (item[1] == "NCMN" and item[0])]
+    #
+    #         poswordseng = eng_tag(tokenwords_eng)
+    #         poswordseng_noun = [item[0] for item in poswordseng if (item[1] not in ["IN"]and item[0])]
+    #         poswords_noun = poswordsthai_noun + poswordseng_noun
+    #     except:
+    #         print("[Error] POS Tag Function")
+    #         poswords_noun = tokenwords_thai + tokenwords_eng
+    #         statusrun = 402
+    #     tokenwords = set(poswords_noun)
+    #     return tokenwords, statusrun
 
 
 if __name__ == "__main__":
