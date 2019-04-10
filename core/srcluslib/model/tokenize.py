@@ -9,8 +9,8 @@ import sys
 import re
 
 # Part of speech Module
-# from pythainlp.tag import pos_tag as thai_tag
-# from nltk import pos_tag as eng_tag
+from pythainlp.tag import pos_tag as thai_tag
+from nltk import pos_tag as eng_tag
 
 # Check Thai Language Module
 from pythainlp.util import is_thai
@@ -23,7 +23,6 @@ from pythainlp.tokenize import word_tokenize
 sys.path.insert(0, os.path.abspath('..'))
 from corpus.stopwords import Stopwords
 from corpus.customwords import Customwords
-from corpus.pantip import Pantip
 from utility.iorq import IORQ
 
 
@@ -114,8 +113,20 @@ class Tokenize:
         text = [word for word in text if word not in self.stopwords_eng and word not in self.stopwords_thai]
         return text, 500
 
+    '''                                                                                                                  
+    Tokenize word by PyThaiNLP 
+    use Newmm algorithm    
+    -----------
+    Noun Classifier by POS Tagger
+    use Orchid corpus                                                                          
+    ---------------- Input ---------------                                                                               
+    data = ""                                                                                                            
+    --------------- Output ---------------                                                                               
+    str(data), int(statuscode)                                                                                           
+    '''
     def run(self, data=""):
-        tokenwords_thai, tokenwords_eng, statusrun = [], [], 600
+        tokenwords_thai, tokenwords_eng = [], []
+
         # Wordcut
         try:
             tokenword = word_tokenize(data, engine='newmm', whitespaces=False)
@@ -125,23 +136,16 @@ class Tokenize:
                     tokenwords_thai.append(word.replace(' ', ''))
                 else:
                     tokenwords_eng.append(word.replace(' ', ''))
-            return tokenwords_thai, tokenwords_eng, 600
         except RuntimeError:
             return [], 601
-        # tokenwords_thai = set(tokenwords_thai)
-        # tokenwords_eng = set(tokenwords_eng)
 
         # POS Tag
-    #     try:
-    #         poswordsthai = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
-    #         poswordsthai_noun = [item[0] for item in poswordsthai if (item[1] == "NCMN" and item[0])]
-    #
-    #         poswordseng = eng_tag(tokenwords_eng)
-    #         poswordseng_noun = [item[0] for item in poswordseng if (item[1] not in ["IN"]and item[0])]
-    #         poswords_noun = poswordsthai_noun + poswordseng_noun
-    #     except:
-    #         print("[Error] POS Tag Function")
-    #         poswords_noun = tokenwords_thai + tokenwords_eng
-    #         statusrun = 402
-    #     tokenwords = set(poswords_noun)
-    #     return tokenwords, statusrun
+        try:
+            poswordsthai = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
+            poswordsthai_noun = [item[0] for item in poswordsthai if (item[1] == "NCMN" and item[0])]
+            poswordseng = eng_tag(tokenwords_eng)
+            poswordseng_noun = [item[0] for item in poswordseng if (item[1] not in ["IN"]and item[0])]
+            poswords_noun = poswordsthai_noun + poswordseng_noun
+        except RuntimeError:
+            return [], 602
+        return poswords_noun, 600
