@@ -8,8 +8,8 @@ import os
 import sys
 
 # My Module
-sys.path.insert(0, os.path.abspath('..'))
-from utility.iorq import IORQ
+sys.path.insert(0, os.path.abspath('../utility'))
+from iorq import IORQ
 
 
 '''
@@ -45,7 +45,7 @@ class Stopwords:
             return None, 201
 
 
-# if __name__ == "__main__":
-    # stopwords = Stopwords()
-    # iorq = IORQ()
-    # iorq.print(stopwords.languages("thai"))
+if __name__ == "__main__":
+    stopwords = Stopwords()
+    iorq = IORQ()
+    iorq.print(stopwords.languages("thai"))

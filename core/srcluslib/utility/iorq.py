@@ -60,9 +60,9 @@ class IORQ:
             if filename.split('.')[-1] != "json":
                 return None, 303
             path = os.path.join(filepath, filename)
-            print(path)
+            # print(path)
             words = open(path, 'r', encoding="utf-8")
-            print(words)
+            # print(words)
             print(f'[Success] Read file at %s' % path)
             return json.load(words), 300
         except IOError:

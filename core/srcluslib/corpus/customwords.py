@@ -8,8 +8,8 @@ import os
 import sys
 
 # My Module
-sys.path.insert(0, os.path.abspath('..'))
-from utility.iorq import IORQ
+sys.path.insert(0, os.path.abspath('../utility'))
+from iorq import IORQ
 
 
 '''
@@ -46,7 +46,7 @@ class Customwords:
         return None, 101
 
 
-# if __name__ == "__main__":
-#     cw = Customwords()
-#     iorq = IORQ()
-#     iorq.print(cw.target(custom_type="tokenize"))
+if __name__ == "__main__":
+    cw = Customwords()
+    iorq = IORQ()
+    iorq.print(cw.target(custom_type="tokenize"))

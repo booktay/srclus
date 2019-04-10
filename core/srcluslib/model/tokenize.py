@@ -9,18 +9,21 @@ import sys
 import re
 
 # Part of speech Module
-from pythainlp.tag import pos_tag as thai_tag
-from nltk import pos_tag as eng_tag
+# from pythainlp.tag import pos_tag as thai_tag
+# from nltk import pos_tag as eng_tag
+
 # Check Thai Language Module
-from pythainlp.util import is_thai
+# from pythainlp.util import is_thai
+
 # Tokenize Module
-from pythainlp.tokenize import dict_word_tokenize
+# from pythainlp.tokenize import dict_word_tokenize
 # import deepcut
 
 # My Module
 sys.path.insert(0, os.path.abspath('..'))
 from corpus.stopwords import Stopwords
 from corpus.customwords import Customwords
+from corpus.pantip import Pantip
 from utility.iorq import IORQ
 
 
@@ -37,11 +40,14 @@ from utility.iorq import IORQ
 '''
 
 
-# Init Preprocess class
-class Preprocess:
+# Init Tokenize class
+class Tokenize:
     # Init
-    def __init__(self):
+    def __init__(self, data=[]):
+        self.data = data
         self.stopwords = Stopwords()
+        self.stopword_thai, status_th = self.stopwords.languages("thai")
+        self.stopword_eng, status_eng = self.stopwords.languages("eng")
         self.custom_words = Customwords()
 
     '''                                                                                                                  
@@ -57,7 +63,6 @@ class Preprocess:
             text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', r' ', data)
             return text, 500
         else:
-            print("[Error] No Operation in replaceurl function")
             return "", 501
 
     '''                                                                                                                  
@@ -81,11 +86,10 @@ class Preprocess:
             text = text.lower()
             return text, 500
         else:
-            print("[Error] No operation in filtertheng function")
             return "", 502
 
     '''                                                                                                                  
-    Filter words                                                                                                         
+    Remove stopwords                                                                                                         
     ---------------- Input ---------------                                                                               
     data = ""                                                                                                            
     --------------- Output ---------------                                                                               
@@ -93,23 +97,14 @@ class Preprocess:
     '''
     def removestopword(self, data=[]):
         if data == "":
-            print("[Error] No Operation in removestopword function")
             return "", 503
-        stopwordthai, statusth = self.stopwords.languages("thai")
-        stopwordeng, statuseng = self.stopwords.languages("eng")
-        customstopword, statuscustom = self.customwords.target(customtype="stopwords")
-        text = [word for word in data if word not in stopwordeng]
-        text = [word for word in text if word not in stopwordthai]
-        text = [word for word in text if word not in customstopword]
-        text = [word for word in text if len(word) > 1]
-        return text, 500
 
-
-# Init Tokenize class
-class Tokenize:
-    def __init__(self, data=[]):
-        self.data = data
-        self.custom_words = Customwords()
+        # customstopword, statuscustom = self.customwords.target(customtype="stopwords")
+        # text = [word for word in data if word not in stopwordeng]
+        # text = [word for word in text if word not in stopwordthai]
+        # text = [word for word in text if word not in customstopword]
+        # text = [word for word in text if len(word) > 1]
+        # return text, 500
 
     # def run(self):
     #     customdict, statuscustom = self.custom_words.target(customtype="tokenize")
@@ -145,4 +140,5 @@ class Tokenize:
 
 
 if __name__ == "__main__":
-    Tokenize(data=['Apple สวัสดี now has Mr.']).run()
+    IORQ().print(Pantip().requestthread(thread="35421656"))
+    # Tokenize(data=[]).run()

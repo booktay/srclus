@@ -1,9 +1,14 @@
 # coding: utf-8
 # author: Siwanont Sittinam
-# description: utility/io module
+# description: corpus/pantip module
+
+# General Module
+import sys
+import os
 
 # My Module
-from .iorq import IORQ
+sys.path.insert(0, os.path.abspath('../utility'))
+from iorq import IORQ
 
 
 '''
@@ -68,7 +73,8 @@ class Pantip:
             print(f'[Error] word %s on page %s' % (keywords, pages))
             return None, 401
 
-# if __name__ == "__main__":
-    # pantip = Pantip()
-    # iorq.print(pantip.requestThread(thread="30000111"))
-    # iorq.print(pantip.requestSearch(keywords="apple", pages="1"))
+if __name__ == "__main__":
+    pantip = Pantip()
+    iorq = IORQ()
+    iorq.print(pantip.requestthread(thread="30000111"))
+    # iorq.print(pantip.requestsearch(keywords="apple", pages="1"))
