@@ -13,10 +13,10 @@ import re
 # from nltk import pos_tag as eng_tag
 
 # Check Thai Language Module
-# from pythainlp.util import is_thai
+from pythainlp.util import is_thai
 
 # Tokenize Module
-# from pythainlp.tokenize import dict_word_tokenize
+from pythainlp.tokenize import word_tokenize
 # import deepcut
 
 # My Module
@@ -34,21 +34,32 @@ from utility.iorq import IORQ
 401 : Error
 -- 5XX Series
 500 : OK
-501 : Replaceurl Error
-502 : Filtertheng Error
-503 : Removestopword Error
+501 : Replace url Error
+502 : Filter th eng Error
+503 : Remove stop word Error
+--- 6XX Series
+600 : OK
+601 : Word tokenize Error
+602 : POS Error
 '''
 
 
 # Init Tokenize class
 class Tokenize:
     # Init
-    def __init__(self, data=[]):
-        self.data = data
+    def __init__(self):
+        # Data from 1 thread
+        # self.data = data
+
+        # Stopwords
         self.stopwords = Stopwords()
-        self.stopword_thai, status_th = self.stopwords.languages("thai")
-        self.stopword_eng, status_eng = self.stopwords.languages("eng")
+        self.stopwords_thai, status_th = self.stopwords.languages("thai")
+        self.stopwords_eng, status_eng = self.stopwords.languages("eng")
+
+        # Custom words
         self.custom_words = Customwords()
+        self.custom_words_tokenize, status_tok = self.custom_words.target("tokenize")
+        self.custom_words_stopwords, status_tok = self.custom_words.target("stopwords")
 
     '''                                                                                                                  
     Replace URL with 2 space                                                                                             
@@ -60,7 +71,7 @@ class Tokenize:
     @staticmethod
     def replaceurl(data=""):
         if data != "":
-            text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', r' ', data)
+            text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', r'  ', data)
             return text, 500
         else:
             return "", 501
@@ -75,14 +86,14 @@ class Tokenize:
     @staticmethod
     def filtertheng(data=""):
         if data != "":
-            text = re.sub(r'[^a-zA-Z0-9ก-ฮะ-ูเ-์๐-๙\s#@._%)\-]+', r' ', data)
-            text = re.sub(r'([#@._%)\-\s])\1+', r'\1', text)
-            text = re.sub(r'([#@._\-])(\s)', r'\1', text)
+            text = re.sub(r'[^a-zA-Z0-9ก-๙\s]+', r' ', data)
+            # text = re.sub(r'([#@._%)\-\s])\1+', r'\1', text)
+            # text = re.sub(r'([#@._\-])(\s)', r'\1', text)
             # TEXT = re.sub(r'(\d+)(\s)([%])', r'\2', TEXT)
-            text = re.sub(r'\s(\d+[\.)]?\d*)\s', r' ', text)
+            # text = re.sub(r'\s(\d+[\.)]?\d*)\s', r' ', text)
             # TEXT = re.sub(r'([!-/:-@[-`{-~])\1{1,}', r'\1', data)
-            # TEXT = re.sub(r'(\s)\1{1,}', r' ', TEXT)
-            text = re.sub(r'([a-zA-Zก-ฮ])\1{3,}', r'\1\1', text)
+            text = re.sub(r'(\s)\1+', r' ', text)
+            # text = re.sub(r'([a-zA-Zก-ฮ])\1{3,}', r'\1\1', text)
             text = text.lower()
             return text, 500
         else:
@@ -99,31 +110,28 @@ class Tokenize:
         if data == "":
             return "", 503
 
-        # customstopword, statuscustom = self.customwords.target(customtype="stopwords")
-        # text = [word for word in data if word not in stopwordeng]
-        # text = [word for word in text if word not in stopwordthai]
-        # text = [word for word in text if word not in customstopword]
-        # text = [word for word in text if len(word) > 1]
-        # return text, 500
+        text = [word for word in data if len(word) > 1 and word not in self.custom_words_stopwords]
+        text = [word for word in text if word not in self.stopwords_eng and word not in self.stopwords_thai]
+        return text, 500
 
-    # def run(self):
-    #     customdict, statuscustom = self.custom_words.target(customtype="tokenize")
-    #     tokenwords_thai, tokenwords_eng, statusrun = [], [], 600
-    #     # Wordcut
-    #     try:
-    #         for word in self.DATA:
-    #             if isthai(word, check_all=True)['thai'] > 0:
-    #                 # tokenword = deepcut.tokenize(word, custom_dict=customdict)
-    #                 tokenword = dict_word_tokenize(word,customdict, engine='newmm')
-    #                 if tokenword: tokenwords_thai += [word.replace(' ', '') for word in tokenword if word not in [' ','']]
-    #             else:
-    #                 if not word.isdigit(): tokenwords_eng.append(word)
-    #     except:
-    #         print("[Error] Wordcut Function")
-    #         statusrun = 601
-    #     tokenwords_thai = set(tokenwords_thai)
-    #     tokenwords_eng = set(tokenwords_eng)
-    #     # POS Tag
+    def run(self, data=""):
+        tokenwords_thai, tokenwords_eng, statusrun = [], [], 600
+        # Wordcut
+        try:
+            tokenword = word_tokenize(data, engine='newmm', whitespaces=False)
+            tokenword = set(tokenword)
+            for word in tokenword:
+                if is_thai(word, check_all=True)['thai'] > 0:
+                    tokenwords_thai.append(word.replace(' ', ''))
+                else:
+                    tokenwords_eng.append(word.replace(' ', ''))
+            return tokenwords_thai, tokenwords_eng, 600
+        except RuntimeError:
+            return [], 601
+        # tokenwords_thai = set(tokenwords_thai)
+        # tokenwords_eng = set(tokenwords_eng)
+
+        # POS Tag
     #     try:
     #         poswordsthai = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
     #         poswordsthai_noun = [item[0] for item in poswordsthai if (item[1] == "NCMN" and item[0])]
@@ -137,8 +145,3 @@ class Tokenize:
     #         statusrun = 402
     #     tokenwords = set(poswords_noun)
     #     return tokenwords, statusrun
-
-
-if __name__ == "__main__":
-    IORQ().print(Pantip().requestthread(thread="35421656"))
-    # Tokenize(data=[]).run()

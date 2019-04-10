@@ -59,7 +59,7 @@ class IORQ:
         try:
             if filename.split('.')[-1] != "json":
                 return None, 303
-            path = os.path.join(filepath, filename)
+            path = os.path.abspath(os.path.join(filepath, filename))
             # print(path)
             words = open(path, 'r', encoding="utf-8")
             # print(words)
@@ -79,7 +79,7 @@ class IORQ:
     '''
     @staticmethod
     def writejson(filepath=".", filename=None, data=None):
-        path, ops = os.path.join(filepath, filename), "yes"
+        path, ops = os.path.abspath(os.path.join(filepath, filename)), "yes"
         if filename.split('.')[-1] != "json":
             return None, 303
         if not os.path.exists(filepath):
