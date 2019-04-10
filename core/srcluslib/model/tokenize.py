@@ -35,7 +35,6 @@ from utility.iorq import IORQ
 500 : OK
 501 : Replace url Error
 502 : Filter th eng Error
-503 : Remove stop word Error
 --- 6XX Series
 600 : OK
 601 : Word tokenize Error
@@ -99,21 +98,6 @@ class Tokenize:
             return "", 502
 
     '''                                                                                                                  
-    Remove stopwords                                                                                                         
-    ---------------- Input ---------------                                                                               
-    data = ""                                                                                                            
-    --------------- Output ---------------                                                                               
-    str(data), int(statuscode)                                                                                           
-    '''
-    def removestopword(self, data=[]):
-        if data == "":
-            return "", 503
-
-        text = [word for word in data if len(word) > 1 and word not in self.custom_words_stopwords]
-        text = [word for word in text if word not in self.stopwords_eng and word not in self.stopwords_thai]
-        return text, 500
-
-    '''                                                                                                                  
     Tokenize word by PyThaiNLP 
     use Newmm algorithm    
     -----------
@@ -131,6 +115,8 @@ class Tokenize:
         try:
             tokenword = word_tokenize(data, engine='newmm', whitespaces=False)
             tokenword = set(tokenword)
+            tokenword = [word for word in tokenword if len(word) > 1 and word not in self.custom_words_stopwords]
+            tokenword = [word for word in tokenword if word not in self.stopwords_eng and word not in self.stopwords_thai]
             for word in tokenword:
                 if is_thai(word, check_all=True)['thai'] > 0:
                     tokenwords_thai.append(word.replace(' ', ''))
@@ -141,10 +127,10 @@ class Tokenize:
 
         # POS Tag
         try:
-            poswordsthai = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
-            poswordsthai_noun = [item[0] for item in poswordsthai if (item[1] == "NCMN" and item[0])]
-            poswordseng = eng_tag(tokenwords_eng)
-            poswordseng_noun = [item[0] for item in poswordseng if (item[1] not in ["IN"]and item[0])]
+            poswordsthai_noun = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
+            poswordsthai_noun = [item[0] for item in poswordsthai_noun if (item[1] == "NCMN" and item[0])]
+            poswordseng_noun = eng_tag(tokenwords_eng)
+            poswordseng_noun = [item[0] for item in poswordseng_noun if (item[1] not in ["IN"]and item[0])]
             poswords_noun = poswordsthai_noun + poswordseng_noun
         except RuntimeError:
             return [], 602
