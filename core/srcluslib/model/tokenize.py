@@ -8,12 +8,14 @@ import os
 import sys
 import re
 
+import unicodedata
+
 # Part of speech Module
 from pythainlp.tag import pos_tag as thai_tag
 from nltk import pos_tag as eng_tag
 
 # Check Thai Language Module
-from pythainlp.util import is_thai
+from pythainlp.util import isthai, num_to_thaiword, text_to_arabic_digit
 
 # Tokenize Module
 from pythainlp.tokenize import word_tokenize
@@ -24,7 +26,7 @@ sys.path.insert(0, os.path.abspath('..'))
 from corpus.stopwords import Stopwords
 from corpus.customwords import Customwords
 from utility.iorq import IORQ
-
+iorq = IORQ()
 
 '''
 ------------- Statuscode -------------
@@ -98,6 +100,34 @@ class Tokenize:
             return "", 502
 
     '''                                                                                                                  
+    Num to text                                                                                                         
+    ---------------- Input ---------------                                                                               
+    data = 1                                                                                                            
+    --------------- Output ---------------                                                                               
+    str(data), int(statuscode)                                                                                           
+    '''
+    def numth(self, data=""):
+        new_data, number_search, state, n = "", "", 0, ""
+        for ch in data:
+            state = self.checknum(data=ch)
+            if state:
+                number_search += ch
+            else:
+                if number_search != "":
+                    n = num_to_thaiword(int(number_search))
+                new_data += n + ch
+                n, number_search = "", ""
+        return new_data, 600
+
+    @staticmethod
+    def checknum(data=""):
+        try:
+            unicodedata.numeric(data)
+            return True
+        except (TypeError, ValueError):
+            return False
+
+    '''                                                                                                                  
     Tokenize word by PyThaiNLP 
     use Newmm algorithm    
     -----------
@@ -118,10 +148,13 @@ class Tokenize:
             tokenword = [word for word in tokenword if len(word) > 1 and word not in self.custom_words_stopwords]
             tokenword = [word for word in tokenword if word not in self.stopwords_eng and word not in self.stopwords_thai]
             for word in tokenword:
-                if is_thai(word, check_all=True)['thai'] > 0:
+                if isthai(word):
                     tokenwords_thai.append(word.replace(' ', ''))
                 else:
                     tokenwords_eng.append(word.replace(' ', ''))
+            print(tokenwords_thai)
+            print(tokenwords_eng)
+            # return [tokenwords_thai, tokenwords_thai], 600
         except RuntimeError:
             return [], 601
 
@@ -130,8 +163,9 @@ class Tokenize:
             poswordsthai_noun = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
             poswordsthai_noun = [item[0] for item in poswordsthai_noun if (item[1] == "NCMN" and item[0])]
             poswordseng_noun = eng_tag(tokenwords_eng)
-            poswordseng_noun = [item[0] for item in poswordseng_noun if (item[1] not in ["IN"]and item[0])]
-            poswords_noun = poswordsthai_noun + poswordseng_noun
+            print(poswordseng_noun)
+            # poswordseng_noun = [item[0] for item in poswordseng_noun if (item[1] not in ["IN"]and item[0])]
+        #     poswords_noun = poswordseng_noun + poswordsthai_noun
         except RuntimeError:
             return [], 602
-        return poswords_noun, 600
+        return poswordsthai_noun, 600
