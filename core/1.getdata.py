@@ -24,9 +24,9 @@ def collectPantip():
                 if status == 400 : 
                     datas[0] = {**datas[0], **data}
                 else:
-                    datas[0][thread] = ""
-                    datas[1][thread] = status
-                if i % 10000 == 0 or i == stopthread:
+                    datas[0][str(i)] = ""
+                    datas[1][str(i)] = status
+                if i != startthread and (i % 10000 == 0 or i == stopthread):
                     iorq.writejson(filepath=savepath, filename=str(i)+".json", data=datas)
                     datas = [{},{}]
                     break
