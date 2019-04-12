@@ -18,7 +18,7 @@ import multiprocessing
 
 
 # Init Word2Vec class
-class word2vec:
+class W2V:
     def __init__(self, data=[], resultpath=""):
         self.WORDSALL = data
         self.RESULTPATH = resultpath

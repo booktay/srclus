@@ -6,11 +6,11 @@
 # General Module
 import os, sys, time
 # My Module
-from srcluslib.utility.io import io
+from srcluslib.utility.iorq import IORQ
 from srcluslib.model.tfidf import tfidf
 
 # Init My Module
-io = io()
+iorq = IORQ()
 
 datas_path = os.path.join(".", "datas")
 raw_datas_path = os.path.join(datas_path, "raw")
@@ -54,9 +54,9 @@ class procfromfile:
             rankword.append(rankwords[n])
             if (n > 0 and n % 10000 == 0) or n == len(rankwords) - 1:
                 filepathtfidf = os.path.join(tfidf_datas_path, self.time)
-                io.writeJson(filename="tfidf."+ str(n) + ".json", filepath=filepathtfidf, data=rankword)
+                iorq.writeJson(filename="tfidf."+ str(n) + ".json", filepath=filepathtfidf, data=rankword)
                 rankword = []
-        io.writeJson(filename="tfidf.word.json", filepath=filepathtfidf, data=wordlist)
+        iorq.writeJson(filename="tfidf.word.json", filepath=filepathtfidf, data=wordlist)
 
     def convert(self):
         word_all = []
@@ -72,7 +72,7 @@ class procfromfile:
             for word in data:
                 if word != [] : word_all += word
             # break
-        io.writeJson(filename="tfidf.word.json", filepath=folderpath, data=word_all)
+        iorq.writeJson(filename="tfidf.word.json", filepath=folderpath, data=word_all)
 
 
 if __name__ == "__main__":

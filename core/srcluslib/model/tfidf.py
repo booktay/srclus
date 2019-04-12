@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 # Init TF-IDF class
-class tfidf:
+class TFIDF:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = sorted(data)
         self.tfidf = TfidfVectorizer(analyzer='word', tokenizer=self.tfidftemp, preprocessor=self.tfidftemp, token_pattern=None)  
