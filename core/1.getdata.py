@@ -50,10 +50,4 @@ def checkCollectPantip():
                     tempforrequest.append(name)
     iorq.print([count, tempforrequest])
 
-
 collectPantip()
-# tk = Tokenize()
-# rep, status_url = tk.replaceurl(data=data)
-# rep, status_f = tk.filtertheng(data=rep)
-# rep, status_nt = tk.numth(data=rep)
-# rep, status_t = tk.run(data=rep)
