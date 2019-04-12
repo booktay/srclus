@@ -12,7 +12,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-#
+# Init TF-IDF class
 class tfidf:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = sorted(data)

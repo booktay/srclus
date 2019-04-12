@@ -3,14 +3,21 @@
 # author: Siwanont Sittinam
 # description: model/word2vec module
 
-# Import Basic Module
-import collections, time, json, os
+# General Module
+import collections
+import time
+import json
+import os
+
+# Model Module
 import numpy as np
 # import tensorflow as tf
 from gensim.models import Word2Vec
 # from gensim.models.word2vec import LineSentence
 import multiprocessing
 
+
+# Init Word2Vec class
 class word2vec:
     def __init__(self, data=[], resultpath=""):
         self.WORDSALL = data
@@ -131,7 +138,3 @@ class word2vec:
         # model.save_word2vec_format("word.vector", binary=False)
         print("[Save] Model and Vector")
 
-    def loadGensim(self, pathname):
-        new_model = Word2Vec.load(pathname)
-        print(new_model)
-        print(new_model['รุ้'])
