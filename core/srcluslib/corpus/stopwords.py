@@ -8,8 +8,8 @@ import os
 import sys
 
 # My Module
-sys.path.insert(0, os.path.abspath('../utility'))
-from iorq import IORQ
+# sys.path.insert(0, os.path.abspath('../utility'))
+from ..utility.iorq import IORQ
 
 
 '''
@@ -25,7 +25,8 @@ class Stopwords:
     # Init
     def __init__(self):
         self.iorq = IORQ()
-        corpus_datas_path = os.path.join("..", "..", "datas", "corpus")
+        root_path = os.path.abspath(os.path.join("."))
+        corpus_datas_path = os.path.join(root_path, "datas", "corpus")
         self.words, status = self.iorq.readjson(filepath=corpus_datas_path, filename="stopwords.json")
         # self.iorq.print(self.words)
 
@@ -38,6 +39,7 @@ class Stopwords:
     # '''
     def languages(self, language=""):
         language = language.lower()
+        # print(self.words)
         if self.words[language]:
             return self.words[language], 200
         else:

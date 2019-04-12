@@ -22,10 +22,10 @@ from pythainlp.tokenize import word_tokenize
 # import deepcut
 
 # My Module
-sys.path.insert(0, os.path.abspath('..'))
-from corpus.stopwords import Stopwords
-from corpus.customwords import Customwords
-from utility.iorq import IORQ
+# sys.path.insert(0, os.path.abspath('..'))
+from ..corpus.stopwords import Stopwords
+from ..corpus.customwords import Customwords
+from ..utility.iorq import IORQ
 iorq = IORQ()
 
 '''
@@ -152,8 +152,8 @@ class Tokenize:
                     tokenwords_thai.append(word.replace(' ', ''))
                 else:
                     tokenwords_eng.append(word.replace(' ', ''))
-            print(tokenwords_thai)
-            print(tokenwords_eng)
+            # print(tokenwords_thai)
+            # print(tokenwords_eng)
             # return [tokenwords_thai, tokenwords_thai], 600
         except RuntimeError:
             return [], 601
@@ -163,9 +163,8 @@ class Tokenize:
             poswordsthai_noun = thai_tag(tokenwords_thai, engine='artagger', corpus='orchid')
             poswordsthai_noun = [item[0] for item in poswordsthai_noun if (item[1] == "NCMN" and item[0])]
             poswordseng_noun = eng_tag(tokenwords_eng)
-            print(poswordseng_noun)
-            # poswordseng_noun = [item[0] for item in poswordseng_noun if (item[1] not in ["IN"]and item[0])]
-        #     poswords_noun = poswordseng_noun + poswordsthai_noun
+            poswordseng_noun = [item[0] for item in poswordseng_noun if (item[1] not in ["IN"]and item[0])]
+            poswords_noun = poswordseng_noun + poswordsthai_noun
         except RuntimeError:
             return [], 602
-        return poswordsthai_noun, 600
+        return poswords_noun, 600

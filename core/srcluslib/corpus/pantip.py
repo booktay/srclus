@@ -7,8 +7,8 @@ import sys
 import os
 
 # My Module
-sys.path.insert(0, os.path.abspath('../utility'))
-from iorq import IORQ
+# sys.path.insert(0, os.path.abspath('../utility'))
+from ..utility.iorq import IORQ
 
 
 '''
