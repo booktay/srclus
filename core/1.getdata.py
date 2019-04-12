@@ -15,7 +15,7 @@ from srcluslib.model.tokenize import Tokenize
 
 def collectPantip(io=None):
         datas = [{},{}]
-        rangethread = [8000001, 8580770]
+        rangethread = [8000001, 8758650] # Update 12/04/2562 23:50 : 38758650
         for i in range(rangethread[0], rangethread[1] + 1):
             thread = str(3*10**7 + i)
             try:
