@@ -3,19 +3,25 @@
 # author: Siwanont Sittinam
 # description: model/tfidf module
 
-# Import Basic Module
-import json, os
+# General Module
+import os
+import json
+
+# TF-IDF Module
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def tfidftemp(doc):
-    return doc
 
+#
 class tfidf:
     def __init__(self, data=[]):
         self.WORD_TOKEN_ALLTHREAD = sorted(data)
-        self.tfidf = TfidfVectorizer(analyzer='word', tokenizer=tfidftemp, preprocessor=tfidftemp, token_pattern=None)  
+        self.tfidf = TfidfVectorizer(analyzer='word', tokenizer=self.tfidftemp, preprocessor=self.tfidftemp, token_pattern=None)  
         # self.tfidf = TfidfVectorizer(tokenizer=lambda x : x.split(" "), min_df=1, max_df=1)
+
+    @staticmethod
+    def tfidftemp(doc):
+        return doc
 
     def getRawdata(self):
         return self.WORD_TOKEN_ALLTHREAD
