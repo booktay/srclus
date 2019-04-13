@@ -29,7 +29,7 @@ def collectPantip():
                 if i != startthread and (i % 10000 == 0 or i == stopthread):
                     iorq.writejson(filepath=savepath, filename=str(i)+".json", data=datas)
                     datas = [{},{}]
-                    break
+                    # break
             except KeyboardInterrupt:
                 print("[Cancel] Ctrl-c Detection")
                 sys.exit(0)
