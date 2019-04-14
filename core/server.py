@@ -33,7 +33,7 @@ def home():
 # ---------------------------
 @app.route('/api', methods=['GET'])
 def api():
-    return "<h1>API</h1>"
+    return "<h1>SRCLUS API</h1>"
 
 # Load Model
 model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.all.notfidf", "vocab.model")
