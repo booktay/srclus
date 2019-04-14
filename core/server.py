@@ -22,7 +22,6 @@ iorq = IORQ()
 pantip = Pantip()
 tokenize = Tokenize()
 
-
 # Home
 # ---------------------------
 @app.route('/', methods=['GET'])
