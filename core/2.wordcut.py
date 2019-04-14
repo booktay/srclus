@@ -38,7 +38,8 @@ def reqfromFile(foldernumber="31"):
         data, status = iorq.readjson(filepath=folderpath, filename=filename)
         # iorq.print(data[0])
         for thread, dat in data[0].items():
-            if data != "": 
+            if dat != "": 
+                data_combine = dat['title'] + " " + data['desc']
                 try:
                     rep, status_url = tokenize.replaceurl(data=dat)
                     rep, status_f = tokenize.filtertheng(data=rep)
