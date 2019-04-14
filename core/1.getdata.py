@@ -29,10 +29,12 @@ def collectPantip():
                 if i != startthread and (i % 10000 == 0 or i == stopthread):
                     iorq.writejson(filepath=savepath, filename=str(i)+".json", data=datas)
                     datas = [{},{}]
-                    # break
+                # if i == 38590003:
+                #     break
             except KeyboardInterrupt:
                 print("[Cancel] Ctrl-c Detection")
                 sys.exit(0)
+        iorq.print(datas)
 
 def checkCollectPantip():
     folderpath = os.path.join(os.path.abspath("."), "datas", "raw")
