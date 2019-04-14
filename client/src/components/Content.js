@@ -93,11 +93,14 @@ function Content(props) {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
+                            id="searchinp"
                         />
                     </div>
                     <Button variant="contained" id="searchbtn" fullWidth size="large" className={classes.button}>
                         Search
                     </Button>
+                </Grid>
+                <Grid item xs={12} className={classes.contentH}>
                 </Grid>
             </Grid>
         </div>
