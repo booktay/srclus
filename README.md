@@ -29,7 +29,7 @@ nltk.download('averaged_perceptron_tagger')
 
 ### Web Server
 ```
-pip install flask flask_cors
+pip install flask flask_cors paramiko
 ```
 
 #### Test Embedded Graph
