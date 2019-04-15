@@ -6,6 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
     root: {
@@ -14,15 +19,6 @@ const styles = theme => ({
     },
     grow: {
         flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing.unit * 2,
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-        // minHeight: "100vh",
-    },
-    contentl : {
-        minHeight: "70vh",
     },
     contentH : {
         marginTop: "0.5%",
@@ -73,10 +69,37 @@ const styles = theme => ({
     input: {
         display: 'none',
     },
+    card: {
+        width: "-webkit-fill-available",
+        marginBottom: 15,
+        background: "#322f53",
+        // maxWidth: 345,
+    },
+    cardcontent: {
+        minHeight: 100,
+        color: "white",
+        textAlign: "left",
+    },
+    typetitle: {
+        color: "white",
+    },
+    typedesc : {
+        color: "white", 
+        fontSize: "medium",
+        marginTop: 10,
+    },
+    divider : {
+        backgroundColor: "white",
+    }
 });
 
 function Content(props) {
     const { classes } = props;
+
+    function handleClick(e) {
+        e.preventDefault();
+        console.log('The link was clicked.');
+    }
 
     return (
         <div className={classes.root}>
@@ -96,11 +119,39 @@ function Content(props) {
                             id="searchinp"
                         />
                     </div>
-                    <Button variant="contained" id="searchbtn" fullWidth size="large" className={classes.button}>
+                    <Button variant="contained" id="searchbtn" fullWidth size="large" className={classes.button} onClick={handleClick}>
                         Search
                     </Button>
                 </Grid>
-                <Grid item xs={12} className={classes.contentH}>
+                <Grid item xs={12} sm={3}>
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent className={classes.cardcontent}>
+                                {/* <a href="" onClick={handleClick}>
+                                    Click me 1
+                                </a>
+                                <a href="" onClick={handleClick}>
+                                    Click me 2
+                                </a> */}
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={9} >
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent className={classes.cardcontent}>
+                                <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
+                                    Lizard
+                                </Typography>
+                                <Divider variant="fullWidth" className={classes.divider} />
+                                <Typography component="p" className={classes.typedesc}>
+                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                    across all continents except Antarctica
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
                 </Grid>
             </Grid>
         </div>
