@@ -89,15 +89,16 @@ def searchc(word):
                             datas[j].append(data_t)
                         else:
                             datas[j] = [data_t]
-            del paragraph
-            del data
-            del data_t
+                    del paragraph, data_t
 
+        del data
         datas_group = {}
         for k, v in datas.items():
             if len(v) > 1 : 
                 datas_group[k] = v
-
+        del datas
+        
+        iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
         return make_response(jsonify(datas_group), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)
