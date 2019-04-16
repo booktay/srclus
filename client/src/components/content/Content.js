@@ -6,13 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
-// import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardContent from '@material-ui/core/CardContent';
-// import Typography from '@material-ui/core/Typography';
-// import Divider from '@material-ui/core/Divider';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
 
-// const axios = require('axios');
+import Cardthread from "./Cardthread";
+
+
+const axios = require('axios');
 
 const styles = theme => ({
     rootGrid: {
@@ -60,6 +61,17 @@ const styles = theme => ({
         transition: theme.transitions.create('width'),
         width: '100%',
     },
+    card: {
+        width: "-webkit-fill-available",
+        marginBottom: 15,
+        background: "#322f53",
+        // maxWidth: 345,
+    },
+    cardcontent: {
+        minHeight: 100,
+        color: "white",
+        textAlign: "left",
+    },
 });
 
 
@@ -70,6 +82,14 @@ class Content extends Component {
         console.log('The link was clicked.');
     }
     
+    getdata() {
+        axios.get('/datas/apple.json')
+            .then(function (response) {
+                // handle success
+                console.log(response);
+            });
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -94,6 +114,23 @@ class Content extends Component {
                         <Button className={classes.button} variant="contained" id="searchbtn" fullWidth size="large" onClick={this.handleClick}>
                             Search
                         </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <Card className={classes.card}>
+                            <CardActionArea>
+                                <CardContent className={classes.cardcontent}>
+                                    <a href="/a" onClick={this.handleClick}>
+                                        Click me 1
+                                    </a>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={9} >
+                        <Cardthread/>
+                        <Cardthread/>
+                        <Cardthread />
+                        <Cardthread />
                     </Grid>
                 </Grid>
             </React.Fragment>
