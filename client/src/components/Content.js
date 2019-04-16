@@ -12,6 +12,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
+const axios = require('axios');
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -101,6 +103,51 @@ function Content(props) {
         console.log('The link was clicked.');
     }
 
+    function addCard() {
+        return (
+            <React.Fragment>
+                <Grid item xs={12} sm={3}>
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent className={classes.cardcontent}>
+                                {/* <a href="" onClick={handleClick}>
+                                            Click me 1
+                                        </a>
+                                        <a href="" onClick={handleClick}>
+                                            Click me 2
+                                        </a> */}
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={9} >
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent className={classes.cardcontent}>
+                                <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
+                                    Lizard
+                                    </Typography>
+                                <Divider variant="fullWidth" className={classes.divider} />
+                                <Typography component="p" className={classes.typedesc}>
+                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                    across all continents except Antarctica
+                                    </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+            </React.Fragment>
+        );
+    }
+
+    function getdata() {
+        axios.get('/datas/apple.json')
+            .then(function (response) {
+                // handle success
+                console.log(response);
+            });
+    }
+
     return (
         <div className={classes.root}>
             <Grid container spacing={24}>
@@ -123,37 +170,9 @@ function Content(props) {
                         Search
                     </Button>
                 </Grid>
-                <Grid item xs={12} sm={3}>
-                    <Card className={classes.card}>
-                        <CardActionArea>
-                            <CardContent className={classes.cardcontent}>
-                                {/* <a href="" onClick={handleClick}>
-                                    Click me 1
-                                </a>
-                                <a href="" onClick={handleClick}>
-                                    Click me 2
-                                </a> */}
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={9} >
-                    <Card className={classes.card}>
-                        <CardActionArea>
-                            <CardContent className={classes.cardcontent}>
-                                <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
-                                    Lizard
-                                </Typography>
-                                <Divider variant="fullWidth" className={classes.divider} />
-                                <Typography component="p" className={classes.typedesc}>
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                    across all continents except Antarctica
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
+                
             </Grid>
+            {/* {getdata} */}
         </div>
     );
 }
