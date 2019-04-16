@@ -89,7 +89,16 @@ def searchc(word):
                             datas[j].append(data_t)
                         else:
                             datas[j] = [data_t]
-        return make_response(jsonify(datas), 200, {'Content-Type': 'application/json'})
+            del paragraph
+            del data
+            del data_t
+
+        datas_group = {}
+        for k, v in datas.items():
+            if len(v) > 1 : 
+                datas_group[k] = v
+
+        return make_response(jsonify(datas_group), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)
 
