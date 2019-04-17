@@ -74,7 +74,7 @@ def tokenizer(data):
     if status_t == 600:
         rep = list(filter(lambda x: x in model_newmm.wv.vocab, rep))
         if rep:
-            word = model_newmm.wv.most_similar(positive=rep, topn=5)
+            word = model_newmm.wv.most_similar(positive=rep, topn=10)
             return word # [x[0] for x in word]
     return []
 
@@ -82,7 +82,7 @@ def tokenizer(data):
 def searchc(word):
     if word:
         datas = {}
-        for i in range(1, 2):
+        for i in range(1, 11):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
@@ -91,23 +91,37 @@ def searchc(word):
                     paragraph = data_t['title'] + " " + data_t['desc']
                     paragraph = tokenizer(paragraph)
                     for j in paragraph:
+                        data_score = {
+                            'id' : data_t['id'],
+                            'title' : data_t['title'],
+                            'desc' : data_t['desc'],
+                            'score' : [data_t['score']/100 , j[1]]
+                        }
+
+                        calculate = data_t['score'] / 100 * j[1]
+
                         if j[0] in datas:
-                            datas[j[0]].append(data_t)
+                            datas[j[0]]['data'].append(data_score)
+                            if datas[j[0]]['score'] < calculate:
+                                oldscore = datas[j[0]]['score'] * (len(datas[j[0]]['data']) - 1)
+                                datas[j[0]]['score'] = (calculate + oldscore) / len(datas[j[0]]['data'])
                         else:
-                            datas[j[0]] = [data_t]
-                    #     score = [j[1], data_t['score']]
-                    #    data[j[0]]['score'] = score
+                            datas[j[0]] = {
+                                'score' : calculate,
+                                'data' : [data_score],
+                            }
+
                     del paragraph, data_t
 
-        del data
-        datas_group = {}
-        for k, v in datas.items():
-            if len(v) > 1 : 
-                datas_group[k] = v
-        del datas
+        # del data
+        # datas_group = {}
+        # for k, v in datas.items():
+        #     if len(v) > 1 : 
+        #         datas_group[k] = v
+        # del datas
         
         # iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
-        return make_response(jsonify(datas_group), 200, {'Content-Type': 'application/json'})
+        return make_response(jsonify(datas), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)
 
