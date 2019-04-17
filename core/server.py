@@ -10,6 +10,7 @@ app.config["DEBUG"] = True
 
 # General Module
 import os
+import operator
 
 # Model Module
 from gensim.models import Word2Vec
@@ -82,7 +83,8 @@ def tokenizer(data):
 def searchc(word):
     if word:
         datas = {}
-        for i in range(1, 11):
+        rank = {}
+        for i in range(1, 2):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
@@ -95,33 +97,34 @@ def searchc(word):
                             'id' : data_t['id'],
                             'title' : data_t['title'],
                             'desc' : data_t['desc'],
-                            'score' : [data_t['score']/100 , j[1]]
+                            'score' : [data_t['score']/100, j[1]]
                         }
 
-                        calculate = data_t['score'] / 100 * j[1]
+                        score_label = data_score['score'][0] * data_score['score'][1]
 
                         if j[0] in datas:
-                            datas[j[0]]['data'].append(data_score)
-                            if datas[j[0]]['score'] < calculate:
-                                oldscore = datas[j[0]]['score'] * (len(datas[j[0]]['data']) - 1)
-                                datas[j[0]]['score'] = (calculate + oldscore) / len(datas[j[0]]['data'])
+                            len_datas = len(datas[j[0]])
+                            rawscore = rank[j[0]] * len_datas
+                            rank[j[0]] = (score_label + rawscore) / (len_datas + 1)
+                            datas[j[0]].append(data_score)
                         else:
-                            datas[j[0]] = {
-                                'score' : calculate,
-                                'data' : [data_score],
-                            }
+                            datas[j[0]] = [data_score]
+                            rank[j[0]] = score_label / 1
 
-                    del paragraph, data_t
+                    del paragraph, data_score
 
-        # del data
+        del data
+
+        rank = sorted(rank.items(),reverse=True)
+
         # datas_group = {}
         # for k, v in datas.items():
-        #     if len(v) > 1 : 
-        #         datas_group[k] = v
+        #     if v['score'] >= 0.2 : 
+        #         datas_group[k] = [v]
         # del datas
         
         # iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
-        return make_response(jsonify(datas), 200, {'Content-Type': 'application/json'})
+        return make_response(jsonify(rank), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)
 
