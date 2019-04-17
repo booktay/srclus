@@ -9,9 +9,8 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-
-import Cardthread from "./Cardthread";
-
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 const axios = require('axios');
 
@@ -23,6 +22,7 @@ const styles = theme => ({
     button: {
         backgroundColor: "#476f2c",
         color: "white",
+        fontSize: "larger",
     },
     searchGrid: {
         // padding: "5px",
@@ -72,25 +72,85 @@ const styles = theme => ({
         color: "white",
         textAlign: "left",
     },
+    typetitle: {
+        color: "white",
+    },
+    typedesc: {
+        color: "white",
+        fontSize: "medium",
+        marginTop: 10,
+    },
+    divider: {
+        backgroundColor: "white",
+    }
 });
 
 
 class Content extends Component {
+    constructor() {
+        super();
 
-    handleClick(e) {
-        e.preventDefault();
-        console.log('The link was clicked.');
+        this.state = {
+            searchword : "",
+            labels : null,
+            clusterData: null,
+            currentLabel: null
+        }
+
+        this.getdata = this.getdata.bind(this)
+        this.handleClickSearch = this.handleClickSearch.bind(this)
+        this.handleClickLabel = this.handleClickLabel.bind(this)
+    }
+
+    handleClickSearch() {
+        const word = this.state.searchword
+        if (word !== "")
+            this.getdata(word)
+    }
+
+    handleClickLabel(e) {
+        const label = e.target.getAttribute('value')
+        this.setState(state => {
+            state.currentLabel = label
+            return state
+        })
     }
     
-    getdata() {
-        axios.get('/datas/apple.json')
-            .then(function (response) {
-                // handle success
-                console.log(response);
-            });
+    async getdata(word) {
+        const wordlist = [
+            "apple",
+            "samsung",
+            "เบล เขมิศรา",
+            "ชะอำ",
+            "เหงา",
+            "ซัมซุง",
+            "ยังโอม",
+            "หิวข้าว",
+            "เผด็จการ",
+            "แอปเปิ้ล",
+            "เที่ยวไทย",
+            "เลือกตั้ง",
+            "ท่องเที่ยวไทย",
+            "นักร้องเกาหลี",
+            "ปวดใจ"
+        ]
+        var webpath = 'http://localhost:5000/api/cluster/' + word
+        if (wordlist.includes(word))
+            webpath = '/datas/' + word + '.json'
+            
+
+        const response = await axios.get(webpath)
+        if (response.status === 200) {
+            this.setState(state => {
+                state.labels = Object.keys(response.data).sort()
+                state.clusterData = response.data
+                return state
+            })
+        }
     }
 
     render() {
+        const { clusterData, labels, currentLabel, searchword } = this.state
         const { classes } = this.props;
         return (
             <React.Fragment >
@@ -101,36 +161,57 @@ class Content extends Component {
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                id = "wordinp"
                                 placeholder="Search Thread Clustering"
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
+                                value={searchword}
+                                onChange={e => this.setState({ searchword: e.target.value })}
                             />
                         </div>
                     </Grid>
                     <Grid className={classes.searchGrid} item xs={12} sm={2}>
-                        <Button className={classes.button} variant="contained" id="searchbtn" fullWidth size="large" onClick={this.handleClick}>
+                        <Button className={classes.button} variant="contained" fullWidth size="large" onClick={this.handleClickSearch}>
                             Search
                         </Button>
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                        <Card className={classes.card}>
-                            <CardActionArea>
-                                <CardContent className={classes.cardcontent}>
-                                    <a href="/a" onClick={this.handleClick}>
-                                        Click me 1
-                                    </a>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
+                        {labels !== null ?
+                            <Card className={classes.card}>
+                                <CardActionArea>
+                                    <CardContent className={classes.cardcontent}>
+                                        {labels.map(label => (
+                                            <a href="/#" key={label} value={label} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
+                                                {label} ({clusterData[label].length})
+                                            </a>
+                                        ))}
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                            : null
+                        }
                     </Grid>
                     <Grid item xs={12} sm={9} >
-                        <Cardthread/>
-                        <Cardthread/>
-                        <Cardthread />
-                        <Cardthread />
+                        {currentLabel !== null ? clusterData[currentLabel].map((item, index) => (
+                            <Card key={`${currentLabel}-${index}`} className={classes.card}>
+                                <CardActionArea>
+                                    <CardContent className={classes.cardcontent}>
+                                        <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
+                                            <a href={"https://pantip.com/topic/" + item.id} style={{ display: 'block', color: 'white', textDecoration: "none" }}>
+                                                {item.title}
+                                            </a>
+                                    </Typography>
+                                        <Divider variant="fullWidth" className={classes.divider} />
+                                        <Typography component="p" className={classes.typedesc}>
+                                            {item.desc}
+                                </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        ))
+                            : null
+                        }
                     </Grid>
                 </Grid>
             </React.Fragment>
