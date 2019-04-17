@@ -22,6 +22,12 @@ iorq = IORQ()
 pantip = Pantip()
 tokenize = Tokenize()
 
+# app = Flask(__name__, static_folder="../websrclus/build/static", template_folder="../websrclus/build")
+
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
+
 # Home
 # ---------------------------
 @app.route('/', methods=['GET'])
@@ -69,14 +75,14 @@ def tokenizer(data):
         rep = list(filter(lambda x: x in model_newmm.wv.vocab, rep))
         if rep:
             word = model_newmm.wv.most_similar(positive=rep, topn=5)
-            return [x[0] for x in word]
+            return word # [x[0] for x in word]
     return []
 
 @app.route('/api/cluster/<word>', methods=['GET'])
 def searchc(word):
     if word:
         datas = {}
-        for i in range(1, 11):
+        for i in range(1, 2):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
@@ -85,10 +91,12 @@ def searchc(word):
                     paragraph = data_t['title'] + " " + data_t['desc']
                     paragraph = tokenizer(paragraph)
                     for j in paragraph:
-                        if j in datas:
-                            datas[j].append(data_t)
+                        if j[0] in datas:
+                            datas[j[0]].append(data_t)
                         else:
-                            datas[j] = [data_t]
+                            datas[j[0]] = [data_t]
+                    #     score = [j[1], data_t['score']]
+                    #    data[j[0]]['score'] = score
                     del paragraph, data_t
 
         del data
@@ -98,7 +106,7 @@ def searchc(word):
                 datas_group[k] = v
         del datas
         
-        iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
+        # iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
         return make_response(jsonify(datas_group), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)

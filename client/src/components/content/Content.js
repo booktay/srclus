@@ -132,7 +132,8 @@ class Content extends Component {
             "เลือกตั้ง",
             "ท่องเที่ยวไทย",
             "นักร้องเกาหลี",
-            "ปวดใจ"
+            "ปวดใจ",
+            "mayyr"
         ]
         var webpath = 'http://localhost:5000/api/cluster/' + word
         if (wordlist.includes(word))
