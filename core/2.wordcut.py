@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 # author: Siwanont Sittinam
-# description: 1.wordcut
+# description: 2.wordcut
 
 # General Module
 import os
 import sys
 import time
-from multiprocessing import Pool
 
 # My Module
 from srcluslib.utility.iorq import IORQ
@@ -23,8 +22,7 @@ raw_datas_path = os.path.join(datas_path, "raw")
 token_algo = "newmm"
 token_datas_path = os.path.join(datas_path, "token", token_algo)
 
-def reqfromFile(self, foldernumber="31"):
-    datas = {}
+def reqfromFile(foldernumber="31"):
     folderpath = os.path.join(raw_datas_path, foldernumber)
     if not os.path.exists(folderpath):
         print("[Error] Can't found directory")
@@ -32,29 +30,31 @@ def reqfromFile(self, foldernumber="31"):
     filesname = sorted(os.listdir(folderpath))
     resultpath = os.path.join(token_datas_path, foldernumber)
     if not os.path.exists(resultpath): os.mkdir(resultpath)
+    
+    # Init loop
     for filename in filesname:
+        datastoken = [{},{}]
         # filepaths = os.path.join(folderpath,filename)
         data, status = iorq.readjson(filepath=folderpath, filename=filename)
-        datas = {**datas, **data[0]}
-    # io.print([len(datas), dict(list(datas.items())[-2:])])
-
-    datastoken = [{},{}]
-    for thread, data in datas.items():
-        if data != "": 
-            try:
-                rep, status_url = tk.replaceurl(data=data)
-                rep, status_f = tk.filtertheng(data=rep)
-                rep, status_nt = tk.numth(data=rep)
-                rep, status_t = tk.run(data=rep)
-                datastoken[0][thread] = rep
-            except KeyboardInterrupt:
-                print("[Cancel] Ctrl-c detection")
-                sys.exit(0)
-            except:
-                print("Something went wrong!!!")
-                datastoken[1][thread] = 700
-        iorq.print(thread)
-        if int(thread) % 10000 == 0:
-            iorq.writejson(filename="token."+thread+".json", filepath=resultpath, data=datastoken)
-            datastoken = [{},{}]
+        # iorq.print(data[0])
+        for thread, dat in data[0].items():
+            if dat != "": 
+                data_combine = dat['title'] + " " + data['desc']
+                try:
+                    rep, status_url = tokenize.replaceurl(data=dat)
+                    rep, status_f = tokenize.filtertheng(data=rep)
+                    rep, status_nt = tokenize.numth(data=rep)
+                    rep, status_t = tokenize.run(data=rep)
+                    datastoken[0][thread] = rep
+                except KeyboardInterrupt:
+                    print("[Cancel] Ctrl-c detection")
+                    sys.exit(0)
+                except:
+                    print("Something went wrong!!!")
+                    datastoken[1][thread] = 700
+            iorq.print(thread)
+        iorq.writejson(filename="token."+filename, filepath=resultpath, data=datastoken)
         # break
+
+
+reqfromFile(foldernumber="39")
