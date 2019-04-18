@@ -54,10 +54,11 @@ def reqfromFile(foldernumber="31"):
                     print("Something went wrong!!!")
                     datastoken[1][thread] = 700
                 # break
-        # iorq.print(datastoken)
+            iorq.print(str(thread))
         iorq.writejson(filename="token."+filename, filepath=resultpath, data=datastoken)
         # break
 
 
-for i in range (39,40):
-    reqfromFile(foldernumber=str(i))
+# for i in range (36,38):
+i = input('Folder : ')
+reqfromFile(foldernumber=str(i))
