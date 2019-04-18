@@ -48,10 +48,10 @@ def reqfromFile(foldernumber="31"):
                     rep, status_t = tokenize.run(data=rep)
                     datastoken[0][thread] = rep
                 except KeyboardInterrupt:
-                    # print("[Cancel] Ctrl-c detection")
+                    print("[Cancel] Ctrl-c detection")
                     sys.exit(0)
                 except:
-                    # print("Something went wrong!!!")
+                    print("Something went wrong!!!")
                     datastoken[1][thread] = 700
                 # break
         # iorq.print(datastoken)
