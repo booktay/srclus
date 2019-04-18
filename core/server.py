@@ -84,7 +84,7 @@ def searchc(word):
     if word:
         datas = {}
         rank = {}
-        for i in range(1, 2):
+        for i in range(1, 11):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
@@ -115,16 +115,15 @@ def searchc(word):
 
         del data
 
-        rank = sorted(rank.items(),reverse=True)
-
-        # datas_group = {}
-        # for k, v in datas.items():
-        #     if v['score'] >= 0.2 : 
-        #         datas_group[k] = [v]
-        # del datas
+        datas_group = {
+            "rank" : sorted(rank.items(), key=lambda kv:kv[1], reverse=True),
+            "datas" : datas
+        }
         
-        # iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
-        return make_response(jsonify(rank), 200, {'Content-Type': 'application/json'})
+        del rank, datas
+
+        iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
+        return make_response(jsonify(datas_group), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)
 
