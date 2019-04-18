@@ -13,8 +13,7 @@ from srcluslib.model.tfidf import TFIDF
 iorq = IORQ()
 
 datas_path = os.path.join(".", "datas")
-raw_datas_path = os.path.join(datas_path, "raw")
-token_datas_path = os.path.join(datas_path, "token", "newmm")
+token_datas_path = os.path.join(datas_path, "token", "newmm.old")
 tfidf_datas_path = os.path.join(datas_path, "tfidf")
 
 class procfromfile:
@@ -28,6 +27,8 @@ class procfromfile:
             return None
         folders = os.listdir(token_datas_path)
         for folder in sorted(folders):
+            if folder == ".DS_Store":
+                continue
             filepaths = os.path.join(token_datas_path, folder)
             for filename in sorted(os.listdir(filepaths)):
                 if filename == ".DS_Store":

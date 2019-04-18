@@ -47,7 +47,7 @@ model_newmm = Word2Vec.load(model_path)
 
 # Search Similarity Word API
 # ---------------------------
-# Query 
+# Query
 # use "," for seperate words
 # search?words=A,B,C,D,...
 # ---------------------------
@@ -115,11 +115,18 @@ def searchc(word):
 
         del data
 
+        data_group = {}
+        rank_group = {}
+        for k,v in datas.items():
+            if len(v) > 1:
+                data_group[k] = v
+                rank_group[k] = rank[k]
+
         datas_group = {
-            "rank" : sorted(rank.items(), key=lambda kv:kv[1], reverse=True),
-            "datas" : datas
+            "rank": sorted(rank_group.items(), key=lambda kv: kv[1], reverse=True),
+            "datas": data_group
         }
-        
+
         del rank, datas
 
         iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
