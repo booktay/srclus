@@ -57,4 +57,5 @@ def reqfromFile(foldernumber="31"):
         # break
 
 
-reqfromFile(foldernumber="39")
+for i in range (31,40):
+    reqfromFile(foldernumber=str(i))
