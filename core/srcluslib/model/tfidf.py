@@ -52,7 +52,7 @@ class TFIDF:
             feature_index = response[doc, :].nonzero()[1]
             # words_thread = sorted([[feature_names[x],response[doc, x]] for x in feature_index])
             words_thread = [feature_names[x] for x in feature_index if response[doc, x] >= 0.1]
-            WORD_TARGET_ALL.append(words_thread[:10])
+            WORD_TARGET_ALL.append(words_thread) # [:10]
             if doc % 1000 == 0 : print("[Process] Complete " + str(doc) + " threads")
         print("[Complete] Get Rank of Words")
         return WORD_TARGET_ALL, 600
