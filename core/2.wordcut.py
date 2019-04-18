@@ -34,8 +34,9 @@ def reqfromFile(foldernumber="31"):
     # Init loop
     for filename in filesname:
         datastoken = [{},{}]
-        if filename == ".DS_Store":
+        if filename in [".DS_Store", "._.DS_Store"]:
             continue
+        # iorq.print(filename)
         data, status = iorq.readjson(filepath=folderpath, filename=filename)
         # iorq.print(data[0])
         for thread, dat in data[0].items():
@@ -47,10 +48,10 @@ def reqfromFile(foldernumber="31"):
                     rep, status_t = tokenize.run(data=rep)
                     datastoken[0][thread] = rep
                 except KeyboardInterrupt:
-                    # print("[Cancel] Ctrl-c detection")
+                    print("[Cancel] Ctrl-c detection")
                     sys.exit(0)
                 except:
-                    # print("Something went wrong!!!")
+                    print("Something went wrong!!!")
                     datastoken[1][thread] = 700
                 # break
         # iorq.print(datastoken)
@@ -58,5 +59,5 @@ def reqfromFile(foldernumber="31"):
         # break
 
 
-for i in range (31,40):
+for i in range (39,40):
     reqfromFile(foldernumber=str(i))
