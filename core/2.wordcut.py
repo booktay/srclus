@@ -34,12 +34,12 @@ def reqfromFile(foldernumber="31"):
     # Init loop
     for filename in filesname:
         datastoken = [{},{}]
-        # filepaths = os.path.join(folderpath,filename)
+        if filename == ".DS_Store":
+            continue
         data, status = iorq.readjson(filepath=folderpath, filename=filename)
         # iorq.print(data[0])
         for thread, dat in data[0].items():
             if dat != "": 
-                data_combine = dat['title'] + " " + data['desc']
                 try:
                     rep, status_url = tokenize.replaceurl(data=dat)
                     rep, status_f = tokenize.filtertheng(data=rep)
@@ -47,12 +47,13 @@ def reqfromFile(foldernumber="31"):
                     rep, status_t = tokenize.run(data=rep)
                     datastoken[0][thread] = rep
                 except KeyboardInterrupt:
-                    print("[Cancel] Ctrl-c detection")
+                    # print("[Cancel] Ctrl-c detection")
                     sys.exit(0)
                 except:
-                    print("Something went wrong!!!")
+                    # print("Something went wrong!!!")
                     datastoken[1][thread] = 700
-            iorq.print(thread)
+                # break
+        # iorq.print(datastoken)
         iorq.writejson(filename="token."+filename, filepath=resultpath, data=datastoken)
         # break
 
