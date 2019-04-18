@@ -119,11 +119,12 @@ class Content extends Component {
     
     async getdata(word) {
         var webpath = '/datas/' + word + '.json'
+        // console.log(webpath)
         // if (!fs.existsSync(webpath)) {
         //     webpath = 'http://localhost:5000/api/cluster/' + word
         // }
         const response = await axios.get(webpath)
-        // console.log(response)
+        console.log(response)
         if (response.status === 200) {
             this.setState(state => {
                 state.labels = response.data.rank
@@ -177,7 +178,7 @@ class Content extends Component {
                         }
                     </Grid>
                     <Grid item xs={12} sm={9} >
-                        {currentLabel !== null ? clusterData[currentLabel].map((item, index) => (
+                        {currentLabel !== null && clusterData[currentLabel] !== null ? clusterData[currentLabel].map((item, index) => (
                             <Card key={`${currentLabel}-${index}`} className={classes.card}>
                                 <CardActionArea>
                                     <CardContent className={classes.cardcontent}>
@@ -188,7 +189,7 @@ class Content extends Component {
                                     </Typography>
                                         <Divider variant="fullWidth" className={classes.divider} />
                                         <Typography component="p" className={classes.typedesc}>
-                                            {item.desc}
+                                            {item.desc.substr(0, 400) + " ..."}
                                 </Typography>
                                     </CardContent>
                                 </CardActionArea>
