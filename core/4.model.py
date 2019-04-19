@@ -56,7 +56,7 @@ class Model:
             filepath = os.path.join(token_datas_path, filename)
             data = self.getdatafromengine(filepath=filepath, engine="1", tfidf=False)
             datas += data
-            break
+            # break
         return datas
 
     # No TF-IDF Process
