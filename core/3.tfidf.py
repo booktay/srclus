@@ -13,7 +13,7 @@ from srcluslib.model.tfidf import TFIDF
 iorq = IORQ()
 
 datas_path = os.path.join(".", "datas")
-token_datas_path = os.path.join(datas_path, "token", "newmm.old")
+token_datas_path = os.path.join(datas_path, "token", "newmm")
 tfidf_datas_path = os.path.join(datas_path, "tfidf")
 
 class procfromfile:
@@ -34,10 +34,7 @@ class procfromfile:
                 if filename == ".DS_Store":
                     continue
                 data, status = iorq.readjson(filename=filename, filepath=filepaths)
-                for word in data[0].values():
-                    if word != [] : word_all.append(word)
-            #     break
-            # break
+                word_all += [i for i in data[0].values() if i != []]
         return word_all
 
     def run(self):

@@ -17,8 +17,10 @@ model_datas_path = os.path.join(datas_path, "model")
 tfidf_datas_path = os.path.join(datas_path, "tfidf", "20190418.1627")
 token_datas_path = os.path.join(datas_path, "token", "newmm")
 
+# ------------------------------
 # Please create dir before run.
-resultpath = os.path.join(model_datas_path, "newmm.all.tfidf.18")
+# ------------------------------
+resultpath = os.path.join(model_datas_path, "newmm.all.notfidf.20")
 
 
 class Model:
@@ -29,6 +31,8 @@ class Model:
     def getdatafromengine(filepath=".", engine="", tfidf=True):
         datas = []
         for filename in sorted(os.listdir(filepath)):
+            if filename in ['.DS_Store']:
+                continue
             data, status = iorq.readjson(filename=filename, filepath=filepath)
             # For Gensim
             if not tfidf:
@@ -45,7 +49,15 @@ class Model:
 
     # TF-IDF Process
     def preparedata1(self):
-        return self.getdatafromengine(filepath=tfidf_datas_path, engine="1")
+        datas = []
+        for filename in sorted(os.listdir(token_datas_path)):
+            if filename in ['.DS_Store']:
+                continue
+            filepath = os.path.join(token_datas_path, filename)
+            data = self.getdatafromengine(filepath=filepath, engine="1", tfidf=False)
+            datas += data
+            # break
+        return datas
 
     # No TF-IDF Process
     def preparedata2(self):
@@ -77,4 +89,5 @@ class Model:
 if __name__ == "__main__":
     model = Model()
     datas = model.preparedata1()
+    # print(datas)
     model.run1(datas)
