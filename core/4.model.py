@@ -17,7 +17,9 @@ model_datas_path = os.path.join(datas_path, "model")
 tfidf_datas_path = os.path.join(datas_path, "tfidf", "20190418.1627")
 token_datas_path = os.path.join(datas_path, "token", "newmm")
 
+# ------------------------------
 # Please create dir before run.
+# ------------------------------
 resultpath = os.path.join(model_datas_path, "newmm.all.notfidf.20")
 
 
