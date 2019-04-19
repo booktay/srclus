@@ -13,7 +13,7 @@ from srcluslib.model.tfidf import TFIDF
 iorq = IORQ()
 
 datas_path = os.path.join(".", "datas")
-token_datas_path = os.path.join(datas_path, "token", "newmm.old")
+token_datas_path = os.path.join(datas_path, "token", "newmm")
 tfidf_datas_path = os.path.join(datas_path, "tfidf")
 
 class procfromfile:
