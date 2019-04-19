@@ -4,7 +4,7 @@
 
 #### Base
 ```
-pip install gensim pythainlp sklearn pprint nltk
+pip install gensim pythainlp sklearn pprint nltk cython
 ```
 
 ```
