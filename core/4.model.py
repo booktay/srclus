@@ -14,13 +14,13 @@ datas_path = os.path.join(".", "datas")
 raw_datas_path = os.path.join(datas_path, "raw")
 model_datas_path = os.path.join(datas_path, "model")
 
-tfidf_datas_path = os.path.join(datas_path, "tfidf", "20190418.1627")
+tfidf_datas_path = os.path.join(datas_path, "tfidf", "20190420.1249")
 token_datas_path = os.path.join(datas_path, "token", "newmm")
 
 # ------------------------------
 # Please create dir before run.
 # ------------------------------
-resultpath = os.path.join(model_datas_path, "newmm.all.notfidf.20")
+resultpath = os.path.join(model_datas_path, "newmm.tfidf.20")
 
 
 class Model:
@@ -49,15 +49,19 @@ class Model:
 
     # TF-IDF Process
     def preparedata1(self):
-        datas = []
-        for filename in sorted(os.listdir(token_datas_path)):
-            if filename in ['.DS_Store']:
-                continue
-            filepath = os.path.join(token_datas_path, filename)
-            data = self.getdatafromengine(filepath=filepath, engine="1", tfidf=False)
-            datas += data
-            # break
-        return datas
+        # datas = []
+        # for filename in sorted(os.listdir(token_datas_path)):
+        #     if filename in ['.DS_Store']:
+        #         continue
+        #     filepath = os.path.join(token_datas_path, filename)
+        #     data = self.getdatafromengine(filepath=filepath, engine="1", tfidf=False)
+        #     datas += data
+        #     # break
+        # return datas
+
+        #------------------------------
+        
+        return self.getdatafromengine(filepath=tfidf_datas_path, engine="1", tfidf=True)
 
     # No TF-IDF Process
     def preparedata2(self):
