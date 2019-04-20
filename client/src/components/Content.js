@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 const axios = require('axios');
+const fs = require("fs");
 
 const styles = theme => ({
     rootGrid: {
@@ -117,34 +118,17 @@ class Content extends Component {
     }
     
     async getdata(word) {
-        const wordlist = [
-            "apple",
-            "samsung",
-            "เบล เขมิศรา",
-            "ชะอำ",
-            "เหงา",
-            "ซัมซุง",
-            "ยังโอม",
-            "หิวข้าว",
-            "เผด็จการ",
-            "แอปเปิ้ล",
-            "เที่ยวไทย",
-            "เลือกตั้ง",
-            "ท่องเที่ยวไทย",
-            "นักร้องเกาหลี",
-            "ปวดใจ",
-            "mayyr"
-        ]
-        var webpath = 'http://localhost:5000/api/cluster/' + word
-        if (wordlist.includes(word))
-            webpath = '/datas/' + word + '.json'
-            
-
+        var webpath = '/datas/' + word + '.json'
+        // console.log(webpath)
+        // if (!fs.existsSync(webpath)) {
+        //     webpath = 'http://localhost:5000/api/cluster/' + word
+        // }
         const response = await axios.get(webpath)
+        console.log(response)
         if (response.status === 200) {
             this.setState(state => {
-                state.labels = Object.keys(response.data).sort()
-                state.clusterData = response.data
+                state.labels = response.data.rank
+                state.clusterData = response.data.datas
                 return state
             })
         }
@@ -183,8 +167,8 @@ class Content extends Component {
                                 <CardActionArea>
                                     <CardContent className={classes.cardcontent}>
                                         {labels.map(label => (
-                                            <a href="/#" key={label} value={label} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
-                                                {label} ({clusterData[label].length})
+                                            <a href="/#" key={label[0]} value={label[0]} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
+                                                {label[0]} ({clusterData[label[0]].length}) {(label[1] * 100).toFixed(2)}%
                                             </a>
                                         ))}
                                     </CardContent>
@@ -194,7 +178,7 @@ class Content extends Component {
                         }
                     </Grid>
                     <Grid item xs={12} sm={9} >
-                        {currentLabel !== null ? clusterData[currentLabel].map((item, index) => (
+                        {currentLabel !== null && clusterData[currentLabel] !== null ? clusterData[currentLabel].map((item, index) => (
                             <Card key={`${currentLabel}-${index}`} className={classes.card}>
                                 <CardActionArea>
                                     <CardContent className={classes.cardcontent}>
@@ -205,7 +189,7 @@ class Content extends Component {
                                     </Typography>
                                         <Divider variant="fullWidth" className={classes.divider} />
                                         <Typography component="p" className={classes.typedesc}>
-                                            {item.desc}
+                                            {item.desc.substr(0, 400) + " ..."}
                                 </Typography>
                                     </CardContent>
                                 </CardActionArea>

@@ -34,12 +34,13 @@ def reqfromFile(foldernumber="31"):
     # Init loop
     for filename in filesname:
         datastoken = [{},{}]
-        # filepaths = os.path.join(folderpath,filename)
+        if filename in [".DS_Store", "._.DS_Store"]:
+            continue
+        # iorq.print(filename)
         data, status = iorq.readjson(filepath=folderpath, filename=filename)
         # iorq.print(data[0])
         for thread, dat in data[0].items():
             if dat != "": 
-                data_combine = dat['title'] + " " + data['desc']
                 try:
                     rep, status_url = tokenize.replaceurl(data=dat)
                     rep, status_f = tokenize.filtertheng(data=rep)
@@ -52,9 +53,12 @@ def reqfromFile(foldernumber="31"):
                 except:
                     print("Something went wrong!!!")
                     datastoken[1][thread] = 700
-            iorq.print(thread)
+                # break
+            iorq.print(str(thread))
         iorq.writejson(filename="token."+filename, filepath=resultpath, data=datastoken)
         # break
 
 
-reqfromFile(foldernumber="39")
+# for i in range (36,38):
+i = input('Folder : ')
+reqfromFile(foldernumber=str(i))
