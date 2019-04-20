@@ -7,16 +7,15 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const axios = require('axios');
 
@@ -29,7 +28,7 @@ const BootstrapInput = withStyles(theme => ({
     input: {
         borderRadius: 4,
         position: 'relative',
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: 'white',
         border: '1px solid #ced4da',
         fontSize: 16,
         width: 'auto',
@@ -90,6 +89,11 @@ const styles = theme => ({
         transition: theme.transitions.create('width'),
         width: '100%',
     },
+    Headercard: {
+        width: "-webkit-fill-available",
+        marginBottom: 15,
+        background: "#322f53",
+    },
     card: {
         width: "-webkit-fill-available",
         marginBottom: 15,
@@ -112,18 +116,20 @@ const styles = theme => ({
     divider: {
         backgroundColor: "white",
     },
-    switchlabel: {
-        color: "white",
-        fontSize: "large",
-    },
     FormControlLabel: {
-        marginLeft: 10,
+        // marginLeft: 10,
     },
     bootstrapFormLabel: {
         fontSize: 18,
+        color: "white",
+        marginTop: "0.5em",
+        marginLeft: "1em",
+        marginRight: "1em",
+        // display: "contents",
     },
     margin: {
         display: "-webkit-box",
+        marginBottom: "1em",
     },
 });
 
@@ -144,6 +150,8 @@ class Content extends Component {
         this.getdata = this.getdata.bind(this)
         this.handleClickSearch = this.handleClickSearch.bind(this)
         this.handleClickLabel = this.handleClickLabel.bind(this)
+        this.handleSelect = this.handleSelect.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     handleSelect = name => event => {
@@ -152,6 +160,7 @@ class Content extends Component {
 
     handleChange = name => event => {
         this.setState({ [name]: event.target.checked });
+        // this.handleClickSearch();
     };
 
     handleClickSearch() {
@@ -212,68 +221,81 @@ class Content extends Component {
                             Search
                         </Button>
                     </Grid>
-                    <Grid className={classes.searchGrid} item xs={12} sm={12}>
-                        <FormControl className={classes.margin}>
-                            <InputLabel className={classes.bootstrapFormLabel}>
-                                Min Cluster
-                            </InputLabel>
-                            <Select
-                                value={this.state.cluster}
-                                onChange={this.handleSelect('cluster')}
-                                input={<BootstrapInput name="cluster" id="age-customized-select" />}
-                            >
-                                {   Array.from(Array(10).keys()).map((item) => (
-                                    <MenuItem key={item} value={item+1}>{item+1}</MenuItem>
-                                    ))
-                                }
-                            </Select>
-                            <FormControlLabel className={classes.FormControlLabel}
-                                label={<Typography className={classes.switchlabel}>TF-IDF</Typography>}
-                                control={
-                                    <Switch
-                                        checked={checkedA}
-                                        onChange={this.handleChange('checkedA')}
-                                        value="checkedA"
-                                        color="primary"
-                                    />
-                                }
-                            />
-                        </FormControl>
-                    </Grid>
                     <Grid item xs={12} sm={3}>
+                                {/* background: "none repeat scroll 0 0 #1F1D33",  */}
+                        <Card className={classes.Headercard} style={{ padding: "1em" }}> 
+                            <CardContent style={{ padding: "0em" }}>
+                                <FormControl style={{ display: "-webkit-box", }}>
+                                    <Typography className={classes.bootstrapFormLabel}>Min Cluster</Typography>
+                                    <Select
+                                        value={this.state.cluster}
+                                        onChange={this.handleSelect('cluster')}
+                                        input={<BootstrapInput name="cluster"/>}
+                                    >
+                                        {Array.from(Array(10).keys()).map((item) => (
+                                            <MenuItem key={item} value={Math.pow(item + 1, 2)}>{Math.pow(item + 1, 2)}</MenuItem>
+                                        ))
+                                        }
+                                    </Select>
+                                    <Typography className={classes.bootstrapFormLabel}>TF-IDF</Typography>
+                                    <FormControlLabel className={classes.FormControlLabel}
+                                        control={
+                                            <Switch
+                                                checked={checkedA}
+                                                onChange={this.handleChange('checkedA')}
+                                                value="checkedA"
+                                                color="primary"
+                                            />
+                                        }
+                                    />
+                                </FormControl>
+                            </CardContent>
+                        </Card>
                         {labels !== null ?
                             <Card className={classes.card}>
-                                <CardActionArea>
-                                    <CardContent className={classes.cardcontent}>
-                                        {labels.map(label => (
-                                            label[1][0] > cluster ?
-                                            <a href="/#" key={label[0]} value={label[0]} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
-                                                    {label[0]} {"(" + (label[1][1] * 100).toFixed(2) + "% , " + label[1][0] + ")"}
-                                            </a>
-                                            : null
-                                        ))}
-                                    </CardContent>
-                                </CardActionArea>
+                                <CardContent className={classes.cardcontent}>
+                                    {labels.map(label => (
+                                        label[1][0] > cluster ?
+                                        <a href="/#" key={label[0]} value={label[0]} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
+                                                {label[0]} {"(" + (label[1][1] * 100).toFixed(2) + "% , " + label[1][0] + ")"}
+                                        </a>
+                                        : null
+                                    ))}
+                                </CardContent>
                             </Card>
-                            : null
+                            : <CircularProgress
+                                className={classes.progress}
+                                variant="determinate"
+                                value={this.state.completed}
+                            />
                         }
                     </Grid>
                     <Grid item xs={12} sm={9} >
+                        <Card className={classes.Headercard} style={{ background: "none repeat scroll 0 0 #1F1D33", minHeight: "80px",}}>
+                            <CardContent>
+                                {currentLabel !== null ? 
+                                    <Typography variant="h4" component="h3" style={{ color: "white"}}>
+                                        {currentLabel} 
+                                    </Typography>
+                                    : <Typography variant="h4" component="h3" style={{ color: "white" }}>
+                                        Input a word and Choose a label from the left-sided
+                                    </Typography>
+                                }
+                            </CardContent>
+                        </Card>
                         {currentLabel !== null && clusterData[currentLabel] !== null ? clusterData[currentLabel].map((item, index) => (
                             <Card key={`${currentLabel}-${index}`} className={classes.card}>
-                                <CardActionArea>
-                                    <CardContent className={classes.cardcontent}>
-                                        <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
-                                            <a href={"https://pantip.com/topic/" + item.id} style={{ display: 'block', color: 'white', textDecoration: "none" }}>
-                                                {item.title}
-                                            </a>
+                                <CardContent className={classes.cardcontent}>
+                                    <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
+                                        <a href={"https://pantip.com/topic/" + item.id} style={{ display: 'block', color: 'white', textDecoration: "none" }}>
+                                            {item.title}
+                                        </a>
                                     </Typography>
-                                        <Divider variant="fullWidth" className={classes.divider} />
-                                        <Typography component="p" className={classes.typedesc}>
-                                            {item.desc.substr(0, 400) + " ..."}
-                                </Typography>
-                                    </CardContent>
-                                </CardActionArea>
+                                    <Divider variant="fullWidth" className={classes.divider} />
+                                    <Typography component="p" className={classes.typedesc}>
+                                        {item.desc.substr(0, 400) + " ..."}
+                                    </Typography>
+                                </CardContent>
                             </Card>
                         ))
                             : null

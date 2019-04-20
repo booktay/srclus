@@ -42,7 +42,7 @@ def api():
     return "<h1>SRCLUS API</h1>"
 
 # Load Model
-model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.2", "vocab.model")
+model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.tfidf", "vocab.model")
 model_newmm = Word2Vec.load(model_path)
 
 # Search Similarity Word API
@@ -83,7 +83,7 @@ def tokenizer(data):
 def searchc(word):
     if word:
         datas, rank = {}, {}
-        for i in range(1, 101):
+        for i in range(1, 11):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
