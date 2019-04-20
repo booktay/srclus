@@ -42,7 +42,7 @@ def api():
     return "<h1>SRCLUS API</h1>"
 
 # Load Model
-model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.all.notfidf", "vocab.model")
+model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.tfidf", "vocab.model")
 model_newmm = Word2Vec.load(model_path)
 
 # Search Similarity Word API
@@ -82,8 +82,7 @@ def tokenizer(data):
 @app.route('/api/cluster/<word>', methods=['GET'])
 def searchc(word):
     if word:
-        datas = {}
-        rank = {}
+        datas, rank = {}, {}
         for i in range(1, 11):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
@@ -102,29 +101,22 @@ def searchc(word):
 
                         score_label = data_score['score'][0] * data_score['score'][1]
 
-                        if j[0] in datas:
-                            len_datas = len(datas[j[0]])
-                            rawscore = rank[j[0]] * len_datas
-                            rank[j[0]] = (score_label + rawscore) / (len_datas + 1)
-                            datas[j[0]].append(data_score)
-                        else:
+                        if not j[0] in datas:
                             datas[j[0]] = [data_score]
-                            rank[j[0]] = score_label / 1
+                            rank[j[0]] = [1, score_label / 1]
+                        else:
+                            len_datas = len(datas[j[0]])
+                            rank[j[0]]= [rank[j[0]][0] + 1,(score_label + (rank[j[0]][1] * len_datas)) / (len_datas + 1)]
+                            datas[j[0]].append(data_score)
+
 
                     del paragraph, data_score
 
         del data
 
-        data_group = {}
-        rank_group = {}
-        for k,v in datas.items():
-            if len(v) > 1:
-                data_group[k] = v
-                rank_group[k] = rank[k]
-
         datas_group = {
-            "rank": sorted(rank_group.items(), key=lambda kv: kv[1], reverse=True),
-            "datas": data_group
+            "rank": sorted(rank.items(), key=lambda e: e[1][0], reverse=True),
+            "datas": datas
         }
 
         del rank, datas
@@ -187,4 +179,4 @@ def not_found(e):
     return '', 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
