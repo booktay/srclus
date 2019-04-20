@@ -11,9 +11,37 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const axios = require('axios');
-const fs = require("fs");
+
+const BootstrapInput = withStyles(theme => ({
+    root: {
+        'label + &': {
+            marginTop: theme.spacing.unit * 3,
+        },
+    },
+    input: {
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        width: 'auto',
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
+    },
+}))(InputBase);
 
 const styles = theme => ({
     rootGrid: {
@@ -83,7 +111,17 @@ const styles = theme => ({
     },
     divider: {
         backgroundColor: "white",
-    }
+    },
+    switchlabel: {
+        color: "white",
+        fontSize: "large",
+    },
+    bootstrapFormLabel: {
+        fontSize: 18,
+    },
+    margin: {
+        margin: theme.spacing.unit,
+    },
 });
 
 
@@ -95,13 +133,23 @@ class Content extends Component {
             searchword : "",
             labels : null,
             clusterData: null,
-            currentLabel: null
+            currentLabel: null,
+            checkedA: false,
+            cluster: 1,
         }
 
         this.getdata = this.getdata.bind(this)
         this.handleClickSearch = this.handleClickSearch.bind(this)
         this.handleClickLabel = this.handleClickLabel.bind(this)
     }
+
+    handleSelect = name => event => {
+        this.setState({ [name]: event.target.value });
+    };
+
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.checked });
+    };
 
     handleClickSearch() {
         const word = this.state.searchword
@@ -118,11 +166,11 @@ class Content extends Component {
     }
     
     async getdata(word) {
-        var webpath = '/datas/' + word + '.json'
-        // console.log(webpath)
-        // if (!fs.existsSync(webpath)) {
-        //     webpath = 'http://localhost:5000/api/cluster/' + word
-        // }
+        var pathfile = "tfidf/" + word + '.json'
+        pathfile = this.state.checkedA ? pathfile : "no" + pathfile
+        const webpath = '/datas/' + pathfile 
+        // webpath = 'http://localhost:5000/api/cluster/' + word
+
         const response = await axios.get(webpath)
         // console.log(response)
         if (response.status === 200) {
@@ -135,7 +183,7 @@ class Content extends Component {
     }
 
     render() {
-        const { clusterData, labels, currentLabel, searchword } = this.state
+        const { clusterData, labels, currentLabel, searchword, checkedA } = this.state
         const { classes } = this.props;
         return (
             <React.Fragment >
@@ -161,8 +209,33 @@ class Content extends Component {
                             Search
                         </Button>
                     </Grid>
-                    <Grid className={classes.searchGrid} item xs={12}>
-                        > H > H
+                    <Grid className={classes.searchGrid} item xs={12} sm={12}>
+                        <FormControl className={classes.margin}>
+                            <InputLabel htmlFor="age-customized-select" className={classes.bootstrapFormLabel}>
+                                Min Cluster
+                             </InputLabel>
+                            <Select
+                                value={this.state.cluster}
+                                onChange={this.handleSelect('cluster')}
+                                input={<BootstrapInput name="cluster" id="age-customized-select" />}
+                            >
+                                {   Array.from(Array(10).keys()).map(item => (
+                                        <MenuItem value={item+1}>{item+1}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={checkedA}
+                                    onChange={this.handleChange('checkedA')}
+                                    value="checkedA"
+                                    color="primary"
+                                />
+                            }
+                            label={<Typography className={classes.switchlabel}>TF-IDF</Typography>}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         {labels !== null ?
