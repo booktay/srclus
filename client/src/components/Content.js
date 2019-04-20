@@ -124,7 +124,7 @@ class Content extends Component {
         //     webpath = 'http://localhost:5000/api/cluster/' + word
         // }
         const response = await axios.get(webpath)
-        console.log(response)
+        // console.log(response)
         if (response.status === 200) {
             this.setState(state => {
                 state.labels = response.data.rank
@@ -167,9 +167,11 @@ class Content extends Component {
                                 <CardActionArea>
                                     <CardContent className={classes.cardcontent}>
                                         {labels.map(label => (
+                                            label[1][0] > 1 ?
                                             <a href="/#" key={label[0]} value={label[0]} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
-                                                {label[0]} ({clusterData[label[0]].length}) {(label[1] * 100).toFixed(2)}%
+                                                    {label[0]} {"(" + (label[1][1] * 100).toFixed(2) + "% , " + label[1][0] + ")"}
                                             </a>
+                                            : null
                                         ))}
                                     </CardContent>
                                 </CardActionArea>
