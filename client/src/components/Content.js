@@ -116,11 +116,14 @@ const styles = theme => ({
         color: "white",
         fontSize: "large",
     },
+    FormControlLabel: {
+        marginLeft: 10,
+    },
     bootstrapFormLabel: {
         fontSize: 18,
     },
     margin: {
-        margin: theme.spacing.unit,
+        display: "-webkit-box",
     },
 });
 
@@ -183,7 +186,7 @@ class Content extends Component {
     }
 
     render() {
-        const { clusterData, labels, currentLabel, searchword, checkedA } = this.state
+        const { clusterData, labels, currentLabel, searchword, checkedA, cluster } = this.state
         const { classes } = this.props;
         return (
             <React.Fragment >
@@ -211,31 +214,31 @@ class Content extends Component {
                     </Grid>
                     <Grid className={classes.searchGrid} item xs={12} sm={12}>
                         <FormControl className={classes.margin}>
-                            <InputLabel htmlFor="age-customized-select" className={classes.bootstrapFormLabel}>
+                            <InputLabel className={classes.bootstrapFormLabel}>
                                 Min Cluster
-                             </InputLabel>
+                            </InputLabel>
                             <Select
                                 value={this.state.cluster}
                                 onChange={this.handleSelect('cluster')}
                                 input={<BootstrapInput name="cluster" id="age-customized-select" />}
                             >
-                                {   Array.from(Array(10).keys()).map(item => (
-                                        <MenuItem value={item+1}>{item+1}</MenuItem>
+                                {   Array.from(Array(10).keys()).map((item) => (
+                                    <MenuItem key={item} value={item+1}>{item+1}</MenuItem>
                                     ))
                                 }
                             </Select>
+                            <FormControlLabel className={classes.FormControlLabel}
+                                label={<Typography className={classes.switchlabel}>TF-IDF</Typography>}
+                                control={
+                                    <Switch
+                                        checked={checkedA}
+                                        onChange={this.handleChange('checkedA')}
+                                        value="checkedA"
+                                        color="primary"
+                                    />
+                                }
+                            />
                         </FormControl>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={checkedA}
-                                    onChange={this.handleChange('checkedA')}
-                                    value="checkedA"
-                                    color="primary"
-                                />
-                            }
-                            label={<Typography className={classes.switchlabel}>TF-IDF</Typography>}
-                        />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         {labels !== null ?
@@ -243,7 +246,7 @@ class Content extends Component {
                                 <CardActionArea>
                                     <CardContent className={classes.cardcontent}>
                                         {labels.map(label => (
-                                            label[1][0] > 1 ?
+                                            label[1][0] > cluster ?
                                             <a href="/#" key={label[0]} value={label[0]} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
                                                     {label[0]} {"(" + (label[1][1] * 100).toFixed(2) + "% , " + label[1][0] + ")"}
                                             </a>
