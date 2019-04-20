@@ -42,7 +42,7 @@ def api():
     return "<h1>SRCLUS API</h1>"
 
 # Load Model
-model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.all.notfidf", "vocab.model")
+model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.2", "vocab.model")
 model_newmm = Word2Vec.load(model_path)
 
 # Search Similarity Word API
