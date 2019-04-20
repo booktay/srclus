@@ -161,6 +161,9 @@ class Content extends Component {
                             Search
                         </Button>
                     </Grid>
+                    <Grid className={classes.searchGrid} item xs={12}>
+                        > H > H
+                    </Grid>
                     <Grid item xs={12} sm={3}>
                         {labels !== null ?
                             <Card className={classes.card}>
