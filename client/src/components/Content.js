@@ -82,11 +82,13 @@ const styles = theme => ({
         width: '100%',
     },
     inputInput: {
-        paddingTop: theme.spacing.unit * 1.5,
+        paddingTop: 5,
         paddingRight: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
+        paddingBottom: 0,
+        fontSize: "larger",
         paddingLeft: theme.spacing.unit * 10,
         transition: theme.transitions.create('width'),
+        height: 44,
         width: '100%',
     },
     Headercard: {
@@ -180,9 +182,10 @@ class Content extends Component {
     async getdata(word) {
         var pathfile = "tfidf/" + word + '.json'
         pathfile = this.state.checkedA ? pathfile : "no" + pathfile
+        
         // const webpath = '/datas/' + pathfile 
         const webpath = 'https://public.siwanont.ml/KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/' + pathfile
-        // webpath = 'http://localhost:5000/api/cluster/' + word
+        // const webpath = 'http://localhost:5000/api/cluster/' + word
 
         const response = await axios.get(webpath, {})
         // console.log(response)

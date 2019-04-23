@@ -33,11 +33,12 @@ const styles = {
 function Header(props) {
     const { classes } = props;
     const storagepath = "https://public.siwanont.ml/GRHVkN5NwxcGmHUXsMOu3Q/";
+    // const storagepath = process.env.PUBLIC_URL + '/images/pantip.png'
 
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.navbar}>
-                <Toolbar> {/* process.env.PUBLIC_URL + '/images/pantip.png'*/}
+                <Toolbar>
                     <img src={storagepath + "image/pantip.png"} className={classes.logo} alt="logo" /> 
                     <Typography variant="h5" color="inherit" className={classes.headername}>
                         Search Result Clustering on Thai Internet Forum
