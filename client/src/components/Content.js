@@ -180,10 +180,11 @@ class Content extends Component {
     async getdata(word) {
         var pathfile = "tfidf/" + word + '.json'
         pathfile = this.state.checkedA ? pathfile : "no" + pathfile
-        const webpath = '/datas/' + pathfile 
+        // const webpath = '/datas/' + pathfile 
+        const webpath = 'https://public.siwanont.ml/H7PL85cOsHcJMgIne0ZFUw/datas/' + pathfile
         // webpath = 'http://localhost:5000/api/cluster/' + word
 
-        const response = await axios.get(webpath)
+        const response = await axios.get(webpath, {})
         // console.log(response)
         if (response.status === 200) {
             this.setState(state => {
@@ -222,7 +223,6 @@ class Content extends Component {
                         </Button>
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                                {/* background: "none repeat scroll 0 0 #1F1D33",  */}
                         <Card className={classes.Headercard} style={{ padding: "1em" }}> 
                             <CardContent style={{ padding: "0em" }}>
                                 <FormControl style={{ display: "-webkit-box", }}>
@@ -257,7 +257,7 @@ class Content extends Component {
                                     {labels.map(label => (
                                         label[1][0] > cluster ?
                                         <a href="/#" key={label[0]} value={label[0]} onClick={this.handleClickLabel} style={{display: 'block', color: 'white', fontSize: "medium",}}>
-                                                {label[0]} {"(" + (label[1][1] * 100).toFixed(2) + "% , " + label[1][0] + ")"}
+                                            {label[0]} {"(" + (label[1][1] * 100).toFixed(2) + "% , " + label[1][0] + ")"}
                                         </a>
                                         : null
                                     ))}

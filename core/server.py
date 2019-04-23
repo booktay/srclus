@@ -42,8 +42,10 @@ def api():
     return "<h1>SRCLUS API</h1>"
 
 # Load Model
-model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm.tfidf", "vocab.model")
+model_path = os.path.join(os.path.abspath("."), "datas", "model", "newmm", "vocab.model")
 model_newmm = Word2Vec.load(model_path)
+model_path_tfidf = os.path.join(os.path.abspath("."), "datas", "model", "newmm.tfidf", "vocab.model")
+model_newmm_tfidf = Word2Vec.load(model_path_tfidf)
 
 # Search Similarity Word API
 # ---------------------------
@@ -67,30 +69,38 @@ def searchw():
 # search?words=A,B,C,D,...
 # ---------------------------
 
-def tokenizer(data):
+def tokenizer(data, tfidf):
     rep, status_url = tokenize.replaceurl(data=data)
     rep, status_f = tokenize.filtertheng(data=rep)
     rep, status_nt = tokenize.numth(data=rep)
     rep, status_t = tokenize.run(data=rep)
     if status_t == 600:
-        rep = list(filter(lambda x: x in model_newmm.wv.vocab, rep))
-        if rep:
-            word = model_newmm.wv.most_similar(positive=rep, topn=10)
-            return word # [x[0] for x in word]
+        if tfidf:
+            rep = list(filter(lambda x: x in model_newmm_tfidf.wv.vocab, rep))
+            if rep:
+                word = model_newmm_tfidf.wv.most_similar(positive=rep, topn=10) #most_similar_cosmul
+                return word # [x[0] for x in word]
+        else:
+            rep = list(filter(lambda x: x in model_newmm.wv.vocab, rep))
+            if rep:
+                word = model_newmm.wv.most_similar(positive=rep, topn=10)  #most_similar_cosmul
+                return word # [x[0] for x in word]
     return []
 
 @app.route('/api/cluster/<word>', methods=['GET'])
 def searchc(word):
     if word:
         datas, rank = {}, {}
-        for i in range(1, 11):
+        tfidf = request.args.get('tfidf', default = False, type = bool)
+        for i in range(1, 6):
+            # print(tfidf)
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
                 for i in range(len(data)):
                     data_t = getdatafromthread(data[i])
                     paragraph = data_t['title'] + " " + data_t['desc']
-                    paragraph = tokenizer(paragraph)
+                    paragraph = tokenizer(paragraph, tfidf)
                     for j in paragraph:
                         data_score = {
                             'id' : data_t['id'],
@@ -109,7 +119,6 @@ def searchc(word):
                             rank[j[0]]= [rank[j[0]][0] + 1,(score_label + (rank[j[0]][1] * len_datas)) / (len_datas + 1)]
                             datas[j[0]].append(data_score)
 
-
                     del paragraph, data_score
 
         del data
@@ -121,7 +130,7 @@ def searchc(word):
 
         del rank, datas
 
-        iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
+        # iorq.writejson(filepath="../client/public/datas", filename=word+".json", data=datas_group)
         return make_response(jsonify(datas_group), 200, {'Content-Type': 'application/json'})
     else:
         abort(404)
