@@ -181,7 +181,7 @@ class Content extends Component {
         var pathfile = "tfidf/" + word + '.json'
         pathfile = this.state.checkedA ? pathfile : "no" + pathfile
         // const webpath = '/datas/' + pathfile 
-        const webpath = 'https://public.siwanont.ml/H7PL85cOsHcJMgIne0ZFUw/datas/' + pathfile
+        const webpath = 'https://public.siwanont.ml/KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/' + pathfile
         // webpath = 'http://localhost:5000/api/cluster/' + word
 
         const response = await axios.get(webpath, {})

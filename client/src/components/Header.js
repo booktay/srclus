@@ -32,12 +32,13 @@ const styles = {
 
 function Header(props) {
     const { classes } = props;
+    const storagepath = "https://public.siwanont.ml/GRHVkN5NwxcGmHUXsMOu3Q/";
 
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.navbar}>
-                <Toolbar>
-                    <img src={process.env.PUBLIC_URL + '/images/pantip.png'} className={classes.logo} alt="logo" /> 
+                <Toolbar> {/* process.env.PUBLIC_URL + '/images/pantip.png'*/}
+                    <img src={storagepath + "image/pantip.png"} className={classes.logo} alt="logo" /> 
                     <Typography variant="h5" color="inherit" className={classes.headername}>
                         Search Result Clustering on Thai Internet Forum
                     </Typography>
@@ -45,7 +46,7 @@ function Header(props) {
                     <Typography variant="h6" color="inherit" className={classes.authorname}>
                         Siwanont Sittinam
                     </Typography>
-                    <img src={process.env.PUBLIC_URL + '/images/mike.png'} className={classes.logo} alt="logo" /> 
+                    <img src={storagepath + "image/mike.png"} className={classes.logo} alt="logo" /> 
                 </Toolbar>
             </AppBar>
         </div>
