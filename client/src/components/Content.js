@@ -146,7 +146,7 @@ class Content extends Component {
             clusterData: null,
             currentLabel: null,
             checkedA: false,
-            cluster: 0,
+            cluster: 1,
         }
 
         this.getdata = this.getdata.bind(this)
@@ -235,9 +235,13 @@ class Content extends Component {
                                         onChange={this.handleSelect('cluster')}
                                         input={<BootstrapInput name="cluster"/>}
                                     >
-                                        {Array.from(Array(10).keys()).map((item) => (
-                                            <MenuItem key={item} value={5*item}>{5*item}</MenuItem>
-                                        ))
+                                        {Array.from(Array(10).keys()).map((item) => {
+                                            if (item == 0) {
+                                                return <MenuItem key={item} value={1}>1</MenuItem>
+                                            } else {
+                                                return <MenuItem key={item} value={5 * item}>{5 * item}</MenuItem>
+                                            }
+                                        })
                                         }
                                     </Select>
                                     <Typography className={classes.bootstrapFormLabel}>TF-IDF</Typography>
