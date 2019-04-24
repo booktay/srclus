@@ -236,7 +236,7 @@ class Content extends Component {
                                         input={<BootstrapInput name="cluster"/>}
                                     >
                                         {Array.from(Array(10).keys()).map((item) => {
-                                            if (item == 0) {
+                                            if (item === 0) {
                                                 return <MenuItem key={item} value={1}>1</MenuItem>
                                             } else {
                                                 return <MenuItem key={item} value={5 * item}>{5 * item}</MenuItem>
@@ -290,7 +290,7 @@ class Content extends Component {
                                 }
                             </CardContent>
                         </Card>
-                        {currentLabel !== null && clusterData[currentLabel] !== null ? clusterData[currentLabel].map((item, index) => (
+                        {currentLabel !== null && clusterData[currentLabel] !== null ? clusterData[currentLabel].sort((a, b) => a.id - b.id).map((item, index) => (
                             <Card key={`${currentLabel}-${index}`} className={classes.card}>
                                 <CardContent className={classes.cardcontent}>
                                     <Typography gutterBottom variant="h5" component="h2" className={classes.typetitle}>
