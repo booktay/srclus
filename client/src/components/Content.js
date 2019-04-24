@@ -146,7 +146,7 @@ class Content extends Component {
             clusterData: null,
             currentLabel: null,
             checkedA: false,
-            cluster: 1,
+            cluster: 0,
         }
 
         this.getdata = this.getdata.bind(this)
