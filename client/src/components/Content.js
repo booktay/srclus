@@ -236,7 +236,7 @@ class Content extends Component {
                                         input={<BootstrapInput name="cluster"/>}
                                     >
                                         {Array.from(Array(10).keys()).map((item) => (
-                                            <MenuItem key={item} value={Math.pow(item + 1, 2)}>{Math.pow(item + 1, 2)}</MenuItem>
+                                            <MenuItem key={item} value={5*item}>{5*item}</MenuItem>
                                         ))
                                         }
                                     </Select>
