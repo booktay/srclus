@@ -10,7 +10,7 @@ Massive Information and Knowledge Engineering Lab
 
 ## Project Structure
 
-![Project Structure](https://github.com/booktay/srclus/blob/master/detail/structure.jpg)
+<center>![Project Structure](https://github.com/booktay/srclus/blob/master/detail/structure.jpg)</center>
 
 ## Core
 
