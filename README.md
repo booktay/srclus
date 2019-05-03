@@ -1,4 +1,13 @@
 # Search Result Clustering on Thai Internet Forum
-## Senior Project#2018 
-### Kasetsart University - Computer Engineering
-### Massive Information and Knowledge Engineering Lab
+
+This project studies the grouping of search results by considering the context of words using the **word2vec** model.
+
+Siwanont Sittinam - B.ENG.CPE. Project#2018
+Kasetsart University - Computer Engineering 
+Massive Information and Knowledge Engineering Lab
+
+![Project Structure](https://github.com/booktay/srclus/blob/master/detail/structure.png?raw=true)
+
+## Core
+
+## Client
