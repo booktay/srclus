@@ -1,68 +1,99 @@
+## Client 
+
+![Project Structure](https://lh3.googleusercontent.com/PfQc3hK_N9CbBSKFy4oXaulKJyNVitly72vl6zwK1F2DiXW8sp00MXDp9tzGt42z9qa3_5HbJXksMYPt3PrIVLVPZ9EALNFGMW7eHQ41aGAr4eHhL0zpJ2ge9gosQRoncQ5q8bm3d9ImlH67RKq4urHg6tv5nsrW_Il2Klcw4bRLNj16zeHP_D3in4wxkULDGEx_lrmgtvlbPGi-EBALcybaoscRtP4zhIQqMSjLeC-kSwFdRhABoPH9DG2xVbUxZAEVo8nDXZ_c_7gfOzD820_RK8zjD5nNoiAAl6dmVx3JNgQk47JWOFcJrJb4LplfAgUbmw6BzxsZJMQP9Rvz7SBjPyjbFkl-27lp28zhlpIMBH-3kLgeC4YAKfKi6JSRTD5_iUZhhjCgiRXdnJ4NBg5iR6D4StPgBRPogbZhmDkCoUj4fIWQu5XlJ10_MW25_6sSX6Ep902q5idvhi3WJYgWdBLcsRwr7MVQUyyE9qdTq_ZBu8kLmWDe4ju-0B65CH03aGIS0FbWgowT20jN28al5yUMrqkM7_soRqotOUpiPEk4yQcqDn0wpzHiYjEny8X6HYXV-BlPHB2rB8KmL9H6mRMJ-aYGH6FS7KSFq29ldss9Z8kKDX4fsAYmzBRRaikerHha5EuIN69dCfEf7jjKOXJA4oUL=w3304-h1924-no)
+
+
+
+### Description
+
+This a web application for showing clustering result. 
+
+- #### Client Directory Path
+
+  ```
+  client/
+  |__ public/
+  |		|__ index.html
+  |		|__ manifest.json
+  |
+  |__ src/
+  |		|__ component/
+  |		|		|__ Content.js
+  |		|		|__ Header.js
+  |		|
+  |		|__ App.css
+  |		|__ App.js
+  |		|__ App.test.js
+  |		|__ index.css
+  |		|__ index.js
+  |		|__ serviceWorker.js
+  |
+  |__ package.json
+  |__ README.md
+  |__ yarn.lock
+  ```
+
+- #### Storage Directory Path
+	
+    I had to move many large files from public directory to the storage directory to reduce Github size more than 100mb. **You can download all these files from an original link and can change all path by yourself for reducing latency**.
+    
+  ```
+  storage/
+  |__ GRHVkN5NwxcGmHUXsMOu3Q
+  |	  	|__ css/
+  |	  	|__ ico/
+  |	  	|__ image/
+  |			  |__ mike.png
+  |			  |__ pantip.png
+  |			  |__ mike.png
+  |
+  |__ KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/
+      	|__ notfidf/
+      	|	  |__ apple.json
+      	|	  |__ avenger.json
+        |	  |__ ภูเก็ต.json
+      	|__ tfidf/
+        	  |__ apple.json
+          	  |__ avenger.json
+              |__ ภูเก็ต.json
+
+	``` 
+
+## Installation
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+#### Requirements
 
-In the project directory, you can run:
+- NodeJS 10.15.3+
+- Yarn 1.15.2
 
-### `npm start`
+#### Instructions
+Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Change directory to **client** directory
+	```
+    $ cd client
+    ```
+    
+2. Install dependencies for all modules
+	```
+    $ yarn
+    ```
+    
+3. Start app - Let's play
+	```
+    $ yarn start
+    ```
+  
+4. **[Optional]** Serving static files to server
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+    1. Install server dependencies
+    2. Config server file
+    3. Build app for production to a **build** directory.
 
-### `npm test`
+        ```
+        $ yarn build
+        ```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+    4. Move **build** directory to web directory or Create symbolic link to web directory

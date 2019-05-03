@@ -1,5 +1,11 @@
 ## Module
+## Installation
 
+#### Requirements
+
+- Python 3.6+
+
+#### Instructions
 ### Install Python Dependencies
 
 #### Base
