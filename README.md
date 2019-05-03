@@ -2,16 +2,14 @@
 
 This project studies the grouping of search results by considering the context of words using the **word2vec** model.
 
-Siwanont Sittinam - B.ENG.CPE. Project#2018
-
-Kasetsart University - Computer Engineering
-
-Massive Information and Knowledge Engineering Lab
-
-## Project Structure
-
 ![Project Structure](https://github.com/booktay/srclus/blob/master/detail/structure.jpg)
 
 ## Core
 
 ## Client
+
+## Author
+
+Siwanont Sittinam - B.ENG.CPE. Project#2018\
+Kasetsart University - Computer Engineering\
+Massive Information and Knowledge Engineering Lab
