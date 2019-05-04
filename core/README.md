@@ -7,28 +7,28 @@
   ```
   core/
   |__ srcluslib/
-  |		|__ corpus/
-  |		|	|__ customwords.py
-  |		|	|__ pantip.py
-  |		|	|__ stopwords.py
-  |		|
-  |		|__ utility/
-  |		|	|__ iorq.py
-  |		|
-  |		|__ model/
-  |			|__ tfidf.py
-  |			|__ tokenize.py
-  |			|__ word2vec.py
+  |     |__ corpus/
+  |     |   |__ customwords.py
+  |     |   |__ pantip.py
+  |     |   |__ stopwords.py
+  |     |
+  |     |__ utility/
+  |     |   |__ iorq.py
+  |     |
+  |     |__ model/
+  |         |__ tfidf.py
+  |         |__ tokenize.py
+  |         |__ word2vec.py
   |
   |__ datas/
-  |		|__ corpus/  
-  |		|	|__ customwords.json
-  |		|	|__ stopwords.json
-  |		|
-  |		|__ model/
-  |		|__ tfidf/
-  |		|__ token/
-  |		|__ raw/
+  |     |__ corpus/  
+  |     |   |__ customwords.json
+  |     |   |__ stopwords.json
+  |     |
+  |     |__ model/
+  |     |__ tfidf/
+  |     |__ token/
+  |     |__ raw/
   |
   |__ envsrclus/
   |__ 1.getdata.py
