@@ -23,20 +23,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   ```
   client/
   |__ public/
-  |		|__ index.html
-  |		|__ manifest.json
+  |   |__ index.html
+  |   |__ manifest.json
   |
   |__ src/
-  |		|__ component/
-  |		|		|__ Content.js
-  |		|		|__ Header.js
-  |		|
-  |		|__ App.css
-  |		|__ App.js
-  |		|__ App.test.js
-  |		|__ index.css
-  |		|__ index.js
-  |		|__ serviceWorker.js
+  |   |__ component/
+  |   |   |__ Content.js
+  |   |   |__ Header.js
+  |   |
+  |   |__ App.css
+  |   |__ App.js
+  |   |__ App.test.js
+  |   |__ index.css
+  |   |__ index.js
+  |   |__ serviceWorker.js
   |
   |__ package.json
   |__ README.md
@@ -50,22 +50,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   ```
   storage/
   |__ GRHVkN5NwxcGmHUXsMOu3Q
-  |	  	|__ css/
-  |	  	|__ ico/
-  |	  	|__ image/
-  |			  |__ mike.png
-  |			  |__ pantip.png
-  |			  |__ mike.png
+  |   |__ css/
+  |   |__ ico/
+  |   |__ image/
+  |       |__ mike.png
+  |       |__ pantip.png
+  |       |__ mike.png
   |
   |__ KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/
-      	|__ notfidf/
-      	|	  |__ apple.json
-      	|	  |__ avenger.json
-        |	  |__ ภูเก็ต.json
-      	|__ tfidf/
-        	  |__ apple.json
-          	  |__ avenger.json
-              |__ ภูเก็ต.json
+      |__ notfidf/
+      |   |__ apple.json
+      |   |__ avenger.json
+      |   |__ ภูเก็ต.json
+      |__ tfidf/
+          |__ apple.json
+          |__ avenger.json
+          |__ ภูเก็ต.json
 
 	``` 
 
