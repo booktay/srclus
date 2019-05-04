@@ -18,7 +18,7 @@ You can input a search word and put a search button. A clustering process may ta
 
 - #### Client Directory
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
   ```
   client/
