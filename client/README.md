@@ -6,9 +6,19 @@
 
 ### Description
 
-This a web application for showing clustering result. 
+This a web application for showing clustering result. It has 3 part
 
-- #### Client Directory Path
+1. Search Part : Top side
+2. Cluster Name Part : Left side
+3. Thread cluster Part : Right side
+
+You can input a search word and put a search button. A clustering process may take approximately **1 minute** then show a result on the web. If you don't want to wait, You can input **apple** or **avenger**. I prepared these words for showing my example clustering.
+
+### Directory Structure
+
+- #### Client Directory
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
   ```
   client/
@@ -33,7 +43,7 @@ This a web application for showing clustering result.
   |__ yarn.lock
   ```
 
-- #### Storage Directory Path
+- #### Storage Directory
 	
     I had to move many large files from public directory to the storage directory to reduce Github size more than 100mb. **You can download all these files from an original link and can change all path by yourself for reducing latency**.
     
@@ -61,8 +71,6 @@ This a web application for showing clustering result.
 
 ## Installation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 #### Requirements
 
 - NodeJS 10.15.3+
@@ -81,19 +89,22 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ yarn
     ```
     
-3. Start app - Let's play
+   
+3. **[Optional]** You can download my files from storage and change my path to your path.
+
+4. Start app - Let's play
 	```
     $ yarn start
     ```
-  
-4. **[Optional]** Serving static files to server
+    
+#### Serving static files to server
 
-    1. Install server dependencies
-    2. Config server file
-    3. Build app for production to a **build** directory.
+1. Install server dependencies
+2. Config server file
+3. Build app for production to a **build** directory.
 
-        ```
-        $ yarn build
-        ```
+    ```
+    $ yarn build
+    ```
 
-    4. Move **build** directory to web directory or Create symbolic link to web directory
+4. Move **build** directory to web directory or Create symbolic link to web directory
