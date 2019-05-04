@@ -7,7 +7,13 @@
 
 This project studies the grouping of search results by considering the context of words using the **word2vec** model. 
 
-#### Feature
+#### Project Structure
+```
+  srclus/
+  |__ core/
+  |__ client/
+```
+
 1. [Core](core/) : Prepare datas, Word2vec Model, Clustering, API Backend
 2. [Client](client/) : Frontend
 
