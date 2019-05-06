@@ -80,7 +80,8 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
 4. Download files in **datas** directory from this [link](https://drive.google.com/open?id=1NjvARd1gyEdhEpQX9zUi_OUsnLfXhz68) and Extract it in **core** directory
    
 #### Description
-  **Please read command desription in each file**
+  _Please read command desription in each file_
+
   * Collect datas from pantip.com
 
     ```
@@ -105,7 +106,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ python 4.model.py 
     ```
 
-  * Run API Serve
+  * Run API Server
     1. Run this command 
 
       ``` 
