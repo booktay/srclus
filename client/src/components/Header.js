@@ -32,8 +32,8 @@ const styles = {
 
 function Header(props) {
     const { classes } = props;
-    const storagepath = "https://public.siwanont.ml/GRHVkN5NwxcGmHUXsMOu3Q/";
-    // const storagepath = process.env.PUBLIC_URL + '/images/pantip.png'
+    const storagepath = "/GRHVkN5NwxcGmHUXsMOu3Q/";
+    // const storagepath = process.env.PUBLIC_URL;
 
     return (
         <div className={classes.root}>

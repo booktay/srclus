@@ -23,6 +23,22 @@ You can input a search word and put a search button. A clustering process may ta
   ```
   client/
   |__ public/
+  |   |__ GRHVkN5NwxcGmHUXsMOu3Q/
+  |   |   |__ css/
+  |   |   |__ ico/
+  |   |   |__ image/
+  |   |
+  |   |__ KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/
+  |   |   |__ notfidf/
+  |   |   |   |__ apple.json
+  |   |   |   |__ avenger.json
+  |   |   |   |__ ภูเก็ต.json
+  |   |   |
+  |   |   |__ tfidf/
+  |   |       |__ apple.json
+  |   |       |__ avenger.json
+  |   |       |__ ภูเก็ต.json
+  |   |
   |   |__ index.html
   |   |__ manifest.json
   |
@@ -42,32 +58,6 @@ You can input a search word and put a search button. A clustering process may ta
   |__ README.md
   |__ yarn.lock
   ```
-
-- #### Storage Directory
-	
-    I had to move many large files from public directory to the storage directory to reduce Github size more than 100mb. **You can download all these files from an original link and can change all path by yourself for reducing latency**.
-    
-  ```
-  storage/
-  |__ GRHVkN5NwxcGmHUXsMOu3Q
-  |   |__ css/
-  |   |__ ico/
-  |   |__ image/
-  |       |__ mike.png
-  |       |__ pantip.png
-  |       |__ mike.png
-  |
-  |__ KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/
-      |__ notfidf/
-      |   |__ apple.json
-      |   |__ avenger.json
-      |   |__ ภูเก็ต.json
-      |__ tfidf/
-          |__ apple.json
-          |__ avenger.json
-          |__ ภูเก็ต.json
-
-	``` 
 
 ## Installation
 
@@ -89,8 +79,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ yarn
     ```
     
-   
-3. **[Optional]** You can download my files from storage and change my path to your path.
+3. Download files in **public** directory from this [link](https://drive.google.com/open?id=1Nm-K8-fAwZ5Bs4wE_rYc7U_M-DEW-ZOB) and Extract it in **public** directory
 
 4. Start app - Let's play
 	```

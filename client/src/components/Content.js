@@ -180,12 +180,14 @@ class Content extends Component {
     }
     
     async getdata(word) {
-        var pathfile = "tfidf/" + word + '.json'
-        pathfile = this.state.checkedA ? pathfile : "no" + pathfile
         
+        var webpath = 'http://localhost:5000/api/cluster/' + word + "?tfidf=" + this.state.checkedA.toString()
+
         // const webpath = '/datas/' + pathfile 
-        const webpath = 'https://public.siwanont.ml/KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/' + pathfile
-        // const webpath = 'http://localhost:5000/api/cluster/' + word
+        if (["apple", "avenger"].includes(word)) {
+            var check = this.state.checkedA ? "pathfile" : "no"
+            webpath = '/KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/' + check + "tfidf/" + word + '.json'
+        }
 
         const response = await axios.get(webpath, {})
         // console.log(response)

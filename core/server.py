@@ -92,7 +92,7 @@ def searchc(word):
     if word:
         datas, rank = {}, {}
         tfidf = request.args.get('tfidf', default = False, type = bool)
-        for i in range(1, 6):
+        for i in range(1, 101):
             # print(tfidf)
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
@@ -120,6 +120,8 @@ def searchc(word):
                             datas[j[0]].append(data_score)
 
                     del paragraph, data_score
+            else :
+                break
 
         del data
 
@@ -188,4 +190,4 @@ def not_found(e):
     return '', 404
 
 if __name__ == '__main__':
-    app.run(debug=False, port=42177)
+    app.run(debug=True, port=5000)
