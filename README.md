@@ -13,20 +13,20 @@ This project studies the grouping of search results by considering the context o
   |__ core/
   |__ client/
 ```
-##### Instructions
+#### Instructions
 1. Follow this instructions in [Core](core/) for Prepare datas, Word2vec Model, Clustering, API Backend
 2. Follow this instructions in [Client](client/) for Frontend
 3. Open your browser without CORS
     **Testing on Chrome**
 
-    ##### MacOS 
+    #### MacOS 
     Run this command in Terminal
     ```
     open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir=
     "/tmp/chrome_dev_test" --disable-web-security
     ```
 
-    ##### Windows 10 
+    #### Windows 10 
     Run this command in CMD or Powershell
     ```
     "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu 
