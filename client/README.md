@@ -85,7 +85,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
 	```
     $ yarn start
     ```
-    
+
 #### Serving static files to server
 
 1. Install server dependencies
