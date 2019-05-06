@@ -80,7 +80,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
 4. Download files in **datas** directory from this [link](https://drive.google.com/open?id=1NjvARd1gyEdhEpQX9zUi_OUsnLfXhz68) and Extract it in **core** directory
    
 #### Description
-  _Please read command desription in each file_
+  _Please read command description in each file_
 
   * Collect datas from pantip.com
 
@@ -109,8 +109,8 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
   * Run API Server
     1. Run this command 
 
-      ``` 
-      $ python server.py 
-      ```
+        ``` 
+        $ python server.py 
+        ```
 
     2. Go to [http://localhost:5000/api/cluster/apple?tfidf=false](http://localhost:5000/api/cluster/apple?tfidf=false) for testing an apple clustering
