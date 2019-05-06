@@ -80,22 +80,36 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
 4. Download files in **datas** directory from this [link](https://drive.google.com/open?id=1NjvARd1gyEdhEpQX9zUi_OUsnLfXhz68) and Extract it in **core** directory
    
 #### Description
-* Collect datas from pantip.com
-  ```
-  $ python 1.getdata.py 
-  ```
-* Word Prepraration
-  ```
-  $ python 2.wordcut.py 
-  ```
-* TF-IDF
-  ```
-  $ python 3.tfidf.py 
-  ```
-* Make a model
-  ```
-  $ python 4.model.py 
-  ```
-* Run API Serve
-  1. Run this command ``` $ python server.py ```
-  2. Go to [http://localhost:5000/api](http://localhost:5000/api)
+  **Please read command desription in each file**
+  * Collect datas from pantip.com
+
+    ```
+    $ python 1.getdata.py 
+    ```
+
+  * Word Prepraration
+
+    ```
+    $ python 2.wordcut.py 
+    ```
+
+  * TF-IDF
+
+    ```
+    $ python 3.tfidf.py 
+    ```
+
+  * Make a model
+
+    ```
+    $ python 4.model.py 
+    ```
+
+  * Run API Serve
+    1. Run this command 
+
+      ``` 
+      $ python server.py 
+      ```
+
+    2. Go to [http://localhost:5000/api/cluster/apple?tfidf=false](http://localhost:5000/api/cluster/apple?tfidf=false) for testing an apple clustering
