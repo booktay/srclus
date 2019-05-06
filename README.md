@@ -19,14 +19,14 @@ This project studies the grouping of search results by considering the context o
 3. Open your browser without CORS
     **Testing on Chrome**
 
-    ### MacOS 
+    ##### MacOS 
     Run this command in Terminal
     ```
     open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir=
     "/tmp/chrome_dev_test" --disable-web-security
     ```
 
-    ### Windows 10 
+    ##### Windows 10 
     Run this command in CMD or Powershell
     ```
     "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu 
