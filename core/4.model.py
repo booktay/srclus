@@ -10,16 +10,24 @@ from srcluslib.utility.iorq import IORQ
 from srcluslib.model.word2vec import W2V
 iorq = IORQ()
 
+# -------------------------------
+# Token Set Data path -----------
+# -------------------------------
 datas_path = os.path.join(".", "datas")
 raw_datas_path = os.path.join(datas_path, "raw")
 model_datas_path = os.path.join(datas_path, "model")
-
+# -------------------------------
+# TF-IDF Set Data path ----------
+# -------------------------------
 tfidf_datas_path = os.path.join(datas_path, "tfidf", "20190420.1249")
 token_datas_path = os.path.join(datas_path, "token", "newmm")
 
-# ------------------------------
-# Please create dir before run.
-# ------------------------------
+# -------------------------------
+# -------------------------------
+# Please create dir before run. -
+# Set Save path -----------------
+# -------------------------------
+# -------------------------------
 resultpath = os.path.join(model_datas_path, "newmm.tfidf.20")
 
 
@@ -60,7 +68,7 @@ class Model:
         # return datas
 
         #------------------------------
-        
+
         return self.getdatafromengine(filepath=tfidf_datas_path, engine="1", tfidf=True)
 
     # No TF-IDF Process
@@ -77,21 +85,25 @@ class Model:
         return datas
 
     def run1(self, datas):
+        print("[Initial] Initial wod2vec model")
+
+        # For Tensorflow
         # w2v = W2V(datas)
-        # print("[Initial] Initial wod2vec model")
+        # print("[Process] Train wod2vec model")
         # w2v.makeModel()
         # datas = w2v.getRawdata()
 
         # For Gensim
-        print("[Initial] Initial wod2vec model")
         w2v = W2V(data=[], resultpath=resultpath)
         print("[Process] Train wod2vec model")
         w2v.makeGensim(datas)
+
         print("[Complete] Train model by gensim")
 
 
 if __name__ == "__main__":
     model = Model()
     datas = model.preparedata1()
+    # datas = model.preparedata2()
     # print(datas)
     model.run1(datas)

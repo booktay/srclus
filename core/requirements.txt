@@ -1,4 +1,4 @@
-artagger==0.1.0.3
+artagger==0.1.2
 asn1crypto==0.24.0
 bcrypt==3.1.6
 boto==2.49.0
@@ -42,5 +42,5 @@ sklearn==0.0
 smart-open==1.8.1
 tinydb==3.13.0
 tqdm==4.31.1
-urllib3==1.24.1
+urllib3==1.24.2
 Werkzeug==0.15.2

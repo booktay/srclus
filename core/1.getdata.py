@@ -15,7 +15,7 @@ pantip = Pantip()
 
 def collectPantip():
         datas = [{},{}]
-        startthread = 38590001
+        startthread = 38000000
         stopthread = 38758650 # Update 12/04/2562 23:50
         savepath = os.path.join(os.path.abspath("."), "datas", "raw", "39")
         for i in range(startthread, stopthread + 1):

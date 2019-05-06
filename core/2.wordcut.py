@@ -59,6 +59,6 @@ def reqfromFile(foldernumber="31"):
         # break
 
 
-# for i in range (36,38):
-i = input('Folder : ')
-reqfromFile(foldernumber=str(i))
+# i = input('Folder : ')
+for i in range (31,38):
+    reqfromFile(foldernumber=str(i))
