@@ -79,7 +79,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ yarn
     ```
     
-3. Download folders in **public-example.zip** from this [link](https://drive.google.com/open?id=1Nm-K8-fAwZ5Bs4wE_rYc7U_M-DEW-ZOB) and Extract it in **public** directory
+3. Download **public-example.zip** from this [link](https://drive.google.com/open?id=1Nm-K8-fAwZ5Bs4wE_rYc7U_M-DEW-ZOB) and Extract it in **public** directory
 
 4. Start app - Let's play
 	```
