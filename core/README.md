@@ -82,7 +82,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
       $ python -c "import nltk; nltk.download('averaged_perceptron_tagger');"
       ```
   
-4. Download files in **datas** directory from this [link](https://drive.google.com/open?id=1NjvARd1gyEdhEpQX9zUi_OUsnLfXhz68) and Extract it in **core** directory
+4. Download **datas-example.zip** from this [link](https://drive.google.com/open?id=1NjvARd1gyEdhEpQX9zUi_OUsnLfXhz68) and Extract it in **core** directory
    
 #### Description
   _Please read command description in each file_
