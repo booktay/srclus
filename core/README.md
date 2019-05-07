@@ -60,7 +60,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ source envsrclus/bin/activate
     ```
     * Note: **Windows 10 OS**, Use this command
-    ```$ ./envsrclus/Script/activate```
+    ```$ .\envsrclus\Script\activate```
     
 3. Install Modules
 
