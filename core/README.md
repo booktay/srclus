@@ -59,6 +59,8 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ virtualenv envsrclus
     $ source envsrclus/bin/activate
     ```
+    * Note: **Windows 10 OS**, Please install this first
+    ```$ ./envsrclus/Script/activate```
     
 3. Install Modules
 
@@ -68,7 +70,7 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ pip install -r requirements.txt 
     ```
     
-    * Note: **Windows OS**, Please install this first
+    * Note: **Windows 10 OS**, Please install this first
     ```$ pip install https://github.com/wannaphongcom/artagger/tarball/master#egg=artagger```
       
     NLTK POS Tagger
