@@ -32,12 +32,10 @@ You can input a search word and put a search button. A clustering process may ta
   |   |   |__ notfidf/
   |   |   |   |__ apple.json
   |   |   |   |__ avenger.json
-  |   |   |   |__ ภูเก็ต.json
   |   |   |
   |   |   |__ tfidf/
   |   |       |__ apple.json
   |   |       |__ avenger.json
-  |   |       |__ ภูเก็ต.json
   |   |
   |   |__ index.html
   |   |__ manifest.json
@@ -84,6 +82,23 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
 4. Start app - Let's play
 	```
     $ yarn start
+    ```
+
+5. Open your browser without CORS Policy and Go to [http://localhost:3000/](http://localhost:3000/)
+    **Testing on Chrome**
+
+    #### MacOS 
+    Run this command in Terminal
+    ```
+    open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir=
+    "/tmp/chrome_dev_test" --disable-web-security
+    ```
+
+    #### Windows 10 
+    Run this command in CMD or Powershell
+    ```
+    "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu 
+    --user-data-dir=~/chromeTemp
     ```
 
 #### Serving static files to server
