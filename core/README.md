@@ -72,9 +72,9 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     
     * Note: **Windows 10 OS**, Please install this first
     
-    ```
-    $ pip install https://github.com/wannaphongcom/artagger/tarball/master#egg=artagger
-    ```
+	    ```
+	    $ pip install https://github.com/wannaphongcom/artagger/tarball/master#egg=artagger
+	    ```
       
     NLTK POS Tagger
 
