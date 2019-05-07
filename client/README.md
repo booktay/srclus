@@ -84,17 +84,16 @@ Testing on MacOS Mojave 10.14.4, Windows 10, Ubuntu 18.04, CentOS 7
     $ yarn start
     ```
 
-5. Open your browser without CORS Policy and Go to [http://localhost:3000/](http://localhost:3000/)
-    **Testing on Chrome**
+5. Open your browser (Testing on **Chrome**) without CORS Policy and Go to [http://localhost:3000/](http://localhost:3000/)
 
-    #### MacOS 
+    #### For MacOS 
     Run this command in Terminal
     ```
     open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir=
     "/tmp/chrome_dev_test" --disable-web-security
     ```
 
-    #### Windows 10 
+    #### For Windows 10 OS
     Run this command in CMD or Powershell
     ```
     "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu 
