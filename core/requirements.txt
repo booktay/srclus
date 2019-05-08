@@ -1,4 +1,4 @@
-artagger==0.1.2
+artagger==0.1.0.3
 asn1crypto==0.24.0
 bcrypt==3.1.6
 boto==2.49.0
