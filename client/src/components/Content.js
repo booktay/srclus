@@ -180,8 +180,8 @@ class Content extends Component {
     }
     
     async getdata(word) {
-        
-        var webpath = 'http://localhost:5000/api/cluster/' + word + "?tfidf=" + this.state.checkedA.toString()
+        var ip = '158.108.40.4'
+        var webpath = 'http://' + ip + ':5000/api/cluster/' + word + "?tfidf=" + this.state.checkedA.toString()
 
         // const webpath = '/datas/' + pathfile 
         if (["apple", "avenger"].includes(word)) {
