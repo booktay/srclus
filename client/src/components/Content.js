@@ -180,7 +180,7 @@ class Content extends Component {
     }
     
     async getdata(word) {
-        var ip = '158.108.40.4'
+        var ip = 'mikeku.siwanont.ml'
         var webpath = 'http://' + ip + ':5000/api/cluster/' + word + "?tfidf=" + this.state.checkedA.toString()
 
         // const webpath = '/datas/' + pathfile 
