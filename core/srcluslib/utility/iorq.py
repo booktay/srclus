@@ -107,7 +107,7 @@ class IORQ:
     def requesturl(url=""):
         try:
             data = requests.get(url, verify=True).json()
-            print(f'[Success] Request from %s' % url)
+            # print(f'[Success] Request from %s' % url)
             return data, 400
         except IOError:
             print(f'[Error] URL : %s not response' % str(url))

@@ -180,12 +180,13 @@ class Content extends Component {
     }
     
     async getdata(word) {
-        var ip = 'mikeku.siwanont.ml'
+        // var ip = 'mikeku.siwanont.ml'
+        var ip = 'localhost'
         var webpath = 'http://' + ip + ':5000/api/cluster/' + word + "?tfidf=" + this.state.checkedA.toString()
 
         // const webpath = '/datas/' + pathfile 
         if (["apple", "avenger"].includes(word)) {
-            var check = this.state.checkedA ? "pathfile" : "no"
+            var check = this.state.checkedA ? "" : "no"
             webpath = '/KmLx7EM2GuwEeDQejBufJfgP+nXga5j8/' + check + "tfidf/" + word + '.json'
         }
 
@@ -241,7 +242,7 @@ class Content extends Component {
                                             if (item === 0) {
                                                 return <MenuItem key={item} value={1}>1</MenuItem>
                                             } else {
-                                                return <MenuItem key={item} value={5 * item}>{5 * item}</MenuItem>
+                                                return <MenuItem key={item} value={10 * item}>{10 * item}</MenuItem>
                                             }
                                         })
                                         }

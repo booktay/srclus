@@ -97,6 +97,7 @@ def searchc(word):
             data, status_s = pantip.requestsearch(keywords=word, pages=str(i))
             if status_s == 400 and data:
                 data = data['hits']
+                if not data: break
                 for i in range(len(data)):
                     data_t = getdatafromthread(data[i])
                     paragraph = data_t['title'] + " " + data_t['desc']
